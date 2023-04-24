@@ -1,0 +1,3 @@
+[submodule "Backend-Hackaton2023"]
+	path = Backend-Hackaton2023
+	url = https://github.com/MatveyBatishchev/Backend-Hackaton2023.git
