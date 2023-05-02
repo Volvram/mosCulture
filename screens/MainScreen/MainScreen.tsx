@@ -1,18 +1,19 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
-import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../components/Navigation/Navigation";
+import { COLORS } from "../../config/colors";
+import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 
-type MainScreenProp = StackNavigationProp<RootStackParamList, 'Main'>;
+type MainScreenProps = {
+    navigation: any,
+}
 
-const MainScreen: React.FC = () => {
-    const navigation = useNavigation<MainScreenProp>();
+const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
     const dimensions = useWindowDimensions();
 
     return (
         <ScrollView style={styles.container}>
+            <ScreenHeader image={require("../../assets/img/btnNav.png")} title="Главная" onPress={() => {navigation.openDrawer()}} />
             <View style={styles.main}>
                 <Text>Open up App.tsx to start working on your app!</Text>
             </View>
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
+        backgroundColor: COLORS.white
     },
     main: {
         height: '100%',

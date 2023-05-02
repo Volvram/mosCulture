@@ -1,17 +1,18 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../components/Navigation/Navigation";
+import { COLORS } from "../../config/colors";
+import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 
-type NewsScreenProp = StackNavigationProp<RootStackParamList, 'News'>;
+type MainScreenProps = {
+    navigation: any,
+}
 
-const NewsScreen: React.FC = () => {
-    const navigation = useNavigation<NewsScreenProp>();
+const NewsScreen: React.FC<MainScreenProps> = ({ navigation }) => {
 
     return (
         <ScrollView style={styles.container}>
+            <ScreenHeader image={require("../../assets/img/btnBack.png")} title="Новости" onPress={() => {navigation.goBack()}} />
             <View style={styles.news}>
                 <Text>Here will be the news!</Text>
             </View>
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
+        backgroundColor: COLORS.white
     },
     news: {
         height: '100%',
