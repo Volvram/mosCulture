@@ -22,12 +22,12 @@ export default function Navigation() {
         screenOptions={{
           drawerType: dimensions.width >= 768 ? 'permanent' : 'front',
           drawerStyle: {
-            width: dimensions.width >= 768 ? '15%' : '85%'
+            width: dimensions.width >= 768 ? '20%' : '85%'
           }
         }}
       >
-        <Drawer.Screen name="Главная" component={MainScreen} />
-        <Drawer.Screen name="Новости" component={NewsScreen} />
+        <Drawer.Screen name="Главная" component={MainScreen} options={{headerShown: false}} />
+        <Drawer.Screen name="Новости" component={NewsScreen} options={{headerShown: false}} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

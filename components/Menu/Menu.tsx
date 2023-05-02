@@ -1,25 +1,47 @@
-import { StyleSheet, ScrollView, View, Text, Button, Image } from 'react-native';
+import React from "react";
+import { StyleSheet, ScrollView, View, Text, Image} from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { menuSections } from '../../config/menuSections';
+import { TYPOGRAPHY } from "../../config/typography";
+import { COLORS } from "../../config/colors";
 
 type MenuProps = {
     navigation: any;
 }
 
 const Menu: React.FC<MenuProps> = ({navigation}) => {
+    const dimensions = useWindowDimensions();
+
   return (
     <ScrollView style={styles.menu}>
-        <View style={{display: 'flex'}}>
-            <Image source={{uri: ""}} /> 
-            <Text style={styles.menu_title}>Product</Text>
+        <View style={styles.menu_header} >
+            {dimensions.width <= 768 && 
+                <TouchableOpacity 
+                    onPress={() => navigation.closeDrawer()} >
+                    <Image source={require("../../assets/img/btnClose.png")} style={styles.menu_header_image} />
+                </TouchableOpacity>
+            }
+            <Text style={styles.menu_header_title}>Product</Text>
         </View>
         <View style={styles.menu_details}>
             <Text style={styles.menu_details_title}>Меню</Text>
-            <TouchableOpacity style={styles.menu_details_button} onPress={() => navigation.navigate("Главная")}>
-                <Text style={styles.menu_details_button_text}>Главная</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.menu_details_button} onPress={() => navigation.navigate("Новости")}>
-                <Text style={styles.menu_details_button_text}>Новости</Text>
-            </TouchableOpacity>
+            {menuSections.map(section => {
+                return (
+                    <TouchableOpacity key={section.id} style={styles.menu_details_button} 
+                        onPress={() => {
+                            navigation.navigate(section.name)
+                        }}>
+                        {section.image && 
+                            <Image source={section.image} 
+                                style={styles.menu_details_button_image} 
+                                resizeMode="contain"/>
+                        }
+                        <Text style={styles.menu_details_button_text}>{section.name}</Text>
+                    </TouchableOpacity>
+                )
+            })
+            }
         </View>
     </ScrollView>
   );
@@ -27,17 +49,20 @@ const Menu: React.FC<MenuProps> = ({navigation}) => {
 export default Menu;
 
 const styles = StyleSheet.create({
-    menu: {
-        paddingTop: 79,
+    menu: {},
+    menu_header: {
+        marginTop: 79,
+        paddingLeft: 16,
+        display: "flex",
+        flexDirection: "row",
     },
-    menu_title: {
+    menu_header_image: {
+        width: 50,
+        height: 50
+    },
+    menu_header_title: {
         marginLeft: 33,
-        // font-family: 'SF Pro Display',
-        fontStyle: 'normal',
-        fontWeight: '700',
-        fontSize: 40,
-        lineHeight: 48,
-        color: '#18181B',
+        ...TYPOGRAPHY.h1
     },
     menu_details: {
         marginTop: 64,
@@ -45,23 +70,24 @@ const styles = StyleSheet.create({
     },
     menu_details_title: {
         paddingBottom: 19,
-        // fontFamily: 'SF Pro Display';
-        fontStyle: 'normal',
-        fontWeight: '400',
-        fontSize: 16,
-        lineHeight: 24,
-        color: '#A1A1AA',
+        color: COLORS.gray400,
+        ...TYPOGRAPHY.small
     },
     menu_details_button: {
         paddingBottom: 24,
         paddingLeft: 18,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    menu_details_button_image: {
+        width: 20,
+        height: 20,
+        filter: 'brightness(0%)'
     },
     menu_details_button_text: {
-        // fontFamily: 'SF Pro Display',
-        fontStyle: 'normal',
-        fontWeight: '400',
-        fontSize: 20,
-        lineHeight: 24,
-        color: '#18181B',
+        marginLeft: 7,
+        color: COLORS.gray900,
+        ...TYPOGRAPHY.h4,
     },
 })
