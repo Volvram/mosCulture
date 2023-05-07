@@ -1,8 +1,10 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView, useWindowDimensions } from 'react-native';
+import { StyleSheet, View, ScrollView, useWindowDimensions } from 'react-native';
 import { COLORS } from "../../config/colors";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
+import DailyFact from "./components/DailyFact/DailyFact";
+import Popular from "./components/Popular/Popular";
 
 type MainScreenProps = {
     navigation: any,
@@ -12,13 +14,14 @@ const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
     const dimensions = useWindowDimensions();
 
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <ScreenHeader image={require("../../assets/img/btnNav.png")} title="Главная" onPress={() => {navigation.openDrawer()}} />
             <View style={styles.main}>
-                <Text>Open up App.tsx to start working on your app!</Text>
+                <DailyFact />
+                <Popular navigation={navigation} />
             </View>
             <StatusBar style="auto" />
-        </ScrollView>
+        </View>
     );
 }
 export default MainScreen;
@@ -31,9 +34,6 @@ const styles = StyleSheet.create({
     },
     main: {
         height: '100%',
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingHorizontal: 16,
     }
 });
