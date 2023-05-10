@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, ImageBackground, ImageSourcePropType } from "react-native";
+import { StyleSheet, View, Text, ImageBackground, ImageSourcePropType, TouchableOpacity } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
@@ -8,13 +8,35 @@ type CardProps = {
     date: string,
     tagName?: string,
     image?: ImageSourcePropType | null,
+    onPress?: () => void,
 }
 
-const Card: React.FC<CardProps> = ({ title, date, tagName = "", image = null}) => {
+const Card: React.FC<CardProps> = ({ title, date, tagName = "", image = null, onPress}) => {
     return (
-        <View style={styles.card}>
-            {image && <ImageBackground source={image}></ImageBackground>}
-            <LinearGradient
+        <TouchableOpacity style={styles.card} onPress={onPress}>
+            {image  
+            ?  <ImageBackground source={image}> 
+                    <LinearGradient
+                        colors={[
+                        'rgba(24, 24, 27, 0)',
+                        'rgba(24, 24, 27, 0)',
+                        'rgba(24, 24, 27, 0.8)',
+                        ]}
+                        style={styles.card_gradient}>
+                        <View style={styles.card_details}>
+                            <Text style={styles.card_details_date}>
+                                {date}
+                            </Text>
+                            <Text style={styles.card_details_tagName}>
+                                {tagName}
+                            </Text>
+                            <Text style={styles.card_details_title}>
+                                {title}
+                            </Text>
+                        </View>
+                    </LinearGradient>
+                </ImageBackground>
+            :  <LinearGradient
                     colors={[
                     'rgba(24, 24, 27, 0)',
                     'rgba(24, 24, 27, 0)',
@@ -33,7 +55,9 @@ const Card: React.FC<CardProps> = ({ title, date, tagName = "", image = null}) =
                         </Text>
                     </View>
                 </LinearGradient>
-        </View>
+            }
+            
+        </TouchableOpacity>
     );
 }
 
