@@ -3,9 +3,10 @@ import ListElement from "../../../../components/ListElement/ListElement";
 
 type NewsListProps = {
     activeTags?: string[],
+    navigation: any,
 }
 
-const NewsList: React.FC<NewsListProps> = ({activeTags}) => {
+const NewsList: React.FC<NewsListProps> = ({activeTags, navigation}) => {
     return (
         <ScrollView style={styles.newsList}
             contentContainerStyle={{
@@ -22,7 +23,8 @@ const NewsList: React.FC<NewsListProps> = ({activeTags}) => {
             .filter(item => activeTags?.find(el => el === "Все") ? item : activeTags?.find(el => el === item.tagName))
             .map(item => {
                 return (
-                    <ListElement key={item.id} title={item.title} date={item.date} tagName={item.tagName} />
+                    <ListElement key={item.id} title={item.title} date={item.date} tagName={item.tagName} 
+                        onPress={() => navigation.navigate("Новость", {postId: item.id, post: item})} />
                 )
             })}
         </ScrollView>

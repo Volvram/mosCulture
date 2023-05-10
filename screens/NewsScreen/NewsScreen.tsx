@@ -43,7 +43,7 @@ const NewsScreen: React.FC<MainScreenProps> = ({ navigation }) => {
                         })}
                     </ScrollView>
                 </View>
-                <NewsList activeTags={newsScreenStore.activeTags} />
+                <NewsList activeTags={newsScreenStore.activeTags} navigation={navigation} />
             </View>
             <StatusBar style="auto" />
         </View>

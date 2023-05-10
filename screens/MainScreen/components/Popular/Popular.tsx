@@ -19,7 +19,7 @@ const Popular: React.FC<PopularProps> = ({ navigation }) => {
                     <Text style={styles.popular_more}>Подробнее</Text>
                 </TouchableOpacity>
             </View>
-            <PopularList />
+            <PopularList navigation={navigation} />
         </View>
     )
 }
