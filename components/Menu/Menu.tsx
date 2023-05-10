@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
     menu_details_button_image: {
         width: 20,
         height: 20,
-        filter: 'brightness(0%)'
     },
     menu_details_button_text: {
         marginLeft: 7,
