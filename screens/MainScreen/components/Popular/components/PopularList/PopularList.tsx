@@ -36,6 +36,7 @@ export default PopularList;
 const styles = StyleSheet.create({
     popularList: {
         marginTop: 16,
+        paddingHorizontal: 10,
         flex: 1,
     },
 })

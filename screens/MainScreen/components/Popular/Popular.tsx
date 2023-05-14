@@ -38,10 +38,12 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     popular_title: {
-        ...TYPOGRAPHY.h2
+        ...TYPOGRAPHY.h2,
+        paddingHorizontal: 16,
     },
     popular_more: {
         ...TYPOGRAPHY.small,
         color: COLORS.blue,
+        paddingHorizontal: 16,
     }
 })

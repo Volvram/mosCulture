@@ -34,6 +34,5 @@ const styles = StyleSheet.create({
     },
     main: {
         height: '100%',
-        paddingHorizontal: 16,
     }
 });
