@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     },
     listElement_details: {
         marginLeft: 12,
-        paddingVertical:13,
+        paddingVertical: 13,
         flex: 1,
         display: "flex",
         justifyContent: "space-between"
