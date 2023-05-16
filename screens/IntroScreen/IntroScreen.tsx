@@ -65,13 +65,18 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ navigation }) => {
             </View>
             <View style={styles.intro_footer}>
                 <TouchableOpacity onPress={() => navigation.navigate("Главная")}>
-                    <Text>Пропустить</Text>
+                    <Text style={styles.intro_footer_skip}>Пропуск</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity onPress={() => { 
-                    if (scroller.current) {
-                        scroller.current.scrollTo({ x: width * (sliderState.currentPage + 1) });
+                    if (sliderState.currentPage === 2) {
+                        navigation.navigate("Главная");
+                    } else {
+                        if (scroller.current) {
+                            scroller.current.scrollTo({ x: width * (sliderState.currentPage + 1) });
+                        }
                     }
+                    
                 }}>
                     <Image style={styles.intro_footer_buttonForward} source={require("../../assets/img/btnForward.png")} />
                 </TouchableOpacity>
@@ -120,13 +125,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#737373',
         marginLeft: 10,
     },
-    // paginationDot_active: {
-    //     height: 12,
-    //     width: 12,
-    //     borderRadius: 6,
-    //     backgroundColor: '#FF5D9D',
-    //     marginLeft: 10,
-    // },
     intro_footer: {
         zIndex: 1,
         paddingHorizontal: 16,
@@ -135,6 +133,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+    },
+    intro_footer_skip: {
+        color: "#737373",
+        fontSize: 18,
     },
     intro_footer_buttonForward: {
         width: 48,
