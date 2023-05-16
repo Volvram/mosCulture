@@ -6,6 +6,7 @@ import NewsScreen from '../../screens/NewsScreen/NewsScreen';
 import Menu from '../Menu/Menu';
 import NewsPostScreen from '../../screens/NewsPostScreen/NewsPostScreen';
 import IntroScreen from '../../screens/IntroScreen/IntroScreen';
+import AccountScreen from '../../screens/AccountScreen/AccountScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -30,6 +31,7 @@ export default function Navigation() {
       >
         <Drawer.Screen name="Интро" component={IntroScreen} options={{headerShown: false}} />
         <Drawer.Screen name="Главная" component={MainScreen} options={{headerShown: false}} />
+        <Drawer.Screen name="Аккаунт" component={AccountScreen} options={{headerShown: false}} />
         <Drawer.Screen name="Новости" component={NewsScreen} options={{headerShown: false}} />
         <Drawer.Screen name="Новость" component={NewsPostScreen} options={{headerShown: false}} />
       </Drawer.Navigator>
