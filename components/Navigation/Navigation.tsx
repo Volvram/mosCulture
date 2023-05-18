@@ -9,6 +9,7 @@ import IntroScreen from '../../screens/IntroScreen/IntroScreen';
 import AccountScreen from '../../screens/AccountScreen/AccountScreen';
 import SignInScreen from '../../screens/SignInScreen/SignInScreen';
 import SignUpScreen from '../../screens/SignUpScreen/SignUpScreen';
+import SchoolScreen from '../../screens/SchoolScreen/SchoolScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -38,6 +39,7 @@ export default function Navigation() {
         <Drawer.Screen name="Аккаунт" component={AccountScreen} options={{headerShown: false}} />
         <Drawer.Screen name="Новости" component={NewsScreen} options={{headerShown: false}} />
         <Drawer.Screen name="Новость" component={NewsPostScreen} options={{headerShown: false}} />
+        <Drawer.Screen name="Школы" component={SchoolScreen} options={{headerShown: false}} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

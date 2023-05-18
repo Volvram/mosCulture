@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity } from "react-nativ
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import { COLORS } from "../../config/colors";
 import React from "react";
+import { StatusBar } from "expo-status-bar";
 
 type SignUpScreenProps = {
     navigation: any,
@@ -55,6 +56,7 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            <StatusBar style="auto" />
         </View>
     );
 }

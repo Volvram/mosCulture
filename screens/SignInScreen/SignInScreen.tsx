@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import { COLORS } from "../../config/colors";
 import React from "react";
@@ -45,6 +46,7 @@ const SignInScreen: React.FC<SignInScreenProps> = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            <StatusBar style="auto" />
         </View>
     );
 }
