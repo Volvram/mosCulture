@@ -16,7 +16,12 @@ export const menuSections: menuSectionType[] = [
         id: "news",
         name: "Новости",
         image: require("../assets/img/newspaper.png")
-    }
+    },
+    {
+        id: "signIn",
+        name: "Войти",
+        image: require("../assets/img/gear.png")
+    },
 ];
 
 export type otherSectionType = {
