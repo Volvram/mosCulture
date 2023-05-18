@@ -3,31 +3,41 @@ import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import { COLORS } from "../../config/colors";
 import React from "react";
 
-type SignInScreenProps = {
+type SignUpScreenProps = {
     navigation: any,
 }
 
-const SignInScreen: React.FC<SignInScreenProps> = ({ navigation }) => {
+const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
+    const nameInput = React.useRef<any>(null);
     const emailInput = React.useRef<any>(null);
     const passwordInput = React.useRef<any>(null);
 
     return (
         <View style={styles.container}>
-            <ScreenHeader image={require("../../assets/img/btnBack.png")} title="Авторизация" onPress={() => {navigation.goBack()}} />
-            <View style={styles.signIn}>
+            <ScreenHeader image={require("../../assets/img/btnBack.png")} title="Регистрация" onPress={() => {navigation.goBack()}} />
+            <View style={styles.signUp}>
+            <TextInput
+                    ref = {nameInput}
+                    style={styles.signUp_input}
+                    onChangeText={() => {}}
+                    placeholder="Ваше имя"
+                />
                 <TextInput
                     ref = {emailInput}
-                    style={styles.signIn_input}
+                    style={styles.signUp_input}
                     onChangeText={() => {}}
                     placeholder="Электронная почта"
                 />
                 <TextInput
                     ref = {passwordInput}
-                    style={styles.signIn_input}
+                    style={styles.signUp_input}
                     onChangeText={() => {}}
                     placeholder="Пароль"
                 />
-                <TouchableOpacity style={styles.signIn_submit} onPress={() => {
+                <TouchableOpacity style={styles.signUp_submit} onPress={() => {
+                    if (nameInput.current) {
+                        console.log(nameInput.current.value);
+                    }
                     if (emailInput.current) {
                         console.log(emailInput.current.value);
                     }
@@ -36,12 +46,12 @@ const SignInScreen: React.FC<SignInScreenProps> = ({ navigation }) => {
                     }
                     
                 }}>
-                    <Text style={styles.signIn_submit_text}>Войти</Text>
+                    <Text style={styles.signUp_submit_text}>Зарегистрироваться</Text>
                 </TouchableOpacity>
-                <View style={styles.signIn_redirect}>
-                    <Text>Нет аккаунта? </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate("Зарегистрироваться")}>
-                        <Text style={styles.signIn_redirect_signUp}>Зарегистрироваться</Text>
+                <View style={styles.signUp_redirect}>
+                    <Text>Уже есть аккаунт? </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("Войти")}>
+                        <Text style={styles.signUp_redirect_signIn}>Войти</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -49,7 +59,7 @@ const SignInScreen: React.FC<SignInScreenProps> = ({ navigation }) => {
     );
 }
 
-export default SignInScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
     container: {
@@ -57,37 +67,37 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: COLORS.white
     },
-    signIn: {
+    signUp: {
         paddingHorizontal: 16,
         width: '100%',
         alignItems: "center",
 
     },
-    signIn_input: {
+    signUp_input: {
         marginVertical: 10,
         width: "100%",
         height: 40,
         borderWidth: 1,
         padding: 10,
     },
-    signIn_submit: {
+    signUp_submit: {
         marginTop: 30,
         paddingVertical: 12,
         paddingHorizontal: 32,
-        maxWidth: 115,
+        maxWidth: 240,
         backgroundColor: "#18181B",
         borderRadius: 16,
     },
-    signIn_submit_text: {
+    signUp_submit_text: {
         color: COLORS.white,
         textAlign: "center",
     },
-    signIn_redirect: {
+    signUp_redirect: {
         marginTop: 32,
         display: "flex",
         flexDirection: "row",
     },
-    signIn_redirect_signUp : {
+    signUp_redirect_signIn : {
         color: "#FF5D9D"
     }
 })

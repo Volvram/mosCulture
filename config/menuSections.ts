@@ -22,6 +22,11 @@ export const menuSections: menuSectionType[] = [
         name: "Войти",
         image: require("../assets/img/gear.png")
     },
+    {
+        id: "signUp",
+        name: "Зарегистрироваться",
+        image: require("../assets/img/gear.png")
+    },
 ];
 
 export type otherSectionType = {
