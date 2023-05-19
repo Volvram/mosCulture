@@ -64,13 +64,13 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ navigation }) => {
                 })}
             </View>
             <View style={styles.intro_footer}>
-                <TouchableOpacity onPress={() => navigation.navigate("Главная")}>
+                <TouchableOpacity onPress={() => navigation.navigate("Приложение")}>
                     <Text style={styles.intro_footer_skip}>Пропуск</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity onPress={() => { 
                     if (sliderState.currentPage === 2) {
-                        navigation.navigate("Главная");
+                        navigation.navigate("Приложение");
                     } else {
                         if (scroller.current) {
                             scroller.current.scrollTo({ x: width * (sliderState.currentPage + 1) });

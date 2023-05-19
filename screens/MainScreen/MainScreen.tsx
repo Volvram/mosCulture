@@ -15,7 +15,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <ScreenHeader image={require("../../assets/img/btnNav.png")} title="Главная" onPress={() => {navigation.openDrawer()}} />
+            <ScreenHeader title="Главная" />
             <View style={styles.main}>
                 <DailyFact />
                 <Popular navigation={navigation} />

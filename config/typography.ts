@@ -2,45 +2,45 @@ import { StyleSheet } from "react-native";
 
 export const TYPOGRAPHY = StyleSheet.create({
     h1: {
-        // fontFamily: 'SF Pro Display',
-        fontStyle: 'normal',
-        fontWeight: '700',
-        fontSize: 40,
-        lineHeight: 48,
+        // fontFamily: 'DeeDee',
+        fontStyle: "normal",
+        fontWeight: "700",
+        fontSize: 32,
+        lineHeight: 36,
     },
     h2: {
-        // fontFamily: 'SF Pro Display',
-        fontStyle: 'normal',
-        fontWeight: '700',
+        // fontFamily: 'DeeDee',
+        fontStyle: "normal",
+        fontWeight: "700",
         fontSize: 24,
-        lineHeight: 29,
+        lineHeight: 30,
     },
     h3: {
-        // fontFamily: 'SF Pro Display',
+        // fontFamily: 'DeeDee',
         fontStyle: 'normal',
         fontWeight: '700',
-        fontSize: 20,
-        lineHeight: 24,
+        fontSize: 18,
+        lineHeight: 22,
     },
     h4: {
-        // fontFamily: 'SF Pro Display',
+        // fontFamily: 'DeeDee',
         fontStyle: 'normal',
         fontWeight: '400',
-        fontSize: 20,
-        lineHeight: 24,
+        fontSize: 18,
+        lineHeight: 23,
     },
-    p: {
-        // fontFamily: 'SF Pro Display',
+    p1: {
+        // fontFamily: 'DeeDee',
         fontStyle: 'normal',
         fontWeight: '400',
         fontSize: 16,
         lineHeight: 24,
     },
-    small: {
-        // fontFamily: 'SF Pro Display',
+    p2: {
+        // fontFamily: 'DeeDee',
         fontStyle: 'normal',
-        fontWeight: '300',
-        fontSize: 16,
-        lineHeight: 19,
+        fontWeight: '400',
+        fontSize: 12,
+        lineHeight: 18,
     }
 });

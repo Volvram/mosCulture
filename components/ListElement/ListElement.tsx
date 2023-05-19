@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     listElement_image_replaced: {
         height: 128,
         width: 128,
-        backgroundColor: COLORS.gray400,
+        backgroundColor: COLORS.lightGray,
         borderRadius: 16,
     },
     listElement_details: {
@@ -53,15 +53,15 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     listElement_details_tagName: {
-        ...TYPOGRAPHY.small,
-        color: COLORS.gray400
+        ...TYPOGRAPHY.p2,
+        color: COLORS.gray
     },
     listElement_details_title: {
         ...TYPOGRAPHY.h3,
-        color: COLORS.gray900,
+        color: COLORS.black,
     },
     listElement_details_date: {
-        ...TYPOGRAPHY.small,
-        color: COLORS.gray400
+        ...TYPOGRAPHY.p2,
+        color: COLORS.gray
     }
 });

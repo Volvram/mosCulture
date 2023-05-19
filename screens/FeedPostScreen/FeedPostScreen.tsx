@@ -3,12 +3,12 @@ import { COLORS } from "../../config/colors";
 import NewsPostContent from "./components/NewsPostContent/NewsPostContent";
 import NewsPostHeader from "./components/NewsPostHeader/NewsPostHeader";
 
-type NewsPostScreenProps = {
+type FeedPostScreenProps = {
     route: any,
     navigation: any,
 }
 
-const NewsPostScreen: React.FC<NewsPostScreenProps> = ({route, navigation}) => {
+const FeedPostScreen: React.FC<FeedPostScreenProps> = ({route, navigation}) => {
     const { postId, post } = route.params;
 
     return (
@@ -21,7 +21,7 @@ const NewsPostScreen: React.FC<NewsPostScreenProps> = ({route, navigation}) => {
     )
 }
 
-export default NewsPostScreen;
+export default FeedPostScreen;
 
 const styles = StyleSheet.create({
     container: {

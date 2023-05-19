@@ -4,22 +4,22 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-nati
 import { COLORS } from "../../config/colors";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import { observer } from "mobx-react-lite";
-import NewsScreenStore from "../../store/NewsScreenStore";
+import FeedScreenStore from "../../store/FeedScreenStore";
 import { useLocalStore } from "../../utils/useLocalStore";
 import { TYPOGRAPHY } from "../../config/typography";
 import NewsList from "./components/NewsList/NewsList";
 
-type MainScreenProps = {
+type FeedScreenProps = {
     navigation: any,
 }
 
-const NewsScreen: React.FC<MainScreenProps> = ({ navigation }) => {
+const FeedScreen: React.FC<FeedScreenProps> = ({ navigation }) => {
 
-    const newsScreenStore = useLocalStore(() => new NewsScreenStore());
+    const newsScreenStore = useLocalStore(() => new FeedScreenStore());
 
     return (
         <View style={styles.container}>
-            <ScreenHeader image={require("../../assets/img/btnBack.png")} title="Новости" onPress={() => {navigation.goBack()}} />
+            <ScreenHeader image={require("../../assets/img/btnBack.png")} title="Лента" onPress={() => {navigation.goBack()}} />
             <View style={styles.news}>
                 <View style={{height: 35, width: "100%"}}>
                     <ScrollView style={styles.news_tags} 
@@ -49,7 +49,7 @@ const NewsScreen: React.FC<MainScreenProps> = ({ navigation }) => {
         </View>
     );
 }
-export default observer(NewsScreen);
+export default observer(FeedScreen);
 
 const styles = StyleSheet.create({
     container: {
@@ -72,22 +72,22 @@ const styles = StyleSheet.create({
         marginHorizontal: 8,
         paddingVertical: 8,
         paddingHorizontal: 12,
-        backgroundColor: COLORS.gray100,
+        backgroundColor: COLORS.lightGray,
         borderRadius: 16,
     },
     news_tags_tag_text: {
-        ...TYPOGRAPHY.small,
-        color: COLORS.gray400
+        ...TYPOGRAPHY.p2,
+        color: COLORS.gray
     },
     news_tags_tag__active: {
         marginHorizontal: 8,
         paddingVertical: 8,
         paddingHorizontal: 12,
-        backgroundColor: COLORS.gray900,
+        backgroundColor: COLORS.black,
         borderRadius: 16,
     },
     news_tags_tag__active_text: {
-        ...TYPOGRAPHY.small,
+        ...TYPOGRAPHY.p2,
         color: COLORS.white
     },
 });

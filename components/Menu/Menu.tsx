@@ -1,8 +1,9 @@
 import React from "react";
-import { StyleSheet, ScrollView, View, Text, Image} from 'react-native';
+import { StyleSheet, View, Text, Image} from 'react-native';
+import { LinearGradient } from "expo-linear-gradient";
 import { useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { menuSections, otherSections } from '../../config/menuSections';
+import { menuSections} from '../../config/menuSections';
 import { TYPOGRAPHY } from "../../config/typography";
 import { COLORS } from "../../config/colors";
 
@@ -12,147 +13,73 @@ type MenuProps = {
 
 const Menu: React.FC<MenuProps> = ({ navigation }) => {
     const dimensions = useWindowDimensions();
+    const [selectedSection, setSelectedSection] = React.useState<string>("main");
 
   return (
-    <ScrollView style={styles.menu}>
-        <View style={styles.menu_header} >
-            {dimensions.width <= 768 && 
-                <TouchableOpacity 
-                    onPress={() => navigation.closeDrawer()} >
-                    <Image source={require("../../assets/img/btnClose.png")} style={styles.menu_header_image} />
-                </TouchableOpacity>
-            }
-            <Text style={styles.menu_header_title}>Название</Text>
-        </View>
-        <TouchableOpacity style={styles.menu_account_details}
-            onPress={() => navigation.navigate("Аккаунт")}>
-            <View style={styles.menu_account_details_avatar}></View>
-            {/* <Image style={styles.menu_account_details_avatar} source={} /> */}
-            <Text style={styles.menu_account_details_username}>Username</Text>
-        </TouchableOpacity>
+    <View style={styles.menu}>
+        
+        <LinearGradient
+            colors={[
+                '#ededed', '#e2e2e2', '#c6c6c6'
+            ]}
+             >
+                <View style={{ height: 3, width: "100%"}} />
+            </LinearGradient>
         <View style={styles.menu_details}>
-            <Text style={styles.menu_details_title}>Меню</Text>
             {menuSections.map(section => {
                 return (
-                    <TouchableOpacity key={section.id} style={styles.menu_details_button} 
+                    <TouchableOpacity key={section.id} 
+                    style={styles.menu_details_button} 
                         onPress={() => {
-                            navigation.navigate(section.name)
+                            setSelectedSection(section.id);
+                            navigation.navigate(section.name);
                         }}>
-                        {section.image && 
-                            <Image source={section.image} 
+                        {(section.image && section.imageActive) && 
+                            <Image source={section.id !== selectedSection ? section.image : section.imageActive} 
                                 style={styles.menu_details_button_image} 
                                 resizeMode="contain"/>
                         }
-                        <Text style={styles.menu_details_button_text}>{section.name}</Text>
+                        <Text style={[styles.menu_details_button_text, 
+                            section.id === selectedSection && styles.menu_details_button_text__active]}>{section.name}</Text>
                     </TouchableOpacity>
                 )
             })
             }
         </View>
-        <View style={styles.menu_other}>
-            <Text style={styles.menu_other_title}>Прочее</Text>
-                {otherSections.map(section => {
-                    return (
-                        <TouchableOpacity key={section.id} style={styles.menu_other_button} 
-                            onPress={() => {}}>
-                            {section.image && 
-                                <Image source={section.image} 
-                                    style={styles.menu_other_button_image} 
-                                    resizeMode="contain"/>
-                            }
-                            <Text style={styles.menu_other_button_text}>{section.name}</Text>
-                        </TouchableOpacity>
-                    )
-                })
-                }
-        </View>
-    </ScrollView>
+    </View>
   );
 }
 export default Menu;
 
 const styles = StyleSheet.create({
-    menu: {},
-    menu_header: {
-        marginTop: 79,
-        paddingLeft: 16,
-        display: "flex",
-        flexDirection: "row",
-    },
-    menu_header_image: {
-        width: 50,
-        height: 50
-    },
-    menu_header_title: {
-        marginLeft: 33,
-        ...TYPOGRAPHY.h1
-    },
-    menu_account_details: {
-        marginTop: 64,
-        paddingHorizontal: 16,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-    },
-    menu_account_details_avatar: {
-        width: 64,
-        height: 64,
-        backgroundColor: COLORS.gray400,
-        borderRadius: 32,
-    },
-    menu_account_details_username: {
-        ...TYPOGRAPHY.h4,
-        color: COLORS.gray900,
-        marginLeft: 16,
+    menu: {
+        height: 103,
+        backgroundColor: COLORS.white,
     },
     menu_details: {
-        marginTop: 36,
+        paddingTop: 16,
         paddingHorizontal: 16,
-    },
-    menu_details_title: {
-        paddingBottom: 19,
-        color: COLORS.gray400,
-        ...TYPOGRAPHY.small
+        borderTopLeftRadius: 24,
+        borderTopRightRadius: 24,
+
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        zIndex: 1,
     },
     menu_details_button: {
-        paddingBottom: 24,
-        paddingLeft: 18,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
     },
     menu_details_button_image: {
-        width: 20,
-        height: 20,
+        width: 24,
+        height: 24,
     },
     menu_details_button_text: {
-        marginLeft: 7,
-        color: COLORS.gray900,
-        ...TYPOGRAPHY.h4,
+        ...TYPOGRAPHY.p2,
+        color: COLORS.gray,
     },
-    menu_other: {
-        marginTop: 36,
-        paddingHorizontal: 16,
-    },
-    menu_other_title: {
-        paddingBottom: 19,
-        color: COLORS.gray400,
-        ...TYPOGRAPHY.small
-    },
-    menu_other_button: {
-        paddingBottom: 24,
-        paddingLeft: 18,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center"
-    },
-    menu_other_button_image: {
-        width: 20,
-        height: 20,
-    },
-    menu_other_button_text: {
-        marginLeft: 7,
-        color: COLORS.gray900,
-        ...TYPOGRAPHY.h4,
-    },
+    menu_details_button_text__active: {
+        ...TYPOGRAPHY.p2,
+        color: COLORS.blueAction,
+    }
 })

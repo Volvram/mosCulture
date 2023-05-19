@@ -3,57 +3,39 @@ import { ImageSourcePropType } from "react-native/types";
 export type menuSectionType = {
     id: string;
     name: string;
-    image?: ImageSourcePropType;
+    image: ImageSourcePropType;
+    imageActive: ImageSourcePropType;
 }
 
 export const menuSections: menuSectionType[] = [
     {
         id: "main",
         name: "Главная",
-        image: require("../assets/img/house.png")
+        image: require("../assets/img/house.png"),
+        imageActive: require("../assets/img/houseActive.png"),
     },
     {
-        id: "news",
-        name: "Новости",
-        image: require("../assets/img/newspaper.png")
+        id: "feed",
+        name: "Лента",
+        image: require("../assets/img/compass.png"),
+        imageActive: require("../assets/img/compassActive.png")
     },
     {
-        id: "signIn",
-        name: "Войти",
-        image: require("../assets/img/gear.png")
+        id: "entertainments",
+        name: "Развлечения",
+        image: require("../assets/img/controller.png"),
+        imageActive: require("../assets/img/controllerActive.png")
     },
     {
-        id: "signUp",
-        name: "Зарегистрироваться",
-        image: require("../assets/img/gear.png")
+        id: "courses",
+        name: "Курсы",
+        image: require("../assets/img/book.png"),
+        imageActive: require("../assets/img/bookActive.png"),
     },
     {
         id: "schools",
         name: "Школы",
-        image: require("../assets/img/gear.png")
+        image: require("../assets/img/mortarboard.png"),
+        imageActive: require("../assets/img/mortarboardActive.png")
     },
 ];
-
-export type otherSectionType = {
-    id: string;
-    name: string;
-    image?: ImageSourcePropType;
-}
-
-export const otherSections: otherSectionType[] = [
-    {
-        id: "options",
-        name: "Настройки",
-        image: require("../assets/img/gear.png")
-    },
-    {
-        id: "notices",
-        name: "Уведомления",
-        image: require("../assets/img/bell.png")
-    },
-    {
-        id: "help",
-        name: "Помощь",
-        image: require("../assets/img/questionCircle.png")
-    },
-]

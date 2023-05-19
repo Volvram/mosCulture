@@ -1,17 +1,21 @@
-import { useWindowDimensions } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainScreen from '../../screens/MainScreen/MainScreen';
-import NewsScreen from '../../screens/NewsScreen/NewsScreen';
+import FeedScreen from '../../screens/FeedScreen/FeedScreen';
 import Menu from '../Menu/Menu';
-import NewsPostScreen from '../../screens/NewsPostScreen/NewsPostScreen';
+import FeedPostScreen from '../../screens/FeedPostScreen/FeedPostScreen';
 import IntroScreen from '../../screens/IntroScreen/IntroScreen';
 import AccountScreen from '../../screens/AccountScreen/AccountScreen';
 import SignInScreen from '../../screens/SignInScreen/SignInScreen';
 import SignUpScreen from '../../screens/SignUpScreen/SignUpScreen';
 import SchoolScreen from '../../screens/SchoolScreen/SchoolScreen';
+import EntertainmentScreen from '../../screens/EntertainmentsScreen/EntertainmentsScreen';
+import CoursesScreen from '../../screens/CoursesScreen/CoursesScreen';
 
-const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
   Main: undefined,
@@ -23,24 +27,32 @@ export default function Navigation() {
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Интро" backBehavior="history"
-        drawerContent={(props) => <Menu {...props} />}
-        screenOptions={{
-          drawerType: dimensions.width >= 768 ? 'permanent' : 'front',
-          drawerStyle: {
-            width: dimensions.width >= 768 ? '20%' : '85%'
-          }
-        }}
-      >
-        <Drawer.Screen name="Интро" component={IntroScreen} options={{headerShown: false}} />
-        <Drawer.Screen name="Главная" component={MainScreen} options={{headerShown: false}} />
-        <Drawer.Screen name="Войти" component={SignInScreen} options={{headerShown: false}} />
-        <Drawer.Screen name="Зарегистрироваться" component={SignUpScreen} options={{headerShown: false}} />
-        <Drawer.Screen name="Аккаунт" component={AccountScreen} options={{headerShown: false}} />
-        <Drawer.Screen name="Новости" component={NewsScreen} options={{headerShown: false}} />
-        <Drawer.Screen name="Новость" component={NewsPostScreen} options={{headerShown: false}} />
-        <Drawer.Screen name="Школы" component={SchoolScreen} options={{headerShown: false}} />
-      </Drawer.Navigator>
+        <Stack.Navigator initialRouteName="Интро">
+          <Stack.Screen name="Интро" component={IntroScreen} options={{headerShown: false}} />
+          <Stack.Screen name="Приложение" component={TabBar} options={{headerShown: false}} />
+
+          <Stack.Screen name="Войти" component={SignInScreen} options={{headerShown: false}} />
+          <Stack.Screen name="Зарегистрироваться" component={SignUpScreen} options={{headerShown: false}} />
+          <Stack.Screen name="Аккаунт" component={AccountScreen} options={{headerShown: false}} />
+          
+          <Stack.Screen name="Лента" component={FeedScreen} options={{headerShown: false}} />
+          <Stack.Screen name="Пост" component={FeedPostScreen} options={{headerShown: false}} />
+          <Stack.Screen name="Развлечения" component={EntertainmentScreen} options={{headerShown: false}} />
+          <Stack.Screen name="Курсы" component={CoursesScreen} options={{headerShown: false}} />
+          <Stack.Screen name="Школы" component={SchoolScreen} options={{headerShown: false}} />
+      </Stack.Navigator>
     </NavigationContainer>
+  );
+}
+
+export const TabBar = () => {
+  return(
+    <Tab.Navigator initialRouteName="Главная" backBehavior="history" tabBar={(props) => <Menu {...props} />} >
+      <Tab.Screen name="Главная" component={MainScreen} options={{headerShown: false, tabBarStyle: {paddingBottom: 2}}}/>
+      <Tab.Screen name="Лента" component={FeedScreen} options={{headerShown: false}} />
+      <Tab.Screen name="Развлечения" component={EntertainmentScreen} options={{headerShown: false}} />
+      <Tab.Screen name="Курсы" component={CoursesScreen} options={{headerShown: false}} />
+      <Tab.Screen name="Школы" component={SchoolScreen} options={{headerShown: false}} />
+    </Tab.Navigator>
   );
 }

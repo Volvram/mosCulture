@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 6,
         height: 192,
         width: 290,
-        backgroundColor: COLORS.gray400,
+        backgroundColor: COLORS.gray,
         borderRadius: 16,
     },
     card_gradient: {
@@ -80,12 +80,12 @@ const styles = StyleSheet.create({
         padding: 16,
     },
     card_details_date: {
-        ...TYPOGRAPHY.small,
+        ...TYPOGRAPHY.p2,
         color: COLORS.white,
     },
     card_details_tagName: {
         marginTop: 66,
-        ...TYPOGRAPHY.small,
+        ...TYPOGRAPHY.p2,
         color: COLORS.white,
     },
     card_details_title: {

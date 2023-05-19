@@ -1,14 +1,14 @@
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import ListElement from "../../../../components/ListElement/ListElement";
 
-type NewsListProps = {
+type FeedListProps = {
     activeTags?: string[],
     navigation: any,
 }
 
-const NewsList: React.FC<NewsListProps> = ({activeTags, navigation}) => {
+const FeedList: React.FC<FeedListProps> = ({activeTags, navigation}) => {
     return (
-        <ScrollView style={styles.newsList}
+        <ScrollView style={styles.feedList}
             contentContainerStyle={{
                 flexGrow: 1,
             }}
@@ -24,17 +24,17 @@ const NewsList: React.FC<NewsListProps> = ({activeTags, navigation}) => {
             .map(item => {
                 return (
                     <ListElement key={item.id} title={item.title} date={item.date} tagName={item.tagName} 
-                        onPress={() => navigation.navigate("Новость", {postId: item.id, post: item})} />
+                        onPress={() => navigation.navigate("Пост", {postId: item.id, post: item})} />
                 )
             })}
         </ScrollView>
     );
 }
 
-export default NewsList;
+export default FeedList;
 
 const styles = StyleSheet.create({
-    newsList: {
+    feedList: {
         marginTop: 24,
         width: "100%",
     }

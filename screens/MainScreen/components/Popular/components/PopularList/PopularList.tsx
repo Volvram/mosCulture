@@ -24,7 +24,7 @@ const PopularList: React.FC<PopularListProps> = ({navigation}) => {
             .map(item => {
                 return (
                     <Card key={item.id} title={item.title} date={item.date} tagName={item.tagName}
-                        onPress={() => navigation.navigate("Новость", {postId: item.id, post: item})} />
+                        onPress={() => navigation.navigate("Пост", {postId: item.id, post: item})} />
                 )
             })}
         </ScrollView>

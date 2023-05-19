@@ -1,8 +1,15 @@
 export const COLORS = {
-    blue: "#3B82F6",
     white: "#FFFFFF",
-    gray100: "#F4F4F5",
-    gray400: "#A1A1AA",
-    gray900: "#18181B",
-    peach: "#FEF3C7"
+    black: "#18181B",
+    gray: "#A1A1AA",
+    lightGray: "#F4F4F5",
+    salad: "#AFCC46",
+    yellow: "#F8F5C7",
+    darkPink: "#C57290",
+    pink: "#E3AEC3",
+    darkPurple: "#9373AC",
+    purple: "#D2C5E2",
+    darkBlue: "#394562",
+    blue: "#B1CFDF",
+    blueAction: "#3B82F6",
 }
