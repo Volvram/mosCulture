@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, ImageBackground, ImageSourcePropType, Touchable
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
+import React from "react";
 
 type CardProps = {
     title: string,
@@ -15,7 +16,12 @@ const Card: React.FC<CardProps> = ({ title, date, tagName = "", image = null, on
     return (
         <TouchableOpacity style={styles.card} onPress={onPress}>
             {image  
-            ?  <ImageBackground source={image}> 
+            ?  <ImageBackground 
+                    style={styles.card_background}
+                    imageStyle={{ borderRadius: 16}}
+                    source={image} 
+                    resizeMode="cover" 
+                    resizeMethod="resize"> 
                     <LinearGradient
                         colors={[
                         'rgba(24, 24, 27, 0)',
@@ -70,6 +76,10 @@ const styles = StyleSheet.create({
         width: 290,
         backgroundColor: COLORS.gray,
         borderRadius: 16,
+    },
+    card_background: {
+        width: "100%",
+        height: "100%",
     },
     card_gradient: {
         flex: 1,

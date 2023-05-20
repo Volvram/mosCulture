@@ -9,10 +9,10 @@ export type menuSectionType = {
 
 export const menuSections: menuSectionType[] = [
     {
-        id: "main",
-        name: "Главная",
-        image: require("../assets/img/house.png"),
-        imageActive: require("../assets/img/houseActive.png"),
+        id: "feed",
+        name: "Лента",
+        image: require("../assets/img/compass.png"),
+        imageActive: require("../assets/img/compassActive.png"),
     },
     {
         id: "entertainments",

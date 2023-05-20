@@ -54,7 +54,6 @@ export default ScreenHeader;
 const styles = StyleSheet.create({
     screenHeader: {
         marginTop: 47,
-        marginBottom: 16,
         height: 50,
 
         justifyContent: "center",
@@ -80,8 +79,8 @@ const styles = StyleSheet.create({
 
     },
     screenHeader_button_image: {
-        width: 50,
-        height: 50
+        width: 20,
+        height: 20
     },
     screenHeader_title: {
         marginLeft: 52,
