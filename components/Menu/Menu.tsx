@@ -1,8 +1,7 @@
 import React from "react";
-import { StyleSheet, View, Text, Image} from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import { useWindowDimensions } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { menuSections} from '../../config/menuSections';
 import { TYPOGRAPHY } from "../../config/typography";
 import { COLORS } from "../../config/colors";
@@ -53,11 +52,11 @@ export default Menu;
 
 const styles = StyleSheet.create({
     menu: {
-        height: 103,
         backgroundColor: COLORS.white,
     },
     menu_details: {
         paddingTop: 16,
+        paddingBottom: 38,
         paddingHorizontal: 16,
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,

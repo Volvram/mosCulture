@@ -19,7 +19,7 @@ const FeedScreen: React.FC<FeedScreenProps> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <ScreenHeader image={require("../../assets/img/btnBack.png")} title="Лента" onPress={() => {navigation.goBack()}} />
+            <ScreenHeader />
             <View style={styles.news}>
                 <View style={{height: 35, width: "100%"}}>
                     <ScrollView style={styles.news_tags} 

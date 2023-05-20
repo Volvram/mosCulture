@@ -3,14 +3,14 @@ import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
 
 type ListElementProps = {
-    title: string,
-    date: string,
-    tagName?: string,
+    top?: string,
+    middle?: string,
+    bottom?: string,
     image?: ImageSourcePropType | null,
     onPress?: () => void,
 }
 
-const ListElement: React.FC<ListElementProps> = ({ title, date, tagName="", image=null, onPress}) => {
+const ListElement: React.FC<ListElementProps> = ({ top=" ", middle=" ", bottom=" ", image=null, onPress}) => {
     return (
         <TouchableOpacity style={styles.listElement} onPress={onPress}>
             {image  
@@ -18,9 +18,9 @@ const ListElement: React.FC<ListElementProps> = ({ title, date, tagName="", imag
                : <View style={styles.listElement_image_replaced}></View> }
 
             <View style={styles.listElement_details}>
-                <Text style={styles.listElement_details_tagName}>{tagName}</Text>
-                <Text style={styles.listElement_details_title}>{title}</Text>
-                <Text style={styles.listElement_details_date}>{date}</Text>
+                <Text style={styles.listElement_details_tagName}>{top}</Text>
+                <Text style={styles.listElement_details_title}>{middle}</Text>
+                <Text style={styles.listElement_details_date}>{bottom}</Text>
             </View>
         </TouchableOpacity>
     )

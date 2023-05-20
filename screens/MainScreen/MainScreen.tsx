@@ -15,7 +15,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <ScreenHeader title="Главная" />
+            <ScreenHeader />
             <View style={styles.main}>
                 <DailyFact />
                 <Popular navigation={navigation} />

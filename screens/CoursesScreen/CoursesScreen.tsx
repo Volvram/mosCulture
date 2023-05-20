@@ -12,7 +12,7 @@ const CoursesScreen: React.FC<CoursesScreenProps> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <ScreenHeader image={require("../../assets/img/btnBack.png")} title="Курсы" onPress={() => {navigation.goBack()}} />
+            <ScreenHeader />
             <View style={styles.courses}>
             </View>
             <StatusBar style="auto" />

@@ -23,7 +23,7 @@ const FeedList: React.FC<FeedListProps> = ({activeTags, navigation}) => {
             .filter(item => activeTags?.find(el => el === "Все") ? item : activeTags?.find(el => el === item.tagName))
             .map(item => {
                 return (
-                    <ListElement key={item.id} title={item.title} date={item.date} tagName={item.tagName} 
+                    <ListElement key={item.id} top={item.date} middle={item.title} bottom={item.tagName} 
                         onPress={() => navigation.navigate("Пост", {postId: item.id, post: item})} />
                 )
             })}

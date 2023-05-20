@@ -7,7 +7,7 @@ type MenuHeaderType = {
     onPress?: () => void;
 }
 
-const ScreenHeader: React.FC<MenuHeaderType> = ({image = null, title = "", onPress}) => {
+const ScreenHeader: React.FC<MenuHeaderType> = ({image = null, title = "Название.Проекта", onPress}) => {
     const dimensions = useWindowDimensions();
 
     return (
@@ -26,8 +26,8 @@ export default ScreenHeader;
 
 const styles = StyleSheet.create({
     screenHeader: {
-        marginTop: 79,
-        marginBottom: 50,
+        marginTop: 47,
+        marginBottom: 16,
         height: 50,
         display: "flex",
         flexDirection: "row",
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         height: 50
     },
     screenHeader_title: {
-        marginLeft: 33,
-        ...TYPOGRAPHY.h1
+        marginLeft: 63,
+        ...TYPOGRAPHY.h4
     }
 })

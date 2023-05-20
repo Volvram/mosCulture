@@ -13,7 +13,7 @@ type AccountScreenProps = {
 const AccountScreen: React.FC<AccountScreenProps> = ({navigation}) => {
     return (
         <View style={styles.container}>
-            <ScreenHeader image={require("../../assets/img/btnBack.png")} title="Аккаунт" onPress={() => {navigation.goBack()}} />
+            <ScreenHeader />
             <View style={styles.account}>
                 <View style={styles.account_wrapper}>
                     <View style={styles.account_avatar}></View>
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     account_avatar: {
         width: 128,
         height: 128,
-        backgroundColor: COLORS.gray400,
+        backgroundColor: COLORS.gray,
         borderRadius: 64,
     },
     account_details: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     },
     account_details_username: {
         ...TYPOGRAPHY.h3,
-        color: COLORS.gray900,
+        color: COLORS.black,
     },
     account_details_date: {
         display: 'flex',
@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
         height: 16,
     },
     account_details_date_text: {
-        ...TYPOGRAPHY.small,
+        ...TYPOGRAPHY.p2,
         marginLeft: 8,
-        color: COLORS.gray400
+        color: COLORS.gray
     },
     account_details_email: {
         display: 'flex',
@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
         height: 16,
     },
     account_details_email_text: {
-        ...TYPOGRAPHY.small,
+        ...TYPOGRAPHY.p2,
         marginLeft: 8,
-        color: COLORS.gray400
+        color: COLORS.gray
     },
 })
