@@ -20,13 +20,13 @@ const styles = StyleSheet.create({
     },
     statistics_title: {
         ...TYPOGRAPHY.h2,
-        color: COLORS.gray900,
+        color: COLORS.black,
     },
     statistics_wrapper: {
         marginTop: 16,
         width: "100%",
         height: 128,
-        backgroundColor: COLORS.gray100,
+        backgroundColor: COLORS.lightGray,
         borderRadius: 16,
     }
 });

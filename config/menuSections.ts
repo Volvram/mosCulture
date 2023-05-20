@@ -15,12 +15,6 @@ export const menuSections: menuSectionType[] = [
         imageActive: require("../assets/img/houseActive.png"),
     },
     {
-        id: "feed",
-        name: "Лента",
-        image: require("../assets/img/compass.png"),
-        imageActive: require("../assets/img/compassActive.png")
-    },
-    {
         id: "entertainments",
         name: "Развлечения",
         image: require("../assets/img/controller.png"),
@@ -37,5 +31,11 @@ export const menuSections: menuSectionType[] = [
         name: "Школы",
         image: require("../assets/img/mortarboard.png"),
         imageActive: require("../assets/img/mortarboardActive.png")
+    },
+    {
+        id: "profile",
+        name: "Профиль",
+        image: require("../assets/img/person.png"),
+        imageActive: require("../assets/img/personActive.png")
     },
 ];

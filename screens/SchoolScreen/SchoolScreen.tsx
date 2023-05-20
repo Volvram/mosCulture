@@ -17,7 +17,7 @@ const SchoolScreen: React.FC<SchoolScreenProps> =  ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <ScreenHeader />
+            <ScreenHeader searchVisible={true} filtersVisible={true}/>
             <View style={styles.schools}>
                 <View style={styles.schools_toggle}>
                     <TouchableOpacity onPress={() => {setSelectedButton("Список")}}
@@ -43,12 +43,12 @@ export default SchoolScreen;
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 16,
         width: "100%",
         height: "100%",
         backgroundColor: COLORS.white
     },
     schools: {
+        paddingHorizontal: 16,
         flex:1,
         backgroundColor: COLORS.white
     },
