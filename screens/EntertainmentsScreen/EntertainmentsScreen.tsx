@@ -2,18 +2,28 @@ import React from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { COLORS } from "../../config/colors";
-import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
+import EntertainmentHeader from "./components/EntertainmentsHeader/EntertainmentsHeader";
+import ToggleButton from "../../components/ToggleButton/ToggleButton";
+import Rating from "./components/Rating/Rating";
 
 type EntertainmentScreenProps = {
     navigation: any,
 }
 
 const EntertainmentScreen: React.FC<EntertainmentScreenProps> = ({ navigation }) => {
+    const [selected, setSelected] = React.useState<string>("Задания");
+
+    const handleChange = (value: string) => {
+        setSelected(value);
+    }
 
     return (
         <View style={styles.container}>
-            <ScreenHeader />
+            <EntertainmentHeader />
             <View style={styles.entertainment}>
+                <ToggleButton firstSelection="Задания" secondSelection="Рейтинг" onChange={handleChange} />
+                {selected === "Задания" && <View></View>}
+                {selected === "Рейтинг" && <Rating />}
             </View>
             <StatusBar style="auto" />
         </View>
@@ -28,6 +38,9 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white
     },
     entertainment: {
+        paddingHorizontal: 16,
+        width: '100%',
         height: '100%',
+        flex: 1,
     }
 });

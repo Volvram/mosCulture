@@ -12,7 +12,10 @@ const CoursesScreen: React.FC<CoursesScreenProps> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <ScreenHeader searchVisible={true} filtersVisible={true}/>
+            <ScreenHeader buttons={
+                [{image: require("../../assets/img/search.png"), onClick: () => {}}, 
+                {image: require("../../assets/img/sliders.png"), onClick: () => {}}]
+                } />
             <View style={styles.courses}>
             </View>
             <StatusBar style="auto" />

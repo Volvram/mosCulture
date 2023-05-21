@@ -57,7 +57,7 @@ export default observer(DailyWord);
 const styles = StyleSheet.create({
     dailyWord: {
         paddingTop: 36,
-        paddingBottom: 176,
+        paddingBottom: 58,
         paddingHorizontal: 16,
         backgroundColor: COLORS.lightGray,
         alignItems: "center"

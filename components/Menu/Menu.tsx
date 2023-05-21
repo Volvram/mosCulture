@@ -1,18 +1,17 @@
 import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
-import { useWindowDimensions } from 'react-native';
 import { menuSections} from '../../config/menuSections';
 import { TYPOGRAPHY } from "../../config/typography";
 import { COLORS } from "../../config/colors";
+import rootStore from "../../store/RootStore/instance";
+import { observer } from "mobx-react-lite";
 
 type MenuProps = {
     navigation: any;
 }
 
 const Menu: React.FC<MenuProps> = ({ navigation }) => {
-    const dimensions = useWindowDimensions();
-    const [selectedSection, setSelectedSection] = React.useState<string>("feed");
 
   return (
     <View style={styles.menu}>
@@ -30,16 +29,16 @@ const Menu: React.FC<MenuProps> = ({ navigation }) => {
                     <TouchableOpacity key={section.id} 
                     style={styles.menu_details_button} 
                         onPress={() => {
-                            setSelectedSection(section.id);
+                            rootStore.menu.setActiveSection(section.id);
                             navigation.navigate(section.name);
                         }}>
                         {(section.image && section.imageActive) && 
-                            <Image source={section.id !== selectedSection ? section.image : section.imageActive} 
+                            <Image source={section.id !== rootStore.menu.activeSection ? section.image : section.imageActive} 
                                 style={styles.menu_details_button_image} 
                                 resizeMode="contain"/>
                         }
                         <Text style={[styles.menu_details_button_text, 
-                            section.id === selectedSection && styles.menu_details_button_text__active]}>{section.name}</Text>
+                            section.id === rootStore.menu.activeSection && styles.menu_details_button_text__active]}>{section.name}</Text>
                     </TouchableOpacity>
                 )
             })
@@ -48,7 +47,7 @@ const Menu: React.FC<MenuProps> = ({ navigation }) => {
     </View>
   );
 }
-export default Menu;
+export default observer(Menu);
 
 const styles = StyleSheet.create({
     menu: {

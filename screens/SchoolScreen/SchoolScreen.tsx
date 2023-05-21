@@ -1,38 +1,34 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Text, Platform, TouchableOpacity } from "react-native";
 import Map from "./components/Map/Map";
-import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import React from "react";
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
 import SchoolList from "./components/SchoolList/SchoolList";
+import ToggleButton from "../../components/ToggleButton/ToggleButton";
+import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 
 type SchoolScreenProps = {
     navigation: any
 }
 
 const SchoolScreen: React.FC<SchoolScreenProps> =  ({ navigation }) => {
-    const [selectedButton, setSelectedButton] = React.useState<string>("Список");
+    const [selected, setSelected] = React.useState<string>("Список");
 
+    const handleChange = (value: string) => {
+        setSelected(value);
+    }
 
     return (
         <View style={styles.container}>
-            <ScreenHeader searchVisible={true} filtersVisible={true}/>
+            <ScreenHeader buttons={
+                [{image: require("../../assets/img/search.png"), onClick: () => {}}, 
+                {image: require("../../assets/img/sliders.png"), onClick: () => {}}]
+                } />
             <View style={styles.schools}>
-                <View style={styles.schools_toggle}>
-                    <TouchableOpacity onPress={() => {setSelectedButton("Список")}}
-                        style={[styles.schools_toggle_button, selectedButton === "Список" && styles.schools_toggle_button__active]} >
-                        <Text style={[styles.schools_toggle_button_text, 
-                            selectedButton === "Список" && styles.schools_toggle_button__active_text]}>Список</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.schools_toggle_button, 
-                        selectedButton === "Карта" && styles.schools_toggle_button__active]} onPress={() => {setSelectedButton("Карта")}}>
-                        <Text style={[styles.schools_toggle_button_text, 
-                            selectedButton === "Карта" && styles.schools_toggle_button__active_text]}>Карта</Text>
-                    </TouchableOpacity>
-                </View>
-                {selectedButton === "Список" && <SchoolList navigation={navigation}/>}
-                {Platform.OS !== "web" && selectedButton === "Карта" && <Map navigation={navigation} />}
+                <ToggleButton firstSelection="Список" secondSelection="Карта" onChange={handleChange} />
+                {selected === "Список" && <SchoolList navigation={navigation}/>}
+                {Platform.OS !== "web" && selected === "Карта" && <Map navigation={navigation} />}
             </View>
             <StatusBar style="auto" />
         </View>

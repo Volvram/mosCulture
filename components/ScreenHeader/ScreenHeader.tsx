@@ -1,22 +1,23 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity, useWindowDimensions, ImageSourcePropType } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity, ImageSourcePropType } from "react-native";
 import { TYPOGRAPHY } from "../../config/typography";
 import { COLORS } from "../../config/colors";
 
-type MenuHeaderType = {
+type headerButtonType = {
+    image: ImageSourcePropType,
+    onClick: () => void
+}
+
+type ScreenHeaderType = {
     image?: ImageSourcePropType | null;
     title?: string;
     onPress?: () => void;
-    searchVisible?: boolean;
-    filtersVisible?: boolean;
+    buttons?: headerButtonType[]
 }
 
-const ScreenHeader: React.FC<MenuHeaderType> = ({image = null, 
-    title = "Название.Проекта", 
-    onPress, 
-    searchVisible=false, 
-    filtersVisible=false}) => {
-
-    const dimensions = useWindowDimensions();
+const ScreenHeader: React.FC<ScreenHeaderType> = ({image = null, 
+    title = "Название.Проекта",
+    onPress,
+    buttons}) => {
 
     return (
         <View style={styles.screenHeader}>
@@ -29,20 +30,14 @@ const ScreenHeader: React.FC<MenuHeaderType> = ({image = null,
                     } 
                     <Text style={styles.screenHeader_title}>{title}</Text>
                     <View style={styles.screenHeader_functions}>
-                        {searchVisible && 
-                            <TouchableOpacity >
-                                <Image style={styles.screenHeader_search} source={require("../../assets/img/search.png")} />
-                            </TouchableOpacity>
-                        }
-                        {filtersVisible &&
-                            <TouchableOpacity >
-                                <Image style={styles.screenHeader_filters} source={require("../../assets/img/sliders.png")} />
-                            </TouchableOpacity>
-                        }
+                        {buttons?.map((button, index) => {
+                            return (
+                                <TouchableOpacity key={index} onPress={() => {button.onClick()}}>
+                                    <Image style={styles.screenHeader_functions_function} source={button.image} />
+                                </TouchableOpacity>
+                            )
+                        })}
                     </View>
-                </View>
-                <View style={styles.screenHeader_searchLine}>
-
                 </View>
             </View>
         </View>
@@ -93,15 +88,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
     },
-    screenHeader_search: {
+    screenHeader_functions_function: {
         width: 20,
-        height: 20,
-    },
-    screenHeader_filters: {
-        width: 20,
-        height: 20,
-    },
-    screenHeader_searchLine: {
-
+        height: 20
     }
 })

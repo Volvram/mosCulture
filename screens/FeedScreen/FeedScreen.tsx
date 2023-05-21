@@ -2,16 +2,16 @@ import React from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, ScrollView, useWindowDimensions } from 'react-native';
 import { COLORS } from "../../config/colors";
-import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import DailyWord from "./components/DailyWord/DailyWord";
 import News from "./components/News/News";
+import TrialTest from "./components/TrialTest/TrialTest";
+import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 
 type FeedScreenProps = {
     navigation: any,
 }
 
 const FeedScreen: React.FC<FeedScreenProps> = ({ navigation }) => {
-    const dimensions = useWindowDimensions();
 
     // function handleInfinityScroll(event: any) {
     //     let mHeight = event.nativeEvent.layoutMeasurement.height;
@@ -23,11 +23,16 @@ const FeedScreen: React.FC<FeedScreenProps> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <ScreenHeader searchVisible={true} filtersVisible={true} />
+            {/* <ScreenHeader searchVisible={true} filtersVisible={true} /> */}
+            <ScreenHeader buttons={
+                [{image: require("../../assets/img/search.png"), onClick: () => {}}, 
+                {image: require("../../assets/img/sliders.png"), onClick: () => {}}]
+                } />
             <View style={styles.feed}>
                 <ScrollView onScroll={() => {}}>
                     <News navigation={navigation} />
                     <DailyWord />
+                    <TrialTest navigation={navigation} />
                 </ScrollView>
             </View>
             <StatusBar style="auto" />

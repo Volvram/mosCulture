@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white
     },
     profile: {
+        marginTop: 16,
         paddingHorizontal: 16,
         flex:1,
     },
