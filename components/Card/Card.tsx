@@ -7,15 +7,15 @@ import React from "react";
 type CardProps = {
     title: string,
     date: string,
-    tagName?: string,
+    tag?: string,
     image?: ImageSourcePropType | null,
     onPress?: () => void,
 }
 
-const Card: React.FC<CardProps> = ({ title, date, tagName = "", image = null, onPress}) => {
+const Card: React.FC<CardProps> = ({ title, date, tag = "", image = null, onPress}) => {
     return (
         <TouchableOpacity style={styles.card} onPress={onPress}>
-            {image  
+            {image
             ?  <ImageBackground 
                     style={styles.card_background}
                     imageStyle={{ borderRadius: 16}}
@@ -34,7 +34,7 @@ const Card: React.FC<CardProps> = ({ title, date, tagName = "", image = null, on
                                 {date}
                             </Text>
                             <Text style={styles.card_details_tagName}>
-                                {tagName}
+                                {tag}
                             </Text>
                             <Text style={styles.card_details_title}>
                                 {title}
@@ -54,7 +54,7 @@ const Card: React.FC<CardProps> = ({ title, date, tagName = "", image = null, on
                             {date}
                         </Text>
                         <Text style={styles.card_details_tagName}>
-                            {tagName}
+                            {tag}
                         </Text>
                         <Text style={styles.card_details_title}>
                             {title}
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         padding: 16,
     },
     card_details_date: {
-        ...TYPOGRAPHY.p2,
+        ...TYPOGRAPHY.p1,
         color: COLORS.white,
     },
     card_details_tagName: {

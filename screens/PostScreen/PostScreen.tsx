@@ -1,9 +1,9 @@
-import { StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity, Animated, SafeAreaView, ScrollView, Dimensions } from "react-native";
+import { StyleSheet, View, Animated, } from "react-native";
 import { COLORS } from "../../config/colors";
-import NewsPostContent from "./components/NewsPostContent/NewsPostContent";
-import NewsPostHeader from "./components/NewsPostHeader/NewsPostHeader";
+import PostContent from "./components/PostContent/PostContent";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import React from "react";
+import PostHeader from "./components/PostHeader/PostHeader";
 
 type PostScreenProps = {
     route: any,
@@ -11,7 +11,7 @@ type PostScreenProps = {
 }
 
 const PostScreen: React.FC<PostScreenProps> = ({route, navigation}) => {
-    const { postId, post } = route.params;
+    const { post } = route.params;
     const scroll = new Animated.Value(0);
 
     return (
@@ -21,9 +21,9 @@ const PostScreen: React.FC<PostScreenProps> = ({route, navigation}) => {
                     onScroll={Animated.event([{nativeEvent: {contentOffset: {y: scroll}}}], {useNativeDriver: true})}>
 
                     <Animated.View style={{transform: [{translateY: Animated.multiply(scroll, 0.8)}]}}>
-                        <NewsPostHeader post={post} navigation={navigation} />
+                        <PostHeader post={post} />
                     </Animated.View>
-                    <NewsPostContent postId={postId} />
+                    <PostContent post={post} />
                 </Animated.ScrollView>
         </View>
     )

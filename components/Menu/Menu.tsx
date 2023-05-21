@@ -12,7 +12,7 @@ type MenuProps = {
 
 const Menu: React.FC<MenuProps> = ({ navigation }) => {
     const dimensions = useWindowDimensions();
-    const [selectedSection, setSelectedSection] = React.useState<string>("main");
+    const [selectedSection, setSelectedSection] = React.useState<string>("feed");
 
   return (
     <View style={styles.menu}>

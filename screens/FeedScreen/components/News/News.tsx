@@ -2,14 +2,13 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { TYPOGRAPHY } from "../../../../config/typography";
 import { COLORS } from "../../../../config/colors";
 import NewsList from "./components/NewsList/NewsList";
+import React from "react";
 
 type NewsProps = {
     navigation: any,
 }
 
 const News: React.FC<NewsProps> = ({ navigation }) => {
-
-
     return (
         <View style={styles.news}>
             <View style={styles.news_header}>
