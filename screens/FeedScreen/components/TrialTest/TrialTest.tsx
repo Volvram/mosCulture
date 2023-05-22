@@ -1,7 +1,6 @@
 import { StyleSheet, View, Text, ImageBackground, Image, TouchableOpacity } from "react-native";
 import { TYPOGRAPHY } from "../../../../config/typography";
 import { COLORS } from "../../../../config/colors";
-import rootStore from "../../../../store/RootStore/instance";
 
 type TrialTestType = {
     navigation: any
@@ -45,7 +44,6 @@ const TrialTest: React.FC<TrialTestType> = ({navigation}) => {
                                 </View>
                                 <TouchableOpacity style={styles.trialTest_content_more_button}
                                     onPress={() => {
-                                        rootStore.menu.setActiveSection("entertainments")
                                         navigation.navigate("Развлечения");
                                     }}>
                                     <Text style={styles.trialTest_content_more_button_text}>

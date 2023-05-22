@@ -6,6 +6,10 @@ import React from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
+// FIXME need reanimated update, see https://github.com/software-mansion/react-native-reanimated/issues/3355
+// @ts-ignore
+window._frameTimestamp = null
+
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {

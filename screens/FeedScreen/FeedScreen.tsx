@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, ScrollView, useWindowDimensions } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { COLORS } from "../../config/colors";
 import DailyWord from "./components/DailyWord/DailyWord";
 import News from "./components/News/News";
@@ -23,7 +23,6 @@ const FeedScreen: React.FC<FeedScreenProps> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            {/* <ScreenHeader searchVisible={true} filtersVisible={true} /> */}
             <ScreenHeader buttons={
                 [{image: require("../../assets/img/search.png"), onClick: () => {}}, 
                 {image: require("../../assets/img/sliders.png"), onClick: () => {}}]

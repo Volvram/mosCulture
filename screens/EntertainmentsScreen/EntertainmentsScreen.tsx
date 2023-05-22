@@ -5,6 +5,7 @@ import { COLORS } from "../../config/colors";
 import EntertainmentHeader from "./components/EntertainmentsHeader/EntertainmentsHeader";
 import ToggleButton from "../../components/ToggleButton/ToggleButton";
 import Rating from "./components/Rating/Rating";
+import Tasks from "./components/Tasks/Tasks";
 
 type EntertainmentScreenProps = {
     navigation: any,
@@ -22,7 +23,7 @@ const EntertainmentScreen: React.FC<EntertainmentScreenProps> = ({ navigation })
             <EntertainmentHeader />
             <View style={styles.entertainment}>
                 <ToggleButton firstSelection="Задания" secondSelection="Рейтинг" onChange={handleChange} />
-                {selected === "Задания" && <View></View>}
+                {selected === "Задания" && <Tasks />}
                 {selected === "Рейтинг" && <Rating />}
             </View>
             <StatusBar style="auto" />

@@ -4,7 +4,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { menuSections} from '../../config/menuSections';
 import { TYPOGRAPHY } from "../../config/typography";
 import { COLORS } from "../../config/colors";
-import rootStore from "../../store/RootStore/instance";
 import { observer } from "mobx-react-lite";
 
 type MenuProps = {
@@ -12,6 +11,12 @@ type MenuProps = {
 }
 
 const Menu: React.FC<MenuProps> = ({ navigation }) => {
+    const [selectedSection, setSelectedSection] = React.useState(navigation.getState().routeNames[navigation.getState().index]);
+
+    React.useEffect(() => {
+        const state = navigation.getState();
+        setSelectedSection(state.routeNames[state.index]);
+    }, [navigation.getState()]);
 
   return (
     <View style={styles.menu}>
@@ -29,16 +34,15 @@ const Menu: React.FC<MenuProps> = ({ navigation }) => {
                     <TouchableOpacity key={section.id} 
                     style={styles.menu_details_button} 
                         onPress={() => {
-                            rootStore.menu.setActiveSection(section.id);
                             navigation.navigate(section.name);
                         }}>
                         {(section.image && section.imageActive) && 
-                            <Image source={section.id !== rootStore.menu.activeSection ? section.image : section.imageActive} 
+                            <Image source={section.name !== selectedSection ? section.image : section.imageActive} 
                                 style={styles.menu_details_button_image} 
                                 resizeMode="contain"/>
                         }
                         <Text style={[styles.menu_details_button_text, 
-                            section.id === rootStore.menu.activeSection && styles.menu_details_button_text__active]}>{section.name}</Text>
+                            section.name === selectedSection && styles.menu_details_button_text__active]}>{section.name}</Text>
                     </TouchableOpacity>
                 )
             })
