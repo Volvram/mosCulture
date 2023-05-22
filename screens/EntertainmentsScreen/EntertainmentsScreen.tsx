@@ -2,10 +2,10 @@ import React from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import { COLORS } from "../../config/colors";
-import EntertainmentHeader from "./components/EntertainmentsHeader/EntertainmentsHeader";
 import ToggleButton from "../../components/ToggleButton/ToggleButton";
 import Rating from "./components/Rating/Rating";
 import Tasks from "./components/Tasks/Tasks";
+import ScreenHeaderPoints from "../../components/ScreenHeaderPoints/ScreenHeaderPoints";
 
 type EntertainmentScreenProps = {
     navigation: any,
@@ -20,7 +20,7 @@ const EntertainmentScreen: React.FC<EntertainmentScreenProps> = ({ navigation })
 
     return (
         <View style={styles.container}>
-            <EntertainmentHeader />
+            <ScreenHeaderPoints />
             <View style={styles.entertainment}>
                 <ToggleButton firstSelection="Задания" secondSelection="Рейтинг" onChange={handleChange} />
                 {selected === "Задания" && <Tasks />}

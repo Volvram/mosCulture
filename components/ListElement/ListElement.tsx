@@ -1,15 +1,15 @@
-import { StyleSheet, View, Text, Image, ImageSourcePropType, TouchableOpacity, StyleProp, TextStyle } from "react-native";
+import { StyleSheet, View, Text, Image, ImageSourcePropType, TouchableOpacity, StyleProp, TextStyle, ScrollView } from "react-native";
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
 import React from "react";
 
 type ListElementProps = {
-    top?: string,
+    top?: string | string[],
     middle?: string,
     bottom?: string,
     image?: ImageSourcePropType | null,
     onPress?: () => void,
-    topStyle?: StyleProp<TextStyle>
+    topStyle?: StyleProp<TextStyle>,
 }
 
 const ListElement: React.FC<ListElementProps> = ({ top=" ", middle=" ", bottom=" ", image=null, onPress, topStyle=null}) => {
@@ -18,11 +18,25 @@ const ListElement: React.FC<ListElementProps> = ({ top=" ", middle=" ", bottom="
         <TouchableOpacity style={styles.listElement} onPress={onPress}>
             {image  
                ? <Image style={styles.listElement_image} source={image} />
-               : <View style={styles.listElement_image_replaced}></View> }
+               : <View style={styles.listElement_image_replaced} /> }
 
             <View style={styles.listElement_details}>
-                <Text style={[styles.listElement_details_top, topStyle]}>{top}</Text>
-                <Text style={styles.listElement_details_middle}>{middle}</Text>
+                { Array.isArray(top) ? 
+                    <ScrollView horizontal>
+                            {top.map(el => {
+                                return (
+                                    <View style={[styles.listElement_details_top, topStyle]}>
+                                        <Text style={styles.listElement_details_top_text}>{el}</Text>
+                                    </View>
+                                )
+                            })
+                            }
+                    </ScrollView>
+                    : <View style={[styles.listElement_details_top, topStyle]}>
+                        <Text style={styles.listElement_details_top_text}>{top}</Text>
+                       </View>
+                }
+                <Text style={styles.listElement_details_middle}>{middle.length > 40 ? middle.slice(0, 40)+"..." : middle}</Text>
                 <Text style={styles.listElement_details_bottom}>{bottom}</Text>
             </View>
         </TouchableOpacity>
@@ -56,12 +70,15 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     listElement_details_top: {
-        ...TYPOGRAPHY.p1,
         paddingVertical: 2,
         paddingHorizontal: 10,
-        color: COLORS.black,
         alignSelf: 'flex-start',
         borderRadius: 8,
+        backgroundColor: COLORS.lightGray,
+    },
+    listElement_details_top_text: {
+        ...TYPOGRAPHY.p1,
+        color: COLORS.black,
     },
     listElement_details_middle: {
         ...TYPOGRAPHY.h3,

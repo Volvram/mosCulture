@@ -23,12 +23,15 @@ const ScreenHeader: React.FC<ScreenHeaderType> = ({image = null,
         <View style={styles.screenHeader}>
             <View style={{ overflow: 'hidden', paddingBottom: 5 }}>
                 <View style={styles.screenHeader_header}>
-                    {image !== null && 
+                    
+                    <View style={{flexDirection: "row", alignItems: "center"}}>
                         <TouchableOpacity style={styles.screenHeader_button} onPress={onPress} >
-                            <Image source={image} style={styles.screenHeader_button_image} />
+                            {image !== null && 
+                                <Image source={image} style={styles.screenHeader_button_image} />
+                            }
                         </TouchableOpacity>
-                    } 
-                    <Text style={styles.screenHeader_title}>{title}</Text>
+                        <Text style={styles.screenHeader_title}>{title}</Text>
+                    </View>
                     <View style={styles.screenHeader_functions}>
                         {buttons?.map((button, index) => {
                             return (
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
     screenHeader: {
         marginTop: 47,
         height: 50,
-
+        zIndex: 1,
         justifyContent: "center",
     },
     screenHeader_header: {
@@ -71,14 +74,15 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     screenHeader_button: {
-
+        width: 20,
+        height: 20
     },
     screenHeader_button_image: {
         width: 20,
         height: 20
     },
     screenHeader_title: {
-        marginLeft: 52,
+        marginLeft: 16,
         ...TYPOGRAPHY.h4
     },
     screenHeader_functions: {

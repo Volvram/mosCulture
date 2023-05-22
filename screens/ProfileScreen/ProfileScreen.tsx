@@ -1,10 +1,9 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, ScrollView, View, Text, Image } from "react-native";
-import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
+import { StyleSheet, View, Text, Image } from "react-native";
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
-import Statistics from "./components/Statistics/Statistics";
 import Achievements from "./components/Achievements/Achievements";
+import ScreenHeaderPoints from "../../components/ScreenHeaderPoints/ScreenHeaderPoints";
 
 type ProfileScreenProps = {
     navigation: any,
@@ -13,24 +12,32 @@ type ProfileScreenProps = {
 const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
     return (
         <View style={styles.container}>
-            <ScreenHeader />
+            <ScreenHeaderPoints />
             <View style={styles.profile}>
                 <View style={styles.profile_wrapper}>
-                    <View style={styles.profile_avatar}></View>
+                    <View style={{alignItems: "center"}}>
+                        <Image style={styles.profile_avatar} source={require("../../assets/img/avatar.png")}/>
+                        {/* <View style={styles.profile_avatar}></View> */}
+                        <View style={styles.profile_rating}>
+                            <Text style={styles.profile_rating_num}>997</Text>
+                        </View>
+                    </View>
                     <View style={styles.profile_details}>
-                        <Text style={styles.profile_details_username}>Username</Text>
-                        <View style={styles.profile_details_date}>
-                            <Image style={styles.profile_details_date_image} source={require("../../assets/img/clock.png")} />
-                            <Text style={styles.profile_details_date_text}>Регистрация: август 2023</Text>
+                        <View style={{flexDirection: "row", alignItems: "center"}}>
+                            <Text style={styles.profile_details_username}>Username</Text>
+                            <Image style={styles.profile_details_username_edit} source={require("../../assets/img/edit.png")} />
                         </View>
                         <View style={styles.profile_details_email}>
                             <Image style={styles.profile_details_email_image} source={require("../../assets/img/envelope.png")} />
                             <Text style={styles.profile_details_email_text}>Почта: romanp@gmail.com</Text>
                         </View>
+                        <View style={styles.profile_details_role}>
+                            <Image style={styles.profile_details_role_image} source={require("../../assets/img/role.png")} />
+                            <Text style={styles.profile_details_role_text}>Предпочтения: музыка</Text>
+                        </View>
                     </View>
                 </View>
-                <Statistics />
-                <Achievements />
+                <Achievements navigation={navigation} />
             </View>
             <StatusBar style="auto" />
         </View>
@@ -46,11 +53,11 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white
     },
     profile: {
-        marginTop: 16,
-        paddingHorizontal: 16,
+        marginTop: 32,
         flex:1,
     },
     profile_wrapper: {
+        paddingHorizontal: 16,
         maxHeight: 128,
         display: 'flex',
         flexDirection: 'row',
@@ -60,10 +67,24 @@ const styles = StyleSheet.create({
         width: 128,
         height: 128,
         backgroundColor: COLORS.gray,
+        borderWidth: 5,
+        borderColor: COLORS.gray,
+        borderStyle: "solid",
         borderRadius: 64,
+    },
+    profile_rating: {
+        marginTop: -21,
+        padding: 8,
+        backgroundColor: COLORS.gray,
+        borderRadius: 24,
+    },
+    profile_rating_num: {
+        ...TYPOGRAPHY.h3,
+        color: COLORS.white,
     },
     profile_details: {
         marginLeft: 12,
+        paddingVertical: 8,
         height: "100%",
         justifyContent: 'space-around',
     },
@@ -71,33 +92,36 @@ const styles = StyleSheet.create({
         ...TYPOGRAPHY.h3,
         color: COLORS.black,
     },
-    profile_details_date: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    profile_details_date_image: {
-        width: 16,
-        height: 16,
-    },
-    profile_details_date_text: {
-        ...TYPOGRAPHY.p2,
+    profile_details_username_edit: {
         marginLeft: 8,
-        color: COLORS.gray
+        width: 20,
+        height: 20,
     },
     profile_details_email: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
     },
     profile_details_email_image: {
-        width: 16,
-        height: 16,
+        width: 20,
+        height: 20,
     },
     profile_details_email_text: {
-        ...TYPOGRAPHY.p2,
+        ...TYPOGRAPHY.p1,
+        marginLeft: 8,
+        color: COLORS.gray
+    },
+    profile_details_role: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    profile_details_role_image: {
+        width: 20,
+        height: 20,
+    },
+    profile_details_role_text: {
+        ...TYPOGRAPHY.p1,
         marginLeft: 8,
         color: COLORS.gray
     },

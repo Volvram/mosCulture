@@ -1,50 +1,57 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ImageBackground } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import { COLORS } from "../../config/colors";
 import React from "react";
+import { TYPOGRAPHY } from "../../config/typography";
+import Redirect from "./components/Redirect/Redirect";
 
 type SignInScreenProps = {
     navigation: any,
 }
 
 const SignInScreen: React.FC<SignInScreenProps> = ({ navigation }) => {
-    const emailInput = React.useRef<any>(null);
-    const passwordInput = React.useRef<any>(null);
+    const [hiddenPassword, setHiddenPassword] = React.useState(true);
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
 
     return (
         <View style={styles.container}>
-            <ScreenHeader image={require("../../assets/img/btnBack.png")} title="Авторизация" onPress={() => {navigation.goBack()}} />
+            <ScreenHeader image={require("../../assets/img/btnClose.png")} onPress={() => {navigation.goBack()}} />
             <View style={styles.signIn}>
-                <TextInput
-                    ref = {emailInput}
-                    style={styles.signIn_input}
-                    onChangeText={() => {}}
-                    placeholder="Электронная почта"
-                />
-                <TextInput
-                    ref = {passwordInput}
-                    style={styles.signIn_input}
-                    onChangeText={() => {}}
-                    placeholder="Пароль"
-                />
-                <TouchableOpacity style={styles.signIn_submit} onPress={() => {
-                    if (emailInput.current) {
-                        console.log(emailInput.current.value);
-                    }
-                    if (passwordInput.current) {
-                        console.log(passwordInput.current.value);
-                    }
-                    
-                }}>
-                    <Text style={styles.signIn_submit_text}>Войти</Text>
-                </TouchableOpacity>
-                <View style={styles.signIn_redirect}>
-                    <Text>Нет аккаунта? </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate("Зарегистрироваться")}>
-                        <Text style={styles.signIn_redirect_signUp}>Зарегистрироваться</Text>
-                    </TouchableOpacity>
-                </View>
+                <ImageBackground style={styles.signIn_background}
+                    source={require("../../assets/img/decoration_2.png")}>
+                    <View style={{marginHorizontal: 16}}>
+                        <Text style={styles.signIn_title}>Авторизация</Text>
+                        <TextInput
+                            style={styles.signIn_input}
+                            onChangeText={(value) => {setEmail(value)}}
+                            placeholder="Электронная почта"
+                            placeholderTextColor={COLORS.gray}
+                        />
+                        <View style={{width: "100%", flexDirection: "row", alignItems: "center"}}>
+                            <TextInput
+                                secureTextEntry={hiddenPassword}
+                                style={styles.signIn_input}
+                                onChangeText={(value) => {setPassword(value)}}
+                                placeholder="Пароль"
+                                placeholderTextColor={COLORS.gray}
+                            />
+                            <TouchableOpacity style={styles.signIn_eye} onPress={() => setHiddenPassword(!hiddenPassword)}>
+                                <Image style={styles.signIn_eye_image} 
+                                    source={hiddenPassword ? require("../../assets/img/eye.png") 
+                                    : require("../../assets/img/eye-slash.png")}/>
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity style={styles.signIn_submit} onPress={() => {
+                            console.log(email);
+                            console.log(password);
+                        }}>
+                            <Text style={styles.signIn_submit_text}>Войти</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ImageBackground>
+                <Redirect navigation={navigation} />
             </View>
             <StatusBar style="auto" />
         </View>
@@ -60,36 +67,50 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white
     },
     signIn: {
-        paddingHorizontal: 16,
         width: '100%',
-        alignItems: "center",
-
+    },
+    signIn_background: {
+        paddingTop: 32,
+    },
+    signIn_title: {
+        ...TYPOGRAPHY.h1,
+        marginBottom: "50%",
+        color: COLORS.black,
+        alignSelf: "center",
     },
     signIn_input: {
-        marginVertical: 10,
+        ...TYPOGRAPHY.p1,
+        marginVertical: 6,
         width: "100%",
-        height: 40,
+        paddingTop: 13,
+        paddingBottom: 11,
+        paddingLeft: 16,
+        paddingRight: 42,
+        backgroundColor: COLORS.white,
+        borderRadius: 24,
         borderWidth: 1,
-        padding: 10,
+        borderStyle: "solid",
+        borderColor: "#DEE2E6",
+    },
+    signIn_eye: {
+        marginLeft: -34,
+    },
+    signIn_eye_image: {
+        width: 20,
+        height: 20,
     },
     signIn_submit: {
         marginTop: 30,
+        marginBottom: 64,
         paddingVertical: 12,
-        paddingHorizontal: 32,
-        maxWidth: 115,
-        backgroundColor: "#18181B",
-        borderRadius: 16,
+        paddingHorizontal: 77.5,
+        backgroundColor: COLORS.blueAction,
+        borderRadius: 24,
+        alignSelf: "center"
     },
     signIn_submit_text: {
+        ...TYPOGRAPHY.p1,
         color: COLORS.white,
         textAlign: "center",
     },
-    signIn_redirect: {
-        marginTop: 32,
-        display: "flex",
-        flexDirection: "row",
-    },
-    signIn_redirect_signUp : {
-        color: "#FF5D9D"
-    }
 })
