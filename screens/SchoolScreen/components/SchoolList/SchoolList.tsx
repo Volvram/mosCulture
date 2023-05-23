@@ -34,7 +34,7 @@ const SchoolList: React.FC<SchoolListProps> = ({ navigation }) => {
 
                     return(
                         <ListElement key={school.id} top={school.tag} middle={school.title} bottom={school.district} 
-                        onPress={() => {}} topStyle={tagStyle} />
+                        onPress={() => {}} topStyle={{paddingVertical: 2, paddingHorizontal: 10, borderRadius: 8, ...tagStyle}} />
                     )
                 })
                 }

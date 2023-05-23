@@ -1,17 +1,24 @@
 import { StyleSheet, View, Text } from "react-native";
 import MapView, { Marker } from 'react-native-maps';
 import React from "react";
+import MapModal from "./components/MapModal/MapModal";
 
 type MapProps = {
     navigation: any
 }
 
+const moscowRegion = {
+    latitude: 55.755825,
+    longitude: 37.617298,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+};
+
 const Map: React.FC<MapProps> =  ({ navigation }) => {
-    const moscowRegion = {
-        latitude: 55.755825,
-        longitude: 37.617298,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
+    const [isModalVisible, setModalVisible] = React.useState(false);
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
     };
 
     return (
@@ -20,12 +27,12 @@ const Map: React.FC<MapProps> =  ({ navigation }) => {
                 style={styles.map}
                 initialRegion={moscowRegion} //your region data goes here.
             >
-                {/*Make sure the Marker component is a child of MapView. Otherwise it won't render*/}
             <Marker coordinate={moscowRegion}
                 // image={{uri: ''}}
-                title={"Москва"}
-                description={"Расположение основных центров школ искусств"} />
+                onPress={() => {toggleModal()}}/>
             </MapView>
+
+            <MapModal isModalVisible={isModalVisible} setModalVisible={setModalVisible}/>
         </View>
     );
 }

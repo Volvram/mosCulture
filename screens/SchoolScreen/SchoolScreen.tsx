@@ -1,19 +1,25 @@
+import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Text, Platform, TouchableOpacity } from "react-native";
 import Map from "./components/Map/Map";
-import React from "react";
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
 import SchoolList from "./components/SchoolList/SchoolList";
 import ToggleButton from "../../components/ToggleButton/ToggleButton";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
+import SchoolFilter from "./components/SchoolFilter/SchoolFilter";
 
 type SchoolScreenProps = {
     navigation: any
 }
 
 const SchoolScreen: React.FC<SchoolScreenProps> =  ({ navigation }) => {
+    const [isFilterVisible, setFilterVisible] = React.useState(false);
     const [selected, setSelected] = React.useState<string>("Список");
+
+    const toggleFilter = () => {
+        setFilterVisible(!isFilterVisible);
+    };
 
     const handleChange = (value: string) => {
         setSelected(value);
@@ -23,12 +29,14 @@ const SchoolScreen: React.FC<SchoolScreenProps> =  ({ navigation }) => {
         <View style={styles.container}>
             <ScreenHeader buttons={
                 [{image: require("../../assets/img/search.png"), onClick: () => {}}, 
-                {image: require("../../assets/img/sliders.png"), onClick: () => {}}]
+                {image: require("../../assets/img/sliders.png"), onClick: () => {toggleFilter()}}]
                 } />
             <View style={styles.schools}>
+                <SchoolFilter isFilterVisible={isFilterVisible} setFilterVisible={setFilterVisible}/>
+                
                 <ToggleButton firstSelection="Список" secondSelection="Карта" onChange={handleChange} />
                 {selected === "Список" && <SchoolList navigation={navigation}/>}
-                {Platform.OS !== "web" && selected === "Карта" && <Map navigation={navigation} />}
+                {Platform.OS !== "web" && selected === "Карта" && <Map navigation={navigation} />}                
             </View>
             <StatusBar style="auto" />
         </View>
@@ -48,6 +56,7 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor: COLORS.white
     },
+    
     schools_toggle: {
         marginVertical: 16,
         width: "100%",

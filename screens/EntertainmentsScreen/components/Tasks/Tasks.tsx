@@ -3,13 +3,17 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 import { COLORS } from "../../../../config/colors";
 import { TYPOGRAPHY } from "../../../../config/typography";
 
-const Tasks: React.FC = () => {
+type TasksProps = {
+    navigation: any,
+}
+
+const Tasks: React.FC<TasksProps> = ({ navigation }) => {
     return (
         <View style={styles.tasks}>
             <ScrollView>
                 {[1, 2, 3].map(task => {
                     return (
-                        <TouchableOpacity key={task} style={styles.tasks_list_task}>
+                        <TouchableOpacity key={task} style={styles.tasks_list_task} onPress={() => navigation.navigate("Задание")}>
                             <ImageBackground style={styles.tasks_list_task_details} 
                                 source={require("../../../../assets/img/musicImg.png")}
                                 resizeMode="cover">

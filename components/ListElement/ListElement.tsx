@@ -10,9 +10,10 @@ type ListElementProps = {
     image?: ImageSourcePropType | null,
     onPress?: () => void,
     topStyle?: StyleProp<TextStyle>,
+    bottomStyle?: StyleProp<TextStyle>,
 }
 
-const ListElement: React.FC<ListElementProps> = ({ top=" ", middle=" ", bottom=" ", image=null, onPress, topStyle=null}) => {
+const ListElement: React.FC<ListElementProps> = ({ top=" ", middle=" ", bottom=" ", image=null, onPress, topStyle=null, bottomStyle=null}) => {
 
     return (
         <TouchableOpacity style={styles.listElement} onPress={onPress}>
@@ -37,7 +38,10 @@ const ListElement: React.FC<ListElementProps> = ({ top=" ", middle=" ", bottom="
                        </View>
                 }
                 <Text style={styles.listElement_details_middle}>{middle.length > 40 ? middle.slice(0, 40)+"..." : middle}</Text>
-                <Text style={styles.listElement_details_bottom}>{bottom}</Text>
+                <View style={[styles.listElement_details_bottom, bottomStyle]}>
+                    <Text style={styles.listElement_details_bottom_text}>{bottom}</Text>
+                </View>
+                
             </View>
         </TouchableOpacity>
     )
@@ -64,17 +68,13 @@ const styles = StyleSheet.create({
     },
     listElement_details: {
         marginLeft: 12,
-        paddingVertical: 13,
+        paddingVertical: 6,
         flex: 1,
         display: "flex",
         justifyContent: "space-between"
     },
     listElement_details_top: {
-        paddingVertical: 2,
-        paddingHorizontal: 10,
         alignSelf: 'flex-start',
-        borderRadius: 8,
-        backgroundColor: COLORS.lightGray,
     },
     listElement_details_top_text: {
         ...TYPOGRAPHY.p1,
@@ -85,6 +85,9 @@ const styles = StyleSheet.create({
         color: COLORS.black,
     },
     listElement_details_bottom: {
+        alignSelf: 'flex-start',
+    },
+    listElement_details_bottom_text: {
         ...TYPOGRAPHY.p1,
         color: COLORS.gray
     }

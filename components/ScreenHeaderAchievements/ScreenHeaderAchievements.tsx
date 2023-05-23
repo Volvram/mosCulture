@@ -1,8 +1,9 @@
 import { StyleSheet, View, Text, Image, ImageSourcePropType, TouchableOpacity } from "react-native";
-import { COLORS } from "../../../../config/colors";
-import { TYPOGRAPHY } from "../../../../config/typography";
+import { COLORS } from "../../config/colors";
+import { TYPOGRAPHY } from "../../config/typography";
 
-type AchievementsHeaderType = {
+
+type ScreenHeaderAchievementsType = {
     image?: ImageSourcePropType | null,
     title?: string;
     received?: number,
@@ -10,22 +11,23 @@ type AchievementsHeaderType = {
     onPress?: () => void
 }
 
-const AchievementsHeader: React.FC<AchievementsHeaderType> = ({image=null, title = "Название.Проекта", received, all, onPress}) => {
+const ScreenHeaderAchievements: React.FC<ScreenHeaderAchievementsType> = ({image=null, title = "Название.Проекта", received, all, onPress}) => {
     return (
-        <View style={styles.achievementsHeader}>
+        <View style={styles.screenHeaderAchievements}>
             <View style={{ overflow: 'hidden', paddingBottom: 5 }}>
-                <View style={styles.achievementsHeader_header}>
+                <View style={styles.screenHeaderAchievements_header}>
                     <View style={{flexDirection: "row", alignItems: "center"}}>
-                        <TouchableOpacity style={styles.achievementsHeader_button} onPress={onPress} >
+                        <TouchableOpacity style={styles.screenHeaderAchievements_button} onPress={onPress} >
                             {image !== null && 
-                                <Image source={image} style={styles.achievementsHeader_button_image} />
+                                <Image source={image} style={styles.screenHeaderAchievements_button_image} />
                             }
                         </TouchableOpacity>
-                        <Text style={styles.achievementsHeader_title}>{title}</Text>
+                        <Text style={styles.screenHeaderAchievements_title}>{title}</Text>
                     </View>
-                    <View style={styles.achievementsHeader_achievements}>
-                        <Text style={styles.achievementsHeader_achievements_num}>{received ? received : "-"} / {all ? all : "-"}</Text>
-                        <Image source={require("../../../../assets/img/achievement.png")} style={styles.achievementsHeader_achievements_image} />
+                    <View style={styles.screenHeaderAchievements_achievements}>
+                        <Text style={styles.screenHeaderAchievements_achievements_num}>{received ? received : "-"} / {all ? all : "-"}</Text>
+                        <Image source={require("../../assets/img/achievement.png")} 
+                            style={styles.screenHeaderAchievements_achievements_image} />
                     </View>
                 </View>
             </View>
@@ -33,15 +35,15 @@ const AchievementsHeader: React.FC<AchievementsHeaderType> = ({image=null, title
     )
 }
 
-export default AchievementsHeader;
+export default ScreenHeaderAchievements;
 
 const styles = StyleSheet.create({
-    achievementsHeader: {
+    screenHeaderAchievements: {
         marginTop: 47,
         height: 50,
         justifyContent: "center",
     },
-    achievementsHeader_header: {
+    screenHeaderAchievements_header: {
         paddingHorizontal: 16,
         width: "100%",
         height: 50,
@@ -58,19 +60,19 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
     },
-    achievementsHeader_button: {
+    screenHeaderAchievements_button: {
         width: 20,
         height: 20
     },
-    achievementsHeader_button_image: {
+    screenHeaderAchievements_button_image: {
         width: 20,
         height: 20
     },
-    achievementsHeader_title: {
+    screenHeaderAchievements_title: {
         marginLeft: 52,
         ...TYPOGRAPHY.h4
     },
-    achievementsHeader_achievements: {
+    screenHeaderAchievements_achievements: {
         marginHorizontal: 16,
         width: 72,
         display: "flex",
@@ -78,12 +80,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
     },
-    achievementsHeader_achievements_num: {
+    screenHeaderAchievements_achievements_num: {
         ...TYPOGRAPHY.h3,
         marginRight: 8,
         color: COLORS.black
     },
-    achievementsHeader_achievements_image: {
+    screenHeaderAchievements_achievements_image: {
         width: 20,
         height: 20
     },

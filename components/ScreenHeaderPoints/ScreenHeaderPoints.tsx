@@ -23,7 +23,7 @@ const ScreenHeaderPoints: React.FC<ScreenHeaderPointsType> = ({image=null, title
                         <Text style={styles.screenHeaderPoints_title}>{title}</Text>
                     </View>
                     <View style={styles.screenHeaderPoints_score}>
-                        <Text style={styles.screenHeaderPoints_score_text}>Очки:</Text>
+                        {/* <Text style={styles.screenHeaderPoints_score_text}>Очки:</Text> */}
                         <Text style={styles.screenHeaderPoints_score_points}>{points ? points : "-"}</Text>
                         <Image source={require("../../assets/img/gem.png")} style={styles.screenHeaderPoints_score_image} />
                     </View>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "flex-end",
     },
     screenHeaderPoints_score_text: {
         ...TYPOGRAPHY.h4,

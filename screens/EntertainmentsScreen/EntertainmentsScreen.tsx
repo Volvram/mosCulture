@@ -23,7 +23,7 @@ const EntertainmentScreen: React.FC<EntertainmentScreenProps> = ({ navigation })
             <ScreenHeaderPoints />
             <View style={styles.entertainment}>
                 <ToggleButton firstSelection="Задания" secondSelection="Рейтинг" onChange={handleChange} />
-                {selected === "Задания" && <Tasks />}
+                {selected === "Задания" && <Tasks navigation={navigation} />}
                 {selected === "Рейтинг" && <Rating />}
             </View>
             <StatusBar style="auto" />

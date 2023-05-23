@@ -4,6 +4,7 @@ import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
 import Achievements from "./components/Achievements/Achievements";
 import ScreenHeaderPoints from "../../components/ScreenHeaderPoints/ScreenHeaderPoints";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 type ProfileScreenProps = {
     navigation: any,
@@ -16,8 +17,9 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
             <View style={styles.profile}>
                 <View style={styles.profile_wrapper}>
                     <View style={{alignItems: "center"}}>
-                        <Image style={styles.profile_avatar} source={require("../../assets/img/avatar.png")}/>
-                        {/* <View style={styles.profile_avatar}></View> */}
+                        <View style={styles.profile_avatar}>
+                            <Image style={styles.profile_avatar_image} source={require("../../assets/img/avatar.png")}/>
+                        </View>
                         <View style={styles.profile_rating}>
                             <Text style={styles.profile_rating_num}>997</Text>
                         </View>
@@ -25,7 +27,9 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
                     <View style={styles.profile_details}>
                         <View style={{flexDirection: "row", alignItems: "center"}}>
                             <Text style={styles.profile_details_username}>Username</Text>
-                            <Image style={styles.profile_details_username_edit} source={require("../../assets/img/edit.png")} />
+                            <TouchableOpacity style={styles.profile_details_username_edit}>
+                                <Image style={styles.profile_details_username_edit_image} source={require("../../assets/img/edit.png")} />
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.profile_details_email}>
                             <Image style={styles.profile_details_email_image} source={require("../../assets/img/envelope.png")} />
@@ -64,12 +68,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     profile_avatar: {
-        width: 128,
-        height: 128,
         backgroundColor: COLORS.gray,
         borderWidth: 5,
         borderColor: COLORS.gray,
         borderStyle: "solid",
+        borderRadius: 64,
+    },
+    profile_avatar_image: {
+        width: 128,
+        height: 128,
+        backgroundColor: COLORS.gray,
         borderRadius: 64,
     },
     profile_rating: {
@@ -85,15 +93,18 @@ const styles = StyleSheet.create({
     profile_details: {
         marginLeft: 12,
         paddingVertical: 8,
+        width: "100%",
         height: "100%",
         justifyContent: 'space-around',
     },
     profile_details_username: {
         ...TYPOGRAPHY.h3,
         color: COLORS.black,
+        marginRight: 8,
     },
     profile_details_username_edit: {
-        marginLeft: 8,
+    },
+    profile_details_username_edit_image: {
         width: 20,
         height: 20,
     },
@@ -109,7 +120,7 @@ const styles = StyleSheet.create({
     profile_details_email_text: {
         ...TYPOGRAPHY.p1,
         marginLeft: 8,
-        color: COLORS.gray
+        color: COLORS.gray,
     },
     profile_details_role: {
         display: 'flex',
