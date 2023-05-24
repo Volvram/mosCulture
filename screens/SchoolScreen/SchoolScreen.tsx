@@ -36,7 +36,7 @@ const SchoolScreen: React.FC<SchoolScreenProps> =  ({ navigation }) => {
                 
                 <ToggleButton firstSelection="Список" secondSelection="Карта" onChange={handleChange} />
                 {selected === "Список" && <SchoolList navigation={navigation}/>}
-                {Platform.OS !== "web" && selected === "Карта" && <Map navigation={navigation} />}                
+                {Platform.OS !== "web" && selected === "Карта" && <Map navigation={navigation} />}
             </View>
             <StatusBar style="auto" />
         </View>

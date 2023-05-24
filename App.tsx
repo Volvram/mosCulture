@@ -5,6 +5,7 @@ import { COLORS } from './config/colors';
 import React from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import rootStore from './store/RootStore/instance';
 
 // FIXME need reanimated update, see https://github.com/software-mansion/react-native-reanimated/issues/3355
 // @ts-ignore
@@ -13,6 +14,11 @@ window._frameTimestamp = null
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  
+  React.useEffect(() => {
+    rootStore.user.checkAuthorization();
+  }, []);
+
   const [fontsLoaded] = useFonts({
     'DeeDee': require('./assets/fonts/DeeDee.ttf'),
     'DeeDee-Bold' : require('./assets/fonts/DeeDee-Bold.ttf'),

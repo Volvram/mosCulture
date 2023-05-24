@@ -5,6 +5,7 @@ import { menuSections} from '../../config/menuSections';
 import { TYPOGRAPHY } from "../../config/typography";
 import { COLORS } from "../../config/colors";
 import { observer } from "mobx-react-lite";
+import rootStore from "../../store/RootStore/instance";
 
 type MenuProps = {
     navigation: any;
@@ -34,7 +35,11 @@ const Menu: React.FC<MenuProps> = ({ navigation }) => {
                     <TouchableOpacity key={section.id} 
                     style={styles.menu_details_button} 
                         onPress={() => {
-                            navigation.navigate(section.name);
+                            if (!rootStore.user.authorized && section.authorizationRequired) {
+                                navigation.navigate("Авторизация");
+                            } else {
+                                navigation.navigate(section.name);
+                            }
                         }}>
                         {(section.image && section.imageActive) && 
                             <Image source={section.name !== selectedSection ? section.image : section.imageActive} 

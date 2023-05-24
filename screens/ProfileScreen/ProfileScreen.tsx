@@ -5,12 +5,20 @@ import { TYPOGRAPHY } from "../../config/typography";
 import Achievements from "./components/Achievements/Achievements";
 import ScreenHeaderPoints from "../../components/ScreenHeaderPoints/ScreenHeaderPoints";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import React from "react";
+import { useLocalStore } from "../../utils/useLocalStore";
+import { ProfileScreenStore } from "../../store/ProfileScreenStore";
+import { observer } from "mobx-react-lite";
+import rootStore from "../../store/RootStore/instance";
 
 type ProfileScreenProps = {
     navigation: any,
 }
 
 const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
+
+    const profileScreenStore = useLocalStore(() => new ProfileScreenStore());
+
     return (
         <View style={styles.container}>
             <ScreenHeaderPoints />
@@ -18,7 +26,10 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
                 <View style={styles.profile_wrapper}>
                     <View style={{alignItems: "center"}}>
                         <View style={styles.profile_avatar}>
-                            <Image style={styles.profile_avatar_image} source={require("../../assets/img/avatar.png")}/>
+                            {rootStore.user.avatar && <Image style={styles.profile_avatar_image} source={{uri: rootStore.user.avatar}}/>}
+
+                            {/* For colorfulness */}
+                            {/* <Image style={styles.profile_avatar_image} source={require("../../assets/img/avatar.png")}/> */}
                         </View>
                         <View style={styles.profile_rating}>
                             <Text style={styles.profile_rating_num}>997</Text>
@@ -26,14 +37,14 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
                     </View>
                     <View style={styles.profile_details}>
                         <View style={{flexDirection: "row", alignItems: "center"}}>
-                            <Text style={styles.profile_details_username}>Username</Text>
+                            <Text style={styles.profile_details_username}>{rootStore.user.name}</Text>
                             <TouchableOpacity style={styles.profile_details_username_edit}>
                                 <Image style={styles.profile_details_username_edit_image} source={require("../../assets/img/edit.png")} />
                             </TouchableOpacity>
                         </View>
                         <View style={styles.profile_details_email}>
                             <Image style={styles.profile_details_email_image} source={require("../../assets/img/envelope.png")} />
-                            <Text style={styles.profile_details_email_text}>Почта: romanp@gmail.com</Text>
+                            <Text style={styles.profile_details_email_text}>Почта: {rootStore.user.email}</Text>
                         </View>
                         <View style={styles.profile_details_role}>
                             <Image style={styles.profile_details_role_image} source={require("../../assets/img/role.png")} />
@@ -48,7 +59,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
     )
 }
 
-export default ProfileScreen;
+export default observer(ProfileScreen);
 
 const styles = StyleSheet.create({
     container: {
@@ -68,6 +79,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     profile_avatar: {
+        minWidth: 128,
+        minHeight: 128,
         backgroundColor: COLORS.gray,
         borderWidth: 5,
         borderColor: COLORS.gray,

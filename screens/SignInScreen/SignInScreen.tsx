@@ -1,10 +1,13 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ImageBackground } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ImageBackground, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import { COLORS } from "../../config/colors";
 import React from "react";
 import { TYPOGRAPHY } from "../../config/typography";
 import Redirect from "./components/Redirect/Redirect";
+import { useLocalStore } from "../../utils/useLocalStore";
+import { SignInStore } from "../../store/SignInStore";
+import { observer } from "mobx-react-lite";
 
 type SignInScreenProps = {
     navigation: any,
@@ -12,20 +15,37 @@ type SignInScreenProps = {
 
 const SignInScreen: React.FC<SignInScreenProps> = ({ navigation }) => {
     const [hiddenPassword, setHiddenPassword] = React.useState(true);
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [incorrectData, setIncorrectData] = React.useState(false);
+
+    const signInStore = useLocalStore(() => new SignInStore());
+
+    async function authorize(){
+        const authorization = await signInStore.requestLogin();
+        if (authorization) {
+            navigation.goBack();
+        } else if (authorization === false) {
+            setIncorrectData(true);
+        }
+    }
 
     return (
         <View style={styles.container}>
-            <ScreenHeader image={require("../../assets/img/btnClose.png")} onPress={() => {navigation.goBack()}} />
+            <ScreenHeader image={require("../../assets/img/btnClose.png")} onPress={() => {navigation.navigate("Лента")}} />
             <View style={styles.signIn}>
                 <ImageBackground style={styles.signIn_background}
                     source={require("../../assets/img/decoration_2.png")}>
                     <View style={{marginHorizontal: 16}}>
                         <Text style={styles.signIn_title}>Авторизация</Text>
+
+                        {incorrectData&&
+                            <View style={styles.signIn_error}>
+                                <Image style={{width: 20, height: 20}} source={require("../../assets/img/exclamation.png")} />
+                                <Text style={styles.signIn_error_text}>Неверная электронная почта или пароль.</Text>
+                            </View>
+                        }
                         <TextInput
                             style={styles.signIn_input}
-                            onChangeText={(value) => {setEmail(value)}}
+                            onChangeText={(value) => {signInStore.setEmail(value)}}
                             placeholder="Электронная почта"
                             placeholderTextColor={COLORS.gray}
                         />
@@ -33,7 +53,7 @@ const SignInScreen: React.FC<SignInScreenProps> = ({ navigation }) => {
                             <TextInput
                                 secureTextEntry={hiddenPassword}
                                 style={styles.signIn_input}
-                                onChangeText={(value) => {setPassword(value)}}
+                                onChangeText={(value) => {signInStore.setPassword(value)}}
                                 placeholder="Пароль"
                                 placeholderTextColor={COLORS.gray}
                             />
@@ -44,8 +64,7 @@ const SignInScreen: React.FC<SignInScreenProps> = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity style={styles.signIn_submit} onPress={() => {
-                            console.log(email);
-                            console.log(password);
+                            authorize();
                         }}>
                             <Text style={styles.signIn_submit_text}>Войти</Text>
                         </TouchableOpacity>
@@ -58,7 +77,7 @@ const SignInScreen: React.FC<SignInScreenProps> = ({ navigation }) => {
     );
 }
 
-export default SignInScreen;
+export default observer(SignInScreen);
 
 const styles = StyleSheet.create({
     container: {
@@ -77,6 +96,23 @@ const styles = StyleSheet.create({
         marginBottom: "50%",
         color: COLORS.black,
         alignSelf: "center",
+    },
+    signIn_error: {
+        position: "absolute",
+        top: "30%",
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        backgroundColor: "#FAE1E3",
+        borderRadius: 24,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
+    signIn_error_text: {
+        ...TYPOGRAPHY.p1,
+        marginLeft: 8,
+        color: "#DC3545",
     },
     signIn_input: {
         ...TYPOGRAPHY.p1,

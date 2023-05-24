@@ -5,6 +5,7 @@ export type menuSectionType = {
     name: string;
     image: ImageSourcePropType;
     imageActive: ImageSourcePropType;
+    authorizationRequired?: boolean;
 }
 
 export const menuSections: menuSectionType[] = [
@@ -36,6 +37,7 @@ export const menuSections: menuSectionType[] = [
         id: "profile",
         name: "Профиль",
         image: require("../assets/img/person.png"),
-        imageActive: require("../assets/img/personActive.png")
+        imageActive: require("../assets/img/personActive.png"),
+        authorizationRequired: true,
     },
 ];
