@@ -5,6 +5,7 @@ import { COLORS } from "../../config/colors";
 import ScreenHeaderPoints from "../../components/ScreenHeaderPoints/ScreenHeaderPoints";
 import { TYPOGRAPHY } from "../../config/typography";
 import ListElement from "../../components/ListElement/ListElement";
+import TaskModal from "./components/TaskModal/TaskModal";
 
 type TaskScreenProps = {
     navigation: any,
@@ -44,6 +45,12 @@ const tests = [
 ]
 
 const TaskScreen: React.FC<TaskScreenProps> = ({ navigation }) => {
+    const [isModalVisible, setModalVisible] = React.useState(false);
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
+
     return (
         <View style={styles.container}>
             <ScreenHeaderPoints image={require("../../assets/img/btnBack.png")} onPress={() => navigation.goBack()} />
@@ -62,12 +69,13 @@ const TaskScreen: React.FC<TaskScreenProps> = ({ navigation }) => {
                         {tests.map(test => {
                             return (
                                 <ListElement key={test.id} top={test.difficulty} middle={test.title} bottom={test.result} 
-                                     onPress={() => {}} />
+                                     onPress={() => {toggleModal()}} />
                             )
                         })
                         }
                 </ScrollView>
             </View>
+            <TaskModal navigation={navigation} isModalVisible={isModalVisible} setModalVisible={setModalVisible}/>
             <StatusBar style="auto" />
         </View>
     );

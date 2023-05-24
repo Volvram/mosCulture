@@ -25,7 +25,9 @@ const SchoolFilter: React.FC<SchoolFilterProps> = ({isFilterVisible, setFilterVi
                 animationIn="slideInUp"
                 isVisible={isFilterVisible}
                 onBackdropPress={() => setFilterVisible(false)}
-            >
+                swipeDirection="down"
+                onSwipeComplete={() => setFilterVisible(false)}>
+
                 <View style={styles.schoolFilter_wrapper}>
                     <View style={styles.schoolFilter_wrapper_top}>
                         <Text style={styles.schoolFilter_wrapper_top_text}>Фильтровать</Text>

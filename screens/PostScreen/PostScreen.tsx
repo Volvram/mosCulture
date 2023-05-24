@@ -1,4 +1,5 @@
 import { StyleSheet, View, Animated, } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { COLORS } from "../../config/colors";
 import PostContent from "./components/PostContent/PostContent";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
@@ -25,6 +26,7 @@ const PostScreen: React.FC<PostScreenProps> = ({route, navigation}) => {
                     </Animated.View>
                     <PostContent post={post} />
                 </Animated.ScrollView>
+                <StatusBar style="auto" />
         </View>
     )
 }

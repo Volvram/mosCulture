@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
 import Card from "../../components/Card/Card";
@@ -128,6 +129,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation }) =
                     </ScrollView>
                 </View>
             </View>
+            <StatusBar style="auto" />
         </View>
     )
 }

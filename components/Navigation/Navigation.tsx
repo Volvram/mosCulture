@@ -15,6 +15,7 @@ import ProfileScreen from '../../screens/ProfileScreen/ProfileScreen';
 import AchievementsScreen from '../../screens/AchievementsScreen/AchievementsScreen';
 import OneAchieveScreen from '../../screens/OneAchieveScreen/OneAchieveScreen';
 import TaskScreen from '../../screens/TaskScreen/TaskScreen';
+import TestScreen from '../../screens/TestScreen/TestScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -36,6 +37,7 @@ export default function Navigation() {
           <Stack.Screen name="Пост" component={PostScreen} options={{headerShown: false}} />
           <Stack.Screen name="Развлечения" component={EntertainmentScreen} options={{headerShown: false}} />
           <Stack.Screen name="Задание" component={TaskScreen} options={{headerShown: false}} />
+          <Stack.Screen name="Тест" component={TestScreen} options={{headerShown: false}} />
           <Stack.Screen name="Курсы" component={CoursesScreen} options={{headerShown: false}} />
           <Stack.Screen name="Школы" component={SchoolScreen} options={{headerShown: false}} />
 

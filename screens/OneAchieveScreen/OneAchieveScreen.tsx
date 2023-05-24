@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text, Image } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
 import ScreenHeaderAchievements from "../../components/ScreenHeaderAchievements/ScreenHeaderAchievements";
@@ -30,6 +31,7 @@ const OneAchieveScreen: React.FC<OneAchieveScreenProps> = ({ route, navigation }
                     Картина является частью собрания Государственного Русского музея. Размер картины — 79,5 × 62,5 см.
                 </Text>
             </View>
+            <StatusBar style="auto" />
         </View>
     )
 }

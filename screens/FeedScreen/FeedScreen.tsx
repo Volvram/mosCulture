@@ -6,7 +6,6 @@ import DailyWord from "./components/DailyWord/DailyWord";
 import News from "./components/News/News";
 import TrialTest from "./components/TrialTest/TrialTest";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type FeedScreenProps = {
     navigation: any,

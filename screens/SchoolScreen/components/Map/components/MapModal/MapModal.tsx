@@ -10,7 +10,6 @@ type MapModalProps = {
 }
 
 const MapModal: React.FC<MapModalProps> = ({ isModalVisible, setModalVisible }) => {
-    
 
     return (
         <Modal
