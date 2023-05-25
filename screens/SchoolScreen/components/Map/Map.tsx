@@ -2,9 +2,11 @@ import { StyleSheet, View, Text } from "react-native";
 import MapView, { Marker } from 'react-native-maps';
 import React from "react";
 import MapModal from "./components/MapModal/MapModal";
+import { SchoolType } from "../../../../store/SchoolScreenStore";
 
 type MapProps = {
-    navigation: any
+    navigation: any,
+    schools: SchoolType[] | null,
 }
 
 const moscowRegion = {
@@ -14,12 +16,15 @@ const moscowRegion = {
     longitudeDelta: 0.01,
 };
 
-const Map: React.FC<MapProps> =  ({ navigation }) => {
+const Map: React.FC<MapProps> =  ({ navigation, schools }) => {
     const [isModalVisible, setModalVisible] = React.useState(false);
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };
+
+    React.useEffect(() => {
+    }, []);
 
     return (
         <View style={styles.map}>
@@ -27,11 +32,15 @@ const Map: React.FC<MapProps> =  ({ navigation }) => {
                 style={styles.map}
                 initialRegion={moscowRegion} //your region data goes here.
             >
-            <Marker coordinate={moscowRegion}
-                // image={{uri: ''}}
-                onPress={() => {toggleModal()}}/>
+                {schools && schools.map((school) => {
+                    return (
+                        <Marker key={school.id} coordinate={moscowRegion}
+                            image={{uri: 'https://pvc-c0a6feae-7987-4729-b7eb-5f07f4dc591c.obs.ru-moscow-1.hc.sbercloud.ru/media/map/icons/geomark_school.png'}}
+                            onPress={() => {toggleModal()}}/>
+                    )
+                })
+                }
             </MapView>
-
             <MapModal isModalVisible={isModalVisible} setModalVisible={setModalVisible}/>
         </View>
     );

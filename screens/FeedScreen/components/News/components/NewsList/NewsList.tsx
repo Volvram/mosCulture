@@ -36,7 +36,7 @@ const NewsList: React.FC<NewsListProps> = ({navigation}) => {
             {newsListStore.news ? newsListStore.news.map(item => {
                 if (item.image) {
                     return (
-                        <Card key={item.id} top={formatDate(item.createdAt)} bottom={item.name} // image={item.image}
+                        <Card key={item.id} top={formatDate(item.createdAt)} bottom={item.name} image={item.image}
                             onPress={() => navigation.navigate("Пост", { post: item})} />
                     )
                 } else {

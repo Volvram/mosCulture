@@ -43,10 +43,14 @@ export default class NewsListStore implements ILocalStore {
         try {
             const result = await axios(`${HOST}/articles`, {
                 method: "get",
+                params: {
+                    per_page: 10,
+                    article_type_ids: 1,
+                }
             });
 
             runInAction(() => {
-                this.setNews(result.data.filter((item: ArticleType) => item.articleType.name === "Новости"));
+                this.setNews(result.data);
             });
             
         } catch(e) {

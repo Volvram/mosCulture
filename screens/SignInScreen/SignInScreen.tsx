@@ -37,7 +37,7 @@ const SignInScreen: React.FC<SignInScreenProps> = ({ navigation }) => {
                     <View style={{marginHorizontal: 16}}>
                         <Text style={styles.signIn_title}>Авторизация</Text>
 
-                        {incorrectData&&
+                        {incorrectData &&
                             <View style={styles.signIn_error}>
                                 <Image style={{width: 20, height: 20}} source={require("../../assets/img/exclamation.png")} />
                                 <Text style={styles.signIn_error_text}>Неверная электронная почта или пароль.</Text>
@@ -102,12 +102,13 @@ const styles = StyleSheet.create({
         top: "30%",
         paddingVertical: 12,
         paddingHorizontal: 16,
+        width: "100%",
         backgroundColor: "#FAE1E3",
         borderRadius: 24,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "center"
     },
     signIn_error_text: {
         ...TYPOGRAPHY.p1,

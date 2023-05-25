@@ -8,6 +8,9 @@ import SchoolList from "./components/SchoolList/SchoolList";
 import ToggleButton from "../../components/ToggleButton/ToggleButton";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import SchoolFilter from "./components/SchoolFilter/SchoolFilter";
+import SchoolScreenStore from "../../store/SchoolScreenStore";
+import { useLocalStore } from "../../utils/useLocalStore";
+import { observer } from "mobx-react-lite";
 
 type SchoolScreenProps = {
     navigation: any
@@ -17,12 +20,23 @@ const SchoolScreen: React.FC<SchoolScreenProps> =  ({ navigation }) => {
     const [isFilterVisible, setFilterVisible] = React.useState(false);
     const [selected, setSelected] = React.useState<string>("Список");
 
+    const schoolScreenStore = useLocalStore(() => new SchoolScreenStore());
+
+    React.useEffect(() => {
+        schoolScreenStore.requestSchools();
+    }, []);
+
     const toggleFilter = () => {
         setFilterVisible(!isFilterVisible);
     };
 
     const handleChange = (value: string) => {
         setSelected(value);
+    }
+
+    const onFilterChange = (districtFilter: number[], artFilter: number[]) => {
+        schoolScreenStore.setDistrictFilters(districtFilter);
+        schoolScreenStore.setArtFilters(artFilter);
     }
 
     return (
@@ -32,18 +46,18 @@ const SchoolScreen: React.FC<SchoolScreenProps> =  ({ navigation }) => {
                 {image: require("../../assets/img/sliders.png"), onClick: () => {toggleFilter()}}]
                 } />
             <View style={styles.schools}>
-                <SchoolFilter isFilterVisible={isFilterVisible} setFilterVisible={setFilterVisible}/>
+                <SchoolFilter isFilterVisible={isFilterVisible} setFilterVisible={setFilterVisible} onFilterChange={onFilterChange}/>
                 
                 <ToggleButton firstSelection="Список" secondSelection="Карта" onChange={handleChange} />
-                {selected === "Список" && <SchoolList navigation={navigation}/>}
-                {Platform.OS !== "web" && selected === "Карта" && <Map navigation={navigation} />}
+                {selected === "Список" && <SchoolList navigation={navigation} schools={schoolScreenStore.schools}/>}
+                {Platform.OS !== "web" && selected === "Карта" && <Map navigation={navigation} schools={schoolScreenStore.schools}/>}
             </View>
             <StatusBar style="auto" />
         </View>
     );
 }
 
-export default SchoolScreen;
+export default observer(SchoolScreen);
 
 const styles = StyleSheet.create({
     container: {

@@ -5,6 +5,8 @@ import { COLORS } from "../../config/colors";
 import React from "react";
 import { TYPOGRAPHY } from "../../config/typography";
 import Redirect from "./components/Redirect/Redirect";
+import { useLocalStore } from "../../utils/useLocalStore";
+import { SignUpStore } from "../../store/SignUpStore";
 
 type SignUpScreenProps = {
     navigation: any,
@@ -12,8 +14,18 @@ type SignUpScreenProps = {
 
 const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
     const [hiddenPassword, setHiddenPassword] = React.useState(true);
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [incorrectData, setIncorrectData] = React.useState(false);
+
+    const signUpStore = useLocalStore(() => new SignUpStore());
+
+    async function register(){
+        const registration = await signUpStore.requestRegister();
+        if (registration) {
+            navigation.goBack();
+        } else if (registration === false) {
+            setIncorrectData(true);
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -23,15 +35,21 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
                     source={require("../../assets/img/decoration_2.png")}>
                     <View style={{marginHorizontal: 16}}>
                         <Text style={styles.signUp_title}>Регистрация</Text>
+                        {incorrectData &&
+                            <View style={styles.signUp_error}>
+                                <Image style={{width: 20, height: 20}} source={require("../../assets/img/exclamation.png")} />
+                                <Text style={styles.signUp_error_text}>Некорректные данные</Text>
+                            </View>
+                        }
                         <TextInput
                             style={styles.signUp_input}
-                            onChangeText={(value) => {setEmail(value)}}
+                            onChangeText={(value) => {signUpStore.setName(value)}}
                             placeholder="Ваше имя"
                             placeholderTextColor={COLORS.gray}
                         />
                         <TextInput
                             style={styles.signUp_input}
-                            onChangeText={(value) => {setEmail(value)}}
+                            onChangeText={(value) => {signUpStore.setEmail(value)}}
                             placeholder="Электронная почта"
                             placeholderTextColor={COLORS.gray}
                         />
@@ -39,7 +57,7 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
                             <TextInput
                                 secureTextEntry={hiddenPassword}
                                 style={styles.signUp_input}
-                                onChangeText={(value) => {setPassword(value)}}
+                                onChangeText={(value) => {signUpStore.setPassword(value)}}
                                 placeholder="Пароль"
                                 placeholderTextColor={COLORS.gray}
                             />
@@ -50,8 +68,7 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity style={styles.signUp_submit} onPress={() => {
-                            console.log(email);
-                            console.log(password);
+                            register();
                         }}>
                             <Text style={styles.signUp_submit_text}>Зарегистрироваться</Text>
                         </TouchableOpacity>
@@ -83,6 +100,24 @@ const styles = StyleSheet.create({
         marginBottom: "30%",
         color: COLORS.black,
         alignSelf: "center",
+    },
+    signUp_error: {
+        position: "absolute",
+        top: "15%",
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        width: "100%",
+        backgroundColor: "#FAE1E3",
+        borderRadius: 24,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    signUp_error_text: {
+        ...TYPOGRAPHY.p1,
+        marginLeft: 8,
+        color: "#DC3545",
     },
     signUp_input: {
         ...TYPOGRAPHY.p1,

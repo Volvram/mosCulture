@@ -3,28 +3,53 @@ import { ILocalStore } from "../utils/useLocalStore";
 import axios from "axios";
 import { HOST } from "../config/host";
 
-type PrivateFields = "_chosenDistricts" | "_chosenDirections";
+type DistrictType = {
+    id: number,
+    name: string
+}
+
+type ArtType = {
+    id: number,
+    name: string
+}
+
+type PrivateFields = "_districts" | "_chosenDistricts" | "_arts" | "_chosenArts";
 
 export default class SchoolFilterStore implements ILocalStore {
-    private _chosenDistricts: string[] = [];
-    private _chosenDirections : string[] = [];
+    private _districts: DistrictType[] | null = null;
+    private _chosenDistricts: number[] = [];
+
+    private _arts: ArtType[] | null = null;
+    private _chosenArts: number[] = [];
 
     constructor() {
         makeObservable<SchoolFilterStore, PrivateFields>(this, {
+            _districts: observable,
+            setDistricts: action,
+            districts: computed,
             _chosenDistricts: observable,
             setChosenDistricts: action,
             chosenDistricts: computed,
             addChosenDistrict: action,
             deleteChosenDistrict: action,
-            _chosenDirections: observable,
-            setChosenDirections: action,
-            chosenDirections: computed,
-            addChosenDirection: action,
-            deleteChosenDirection: action,
+            _arts: observable,
+            _chosenArts: observable,
+            setChosenArts: action,
+            chosenArts: computed,
+            addChosenArt: action,
+            deleteChosenArt: action,
         })
     }
 
-    setChosenDistricts(chosenDistricts: string[]) {
+    setDistricts(districts: DistrictType[]) {
+        this._districts = districts;
+    }
+
+    get districts() {
+        return this._districts;
+    }
+
+    setChosenDistricts(chosenDistricts: number[]) {
         this._chosenDistricts = chosenDistricts;
     }
 
@@ -32,50 +57,70 @@ export default class SchoolFilterStore implements ILocalStore {
         return this._chosenDistricts;
     }
 
-    addChosenDistrict(chosenDistrict: string) {
+    addChosenDistrict(chosenDistrict: number) {
         this._chosenDistricts = [...this._chosenDistricts, chosenDistrict];
     }
 
-    deleteChosenDistrict(chosenDistrict: string) {
+    deleteChosenDistrict(chosenDistrict: number) {
         const idx = this._chosenDistricts.findIndex(dis => dis === chosenDistrict);
         this.setChosenDistricts([
             ...this._chosenDistricts.slice(0, idx), 
             ...this._chosenDistricts.slice(idx+1, this._chosenDistricts.length)]);
     }
 
-    setChosenDirections(chosenDirections: string[]) {
-        this._chosenDirections = chosenDirections;
+    setArts(arts: ArtType[]) {
+        this._arts = arts;
     }
 
-    get chosenDirections() {
-        return this._chosenDirections;
+    get arts() {
+        return this._arts;
     }
 
-    addChosenDirection(chosenDirection: string) {
-        this._chosenDirections = [...this._chosenDirections, chosenDirection];
+    setChosenArts(chosenArts: number[]) {
+        this._chosenArts = chosenArts;
     }
 
-    deleteChosenDirection(chosenDirection: string) {
-        const idx = this._chosenDirections.findIndex(dis => dis === chosenDirection);
-        this.setChosenDirections([
-            ...this._chosenDirections.slice(0, idx), 
-            ...this._chosenDirections.slice(idx+1, this._chosenDirections.length)]);
+    get chosenArts() {
+        return this._chosenArts;
     }
 
-    sendFilters = async () => {
+    addChosenArt(chosenArt: number) {
+        this._chosenArts = [...this._chosenArts, chosenArt];
+    }
+
+    deleteChosenArt(chosenArt: number) {
+        const idx = this._chosenArts.findIndex(art => art === chosenArt);
+        this.setChosenArts([
+            ...this._chosenArts.slice(0, idx), 
+            ...this._chosenArts.slice(idx+1, this._chosenArts.length)]);
+    }
+
+    requestDistricts = async () => {
         try {
-            // const result = await axios(`${HOST}/articles`, {
-            //     method: "get",
-            // });
-            // runInAction(() => {
-            //     this.setNews(result.data.filter((item: ArticleType) => item.articleType.name === "Новости"));
-            // });
-            
-        } catch(e) {
-            // this.setNews([]);
-            // console.log(e)
-        }
-    } 
+            const result = await axios(`${HOST}/districts`, {
+                method: "get"
+            })
 
+            runInAction(() => {
+                this.setDistricts(result.data);
+            })
+        } catch(e) {
+            console.log(e)
+        }
+    }
+
+    requestArts = async () => {
+        try {
+            const result = await axios(`${HOST}/arts`, {
+                method: "get"
+            })
+
+            runInAction(() => {
+                this.setArts(result.data);
+            })
+        } catch(e) {
+            console.log(e)
+        }
+    }
     destroy() {}
 }

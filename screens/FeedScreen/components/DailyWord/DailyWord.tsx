@@ -11,7 +11,6 @@ const DailyWord: React.FC = () => {
 
     React.useEffect(() => {
         dailyWordStore.requestDailyWord();
-        // console.log(dailyWordStore.dailyWord);
     }, []);
 
     return (
@@ -38,16 +37,15 @@ const DailyWord: React.FC = () => {
             <TouchableOpacity style={styles.dailyWord_more}>
                 <Text style={styles.dailyWord_more_text}>Подробнее</Text>
             </TouchableOpacity>
-            {dailyWordStore.dailyWord && dailyWordStore.dailyWord.image ? 
-                <Image style={styles.dailyWord_image} 
-                    source={{uri: dailyWordStore.dailyWord.image}}
-                />
-            : 
-            // <View style={styles.dailyWord_image_placehoder} />
-            <Image style={styles.dailyWord_image} 
-                    source={require("../../../../assets/img/daily.png")}
-                />
-            }
+            <View style={styles.dailyWord_card}>
+                {dailyWordStore.dailyWord && 
+                    <Image style={styles.dailyWord_card_image} 
+                        source={{uri: dailyWordStore.dailyWord.image}}
+                        resizeMode="contain"
+                    />
+                }
+            </View>
+            
         </View>
     )
 }
@@ -108,14 +106,19 @@ const styles = StyleSheet.create({
         ...TYPOGRAPHY.p1,
         color: COLORS.blueAction
     },
-    dailyWord_image: {
+    dailyWord_card: {
         marginTop: 16,
-    },
-    dailyWord_image_placehoder: {
-        marginTop: 16,
-        height: 300,
-        width: 200,
+        height: 451,
+        width: 297,
         backgroundColor: COLORS.white,
         borderRadius: 16,
-    }
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    dailyWord_card_image: {
+        width: "100%",
+        height: "100%",
+        borderRadius: 16,
+    },
+    
 })

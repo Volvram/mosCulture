@@ -16,23 +16,16 @@ type ListElementProps = {
 const ListElement: React.FC<ListElementProps> = ({ top=" ", middle=" ", bottom=" ", image=null, onPress, topStyle=null, bottomStyle=null}) => {
 
     return (
-        <TouchableOpacity style={styles.listElement} onPress={onPress}>
+        <TouchableOpacity style={styles.listElement} onPress={onPress} activeOpacity={1}>
             {image  
                ? <Image style={styles.listElement_image} source={image} />
                : <View style={styles.listElement_image_replaced} /> }
 
             <View style={styles.listElement_details}>
-                { Array.isArray(top) ? 
-                    <ScrollView horizontal>
-                            {top.map(el => {
-                                return (
-                                    <View style={[styles.listElement_details_top, topStyle]}>
-                                        <Text style={styles.listElement_details_top_text}>{el}</Text>
-                                    </View>
-                                )
-                            })
-                            }
-                    </ScrollView>
+                { Array.isArray(top) && top.length > 1 ? 
+                            <View key={top[0]} style={[styles.listElement_details_top, topStyle]}>
+                            <Text style={styles.listElement_details_top_text}>{top[0]}...</Text>
+                        </View>
                     : <View style={[styles.listElement_details_top, topStyle]}>
                         <Text style={styles.listElement_details_top_text}>{top}</Text>
                        </View>

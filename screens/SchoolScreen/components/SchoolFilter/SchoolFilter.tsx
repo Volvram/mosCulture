@@ -10,14 +10,17 @@ import { observer } from 'mobx-react-lite';
 
 type SchoolFilterProps = {
     isFilterVisible: boolean,
-    setFilterVisible: React.Dispatch<React.SetStateAction<boolean>>
+    setFilterVisible: React.Dispatch<React.SetStateAction<boolean>>,
+    onFilterChange: (districtFilters: number[], artFilters: number[]) => void
 }
 
-const districts = ["ЦАО", "ЮВАО","СЗАО", "САО", "ЮАО", "ЗелАО"];
-const directions = ["Музыкальная", "Художественная", "Театральная", "Хореографическая",]
-
-const SchoolFilter: React.FC<SchoolFilterProps> = ({isFilterVisible, setFilterVisible}) => {
+const SchoolFilter: React.FC<SchoolFilterProps> = ({isFilterVisible, setFilterVisible, onFilterChange}) => {
     const schoolFiltersStore = useLocalStore(() => new SchoolFilterStore());
+
+    React.useEffect(() => {
+        schoolFiltersStore.requestDistricts();
+        schoolFiltersStore.requestArts();
+    }, [])
     
     return (
         <Modal
@@ -38,23 +41,23 @@ const SchoolFilter: React.FC<SchoolFilterProps> = ({isFilterVisible, setFilterVi
                     <View style={styles.schoolFilter_wrapper_districts}>
                         <Text style={styles.schoolFilter_wrapper_districts_title}>По округу</Text>
                         <View style={styles.schoolFilter_wrapper_districts_choices}>
-                            {districts.map(district => {
+                            {schoolFiltersStore.districts && schoolFiltersStore.districts.map(district => {
                                 return (
-                                    <View key={district} style={styles.schoolFilter_wrapper_districts_choices_choice}>
+                                    <View key={district.id} style={styles.schoolFilter_wrapper_districts_choices_choice}>
                                         <CheckBox
                                             disabled={false}
-                                            value={Boolean(schoolFiltersStore.chosenDistricts.find(dis => dis === district))}
+                                            value={Boolean(schoolFiltersStore.chosenDistricts.find(dis => dis === district.id))}
                                             onValueChange={(newValue) => {
                                                 if (newValue) {
-                                                    schoolFiltersStore.addChosenDistrict(district);
+                                                    schoolFiltersStore.addChosenDistrict(district.id);
                                                 } else {
-                                                    schoolFiltersStore.deleteChosenDistrict(district)
+                                                    schoolFiltersStore.deleteChosenDistrict(district.id)
                                                 }
                                             }}
                                             color={COLORS.blueAction}
                                             style={{borderRadius: 6}}
                                         />
-                                        <Text style={styles.schoolFilter_wrapper_districts_choices_choice_text}>{district}</Text>
+                                        <Text style={styles.schoolFilter_wrapper_districts_choices_choice_text}>{district.name}</Text>
                                     </View>
                                 )
                             })
@@ -64,7 +67,11 @@ const SchoolFilter: React.FC<SchoolFilterProps> = ({isFilterVisible, setFilterVi
                             <TouchableOpacity onPress={() => schoolFiltersStore.setChosenDistricts([])}>
                                 <Text style={{...TYPOGRAPHY.p1, color: COLORS.blueAction}}>Сбросить все</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => schoolFiltersStore.setChosenDistricts([...districts])}>
+                            <TouchableOpacity onPress={() => {
+                                    if (schoolFiltersStore.districts) {
+                                        schoolFiltersStore.setChosenDistricts([...schoolFiltersStore.districts.map(dis => dis.id)])
+                                    }
+                                }}>
                                 <Text style={{...TYPOGRAPHY.p1, color: COLORS.blueAction}}>Выбрать всё</Text>
                             </TouchableOpacity>
                         </View>
@@ -72,24 +79,24 @@ const SchoolFilter: React.FC<SchoolFilterProps> = ({isFilterVisible, setFilterVi
                     <View style={{marginTop: 32}}>
                         <Text style={styles.schoolFilter_wrapper_direction_title}>По направлению</Text>
                         <View style={styles.schoolFilter_wrapper_direction_choices}>
-                            {directions.map(direction => {
+                            {schoolFiltersStore.arts && schoolFiltersStore.arts.map(art => {
                                 return (
-                                    <View key={direction} style={styles.schoolFilter_wrapper_direction_choices_choice}>
+                                    <View key={art.id} style={styles.schoolFilter_wrapper_direction_choices_choice}>
                                         <CheckBox
                                             disabled={false}
-                                            value={Boolean(schoolFiltersStore.chosenDirections.find(dir => dir === direction))}
+                                            value={Boolean(schoolFiltersStore.chosenArts.find(a => a === art.id))}
                                             onValueChange={(newValue) => {
                                                 if (newValue) {
-                                                    schoolFiltersStore.addChosenDirection(direction)
+                                                    schoolFiltersStore.addChosenArt(art.id)
                                                 } else {
-                                                    const idx = schoolFiltersStore.chosenDirections.findIndex(dis => dis === direction);
-                                                    schoolFiltersStore.deleteChosenDirection(direction);
+                                                    const idx = schoolFiltersStore.chosenArts.findIndex(a => a === art.id);
+                                                    schoolFiltersStore.deleteChosenArt(art.id);
                                                 }
                                             }}
                                             color={COLORS.blueAction}
                                             style={{borderRadius: 6}}
                                         />
-                                        <Text style={styles.schoolFilter_wrapper_direction_choices_choice_text}>{direction}</Text>
+                                        <Text style={styles.schoolFilter_wrapper_direction_choices_choice_text}>{art.name}</Text>
                                     </View>
                                 )
                             })
@@ -99,11 +106,15 @@ const SchoolFilter: React.FC<SchoolFilterProps> = ({isFilterVisible, setFilterVi
 
                     <View style={styles.schoolFilter_wrapper_action}>
                         <TouchableOpacity style={styles.schoolFilter_wrapper_action_reset}
-                            onPress={() => {schoolFiltersStore.setChosenDistricts([]); schoolFiltersStore.setChosenDirections([])}}>
+                            onPress={() => {schoolFiltersStore.setChosenDistricts([]); schoolFiltersStore.setChosenArts([])}}>
                             <Text style={styles.schoolFilter_wrapper_action_reset_text}>Сбросить</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.schoolFilter_wrapper_action_apply}>
+                        <TouchableOpacity style={styles.schoolFilter_wrapper_action_apply}
+                            onPress={() => {
+                                onFilterChange(schoolFiltersStore.chosenDistricts, schoolFiltersStore.chosenArts);
+                                setFilterVisible(false);
+                            }}>
                             <Text style={styles.schoolFilter_wrapper_action_apply_text}>Применить</Text>
                         </TouchableOpacity>
                     </View>

@@ -43,9 +43,14 @@ export default class DailyWordStore implements ILocalStore {
         try {
             const result = await axios(`${HOST}/articles`, {
                 method: "get",
+                params: {
+                    per_page: 1,
+                    article_type_ids: 10,
+                }
             });
+
             runInAction(() => {
-                this.setDailyWord(result.data.find((item: ArticleType) => item.articleType.name === "Слово дня"));
+                this.setDailyWord(result.data[0]);
             });
             
         } catch(e) {

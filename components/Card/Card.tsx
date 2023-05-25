@@ -8,7 +8,7 @@ type CardProps = {
     top?: string,
     middle?: string,
     bottom?: string,
-    image?: ImageSourcePropType | null,
+    image?: string | null,
     onPress?: () => void,
     cardStyle?: StyleProp<ViewStyle>,
     resizeMode?: ImageResizeMode | undefined,
@@ -32,7 +32,7 @@ const Card: React.FC<CardProps> = ({
             ?  <ImageBackground 
                     style={styles.card_background}
                     imageStyle={{ borderRadius: 16}}
-                    source={image} 
+                    source={{uri: image}} 
                     resizeMode={resizeMode}> 
                     <LinearGradient
                         colors={[
