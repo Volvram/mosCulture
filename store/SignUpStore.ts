@@ -64,7 +64,6 @@ export class SignUpStore implements ILocalStore {
             });
 
             runInAction(() => {
-                console.log(result.data);
                 Alert.alert("Аккаунт успешно зарегистрирован");
             });
 
@@ -76,7 +75,7 @@ export class SignUpStore implements ILocalStore {
             if (e.toString().split(" ").find((el: string) => el === "Network")) {
                 Alert.alert("Отсутствует подключение к серверу");
             } else {
-                console.log(e.response);
+                console.log("Sign Up Store: ", e.response);
                 return new Promise((resolve, reject) => {
                     resolve(false);
                 })

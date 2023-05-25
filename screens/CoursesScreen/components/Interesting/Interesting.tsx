@@ -3,27 +3,29 @@ import { TYPOGRAPHY } from "../../../../config/typography";
 import { COLORS } from "../../../../config/colors";
 import Card from "../../../../components/Card/Card";
 import { formatPrice } from "../../../../config/formatPrice";
+import { defineTagStyle } from "../../../../config/defineTagStyle";
 
 const courses = [
     {
         id: 1,
         price: "1000",
-        tag: "Tag name",
+        tag: "Хореография",
         title: "Lorem ipsum dolor sit amet, consectetur adipiscing"
     },
     {
         id: 2,
         price: "Бесплатно",
-        tag: "Tag name",
+        tag: "Музыка",
         title: "Lorem ipsum dolor sit amet, consectetur adipiscing"
     }
 ]
 
 type InterestingProps = {
     navigation: any,
+    onOpen: () => void
 }
 
-const Interesting: React.FC<InterestingProps> = ({navigation}) => {
+const Interesting: React.FC<InterestingProps> = ({ navigation, onOpen }) => {
     return (
         <View style={styles.interesting}>
             <Text style={styles.interesting_title}>Может быть интересно</Text>
@@ -38,9 +40,10 @@ const Interesting: React.FC<InterestingProps> = ({navigation}) => {
                 decelerationRate="fast">
 
                 {courses.map(course => {
+
                     return (
                         <Card key={course.id} top={formatPrice(course.price)} middle={course.tag} bottom={course.title} // image={item.image}
-                            // onPress={() => navigation.navigate("Пост", { post: course})} 
+                            middleStyle={defineTagStyle(course.tag)}  onPress={() => {onOpen()}} 
                             />
                     )
                 })}

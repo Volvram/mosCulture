@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, ImageBackground, ImageSourcePropType, TouchableOpacity, StyleProp, ViewStyle, ImageResizeMode } from "react-native";
+import { StyleSheet, View, Text, ImageBackground, ImageSourcePropType, TouchableOpacity, StyleProp, ViewStyle, ImageResizeMode, TextStyle } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
@@ -14,6 +14,7 @@ type CardProps = {
     resizeMode?: ImageResizeMode | undefined,
     width?: number,
     height?: number,
+    middleStyle?: StyleProp<TextStyle>
 }
 
 const Card: React.FC<CardProps> = ({ 
@@ -25,7 +26,8 @@ const Card: React.FC<CardProps> = ({
         cardStyle=null, 
         resizeMode="cover", 
         width=290,
-        height=192}) => {
+        height=192,
+        middleStyle=null}) => {
     return (
         <TouchableOpacity style={[styles.card, cardStyle, {width, height}]} onPress={onPress}>
             {image
@@ -65,9 +67,11 @@ const Card: React.FC<CardProps> = ({
                         <Text style={styles.card_details_top}>
                             {top}
                         </Text>
-                        <Text style={styles.card_details_middle}>
-                            {middle}
-                        </Text>
+                        <View style={[styles.card_details_middle, middleStyle]}>
+                            <Text style={styles.card_details_middle_text}>
+                                {middle}
+                            </Text>
+                        </View>
                         <Text style={styles.card_details_bottom}>
                             {bottom}
                         </Text>
@@ -109,9 +113,12 @@ const styles = StyleSheet.create({
         color: COLORS.white,
     },
     card_details_middle: {
-        ...TYPOGRAPHY.p1,
         marginTop: 'auto',
-        color: COLORS.white,
+        alignSelf: "flex-start"
+    },
+    card_details_middle_text: {
+        ...TYPOGRAPHY.p1,
+        color: COLORS.black,
     },
     card_details_bottom: {
         marginTop: 8,

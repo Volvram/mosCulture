@@ -3,13 +3,13 @@ import Modal from "react-native-modal";
 import { COLORS } from "../../../../config/colors";
 import { TYPOGRAPHY } from "../../../../config/typography";
 
-type TaskModal = {
+type TaskModalType = {
     navigation: any,
     isModalVisible: boolean,
     setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const TaskModal: React.FC<TaskModal> = ({navigation, isModalVisible, setModalVisible}) => {
+const TaskModal: React.FC<TaskModalType> = ({navigation, isModalVisible, setModalVisible}) => {
     return (
         <Modal
             style={styles.taskModal}

@@ -2,18 +2,31 @@ import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { TYPOGRAPHY } from "../../../../config/typography";
 import { COLORS } from "../../../../config/colors";
 import Card from "../../../../components/Card/Card";
+import { defineTagStyle } from "../../../../config/defineTagStyle";
 
 const courses = [
     {
         id: 1,
         percent: "50%",
-        tag: "Tag name",
+        tag: "Изобразительное Искусство",
         title: "Lorem ipsum dolor sit amet, consectetur adipiscing"
     },
     {
         id: 2,
         percent: "43%",
-        tag: "Tag name",
+        tag: "Музыка",
+        title: "Lorem ipsum dolor sit amet, consectetur adipiscing"
+    },
+    {
+        id: 3,
+        percent: "85%",
+        tag: "Театр",
+        title: "Lorem ipsum dolor sit amet, consectetur adipiscing"
+    },
+    {
+        id: 4,
+        percent: "7%",
+        tag: "Хореография",
         title: "Lorem ipsum dolor sit amet, consectetur adipiscing"
     }
 ]
@@ -39,7 +52,7 @@ const YourCourses: React.FC<YourCousesProps> = ({navigation}) => {
                 {courses.map(course => {
                     return (
                         <Card key={course.id} top={course.percent} middle={course.tag} bottom={course.title} // image={item.image}
-                            // onPress={() => navigation.navigate("Пост", { post: course})} 
+                           middleStyle={defineTagStyle(course.tag)} // onPress={() => navigation.navigate("Пост", { post: course})} 
                             />
                     )
                 })}

@@ -1,41 +1,53 @@
 import { StyleSheet, View, Text, Image } from "react-native";
 import { TYPOGRAPHY } from "../../../../../../config/typography";
 import { COLORS } from "../../../../../../config/colors";
+import { ResultType } from "../../../../../../store/RatingStore";
+import { observer } from "mobx-react-lite"
 
-const LeaderBoard: React.FC = () => {
+type LeaderBoardProps = {
+    leaderBoard: ResultType[] | null
+}
+
+const LeaderBoard: React.FC<LeaderBoardProps> = ({leaderBoard}) => {
     return (
         <View style={styles.leaderBoard}>
             <View style={styles.leaderBoard_place2}>
-                <View style={styles.leaderBoard_place2_avatar}></View>
+                <View style={styles.leaderBoard_place2_avatar}>
+                    {/* {leaderBoard && leaderBoard[1].avatar && <Image source={{uri: leaderBoard[1].avatar}}/>} */}
+                </View>
                 <View style={styles.leaderBoard_place2_medal}>
                     <Text style={styles.leaderBoard_num}>2</Text>
                 </View>
-                <Text style={styles.leaderBoard_username}>Lorem ipsum</Text>
+                <Text style={styles.leaderBoard_username}>{leaderBoard ? leaderBoard[1].name : " - "}</Text>
                 <View style={styles.leaderBoard_place2_score}>
-                    <Text style={styles.leaderBoard_points}>90 очков</Text>
+                    <Text style={styles.leaderBoard_points}>{leaderBoard ? leaderBoard[1].score : " - "} очков</Text>
                 </View>
             </View>
             <View style={styles.leaderBoard_place1}>
                 <Image style={styles.leaderBoard_place1_crown} 
                     source={require("../../../../../../assets/img/crown.png")} />
-                <View style={styles.leaderBoard_place1_avatar}></View>
+                <View style={styles.leaderBoard_place1_avatar}>
+                    {leaderBoard && leaderBoard[0].avatar && <Image source={{uri: leaderBoard[0].avatar}}/>}
+                </View>
                 <View style={styles.leaderBoard_place1_medal}>
                     <Text style={styles.leaderBoard_num}>1</Text>
                 </View>
-                <Text style={styles.leaderBoard_username}>Lorem ipsum</Text>
+                <Text style={styles.leaderBoard_username}>{leaderBoard ? leaderBoard[0].name : " - "}</Text>
                 <View style={styles.leaderBoard_place1_score}>
-                    <Text style={styles.leaderBoard_points}>120 очков</Text>
+                    <Text style={styles.leaderBoard_points}>{leaderBoard ? leaderBoard[0].score : " - "} очков</Text>
                 </View>
             </View>
             
             <View style={styles.leaderBoard_place3}>
-                <View style={styles.leaderBoard_place3_avatar}></View>
+                <View style={styles.leaderBoard_place3_avatar}>
+                    {leaderBoard && leaderBoard[2].avatar && <Image source={{uri: leaderBoard[2].avatar}}/>}
+                </View>
                 <View style={styles.leaderBoard_place3_medal}>
                     <Text style={styles.leaderBoard_num}>3</Text>
                 </View>
-                <Text style={styles.leaderBoard_username}>Lorem ipsum</Text>
+                <Text style={styles.leaderBoard_username}>{leaderBoard ? leaderBoard[0].name : " - "}</Text>
                 <View style={styles.leaderBoard_place3_score}>
-                    <Text style={styles.leaderBoard_points}>70 очков</Text>
+                    <Text style={styles.leaderBoard_points}>{leaderBoard ? leaderBoard[0].score : " - "} очков</Text>
                 </View>
             </View>
         </View>

@@ -54,6 +54,7 @@ export default class NewsListStore implements ILocalStore {
             });
             
         } catch(e) {
+            console.log("News List Store", e)
             this.setNews([]);
         }
     } 

@@ -6,12 +6,19 @@ import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import YourCourses from "./components/YourCourses/YourCourses";
 import Interesting from "./components/Interesting/Interesting";
 import Other from "./components/Other/Other";
+import CourseModal from "./components/CourseModal/CourseModal";
 
 type CoursesScreenProps = {
     navigation: any,
 }
 
 const CoursesScreen: React.FC<CoursesScreenProps> = ({ navigation }) => {
+
+    const [isModalVisible, setModalVisible] = React.useState(false);
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
 
     return (
         <View style={styles.container}>
@@ -21,9 +28,10 @@ const CoursesScreen: React.FC<CoursesScreenProps> = ({ navigation }) => {
                 } />
             <ScrollView style={styles.courses}>
                 <YourCourses navigation={navigation} />
-                <Interesting navigation={navigation} />
-                <Other navigation={navigation} />
+                <Interesting navigation={navigation} onOpen={() => {setModalVisible(true)}}/>
+                <Other navigation={navigation} onOpen={() => {setModalVisible(true)}}/>
             </ScrollView>
+            <CourseModal navigation={navigation} isModalVisible={isModalVisible} setModalVisible={setModalVisible} />
             <StatusBar style="auto" />
         </View>
     );

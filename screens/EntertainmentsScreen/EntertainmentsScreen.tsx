@@ -6,6 +6,7 @@ import ToggleButton from "../../components/ToggleButton/ToggleButton";
 import Rating from "./components/Rating/Rating";
 import Tasks from "./components/Tasks/Tasks";
 import ScreenHeaderPoints from "../../components/ScreenHeaderPoints/ScreenHeaderPoints";
+import rootStore from "../../store/RootStore/instance";
 
 type EntertainmentScreenProps = {
     navigation: any,
@@ -20,7 +21,7 @@ const EntertainmentScreen: React.FC<EntertainmentScreenProps> = ({ navigation })
 
     return (
         <View style={styles.container}>
-            <ScreenHeaderPoints />
+            <ScreenHeaderPoints points={rootStore.user.score}/>
             <View style={styles.entertainment}>
                 <ToggleButton firstSelection="Задания" secondSelection="Рейтинг" onChange={handleChange} />
                 {selected === "Задания" && <Tasks navigation={navigation} />}

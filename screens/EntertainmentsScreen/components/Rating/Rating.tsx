@@ -1,38 +1,58 @@
-import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
+import { StyleSheet, View, Text, Image, ScrollView, ActivityIndicator } from "react-native";
 import { COLORS } from "../../../../config/colors";
 import { TYPOGRAPHY } from "../../../../config/typography";
 import LeaderBoard from "./components/LeaderBoard/LeaderBoard";
+import React from "react";
+import RatingStore from "../../../../store/RatingStore";
+import { useLocalStore } from "../../../../utils/useLocalStore";
+import rootStore from "../../../../store/RootStore/instance";
+import { observer } from "mobx-react-lite";
 
 const Rating: React.FC = () => {
+    const ratingStore = useLocalStore(() => new RatingStore());
+
+    React.useEffect(() => {
+        ratingStore.requestLeaderBoard();
+    }, []);
+
     return (
         <View style={styles.rating}>
-            <LeaderBoard />
+            <LeaderBoard leaderBoard={ratingStore.leaderBoard} />
             <View style={styles.rating_position}>
                 <Text style={styles.rating_position_text}>Ваша позиция в общем рейтинге:</Text>
-                <Text style={styles.rating_position_num}>997</Text>
+                <Text style={styles.rating_position_num}>{rootStore.user.score ? rootStore.user.score : " - "}</Text>
             </View>
             <ScrollView style={styles.rating_all}
                 contentContainerStyle={{
                     flexGrow: 1,
                 }}>
-                {[4,5,6,7, 8, 9, 10].map(user => {
+                {(ratingStore.leaderBoard !== null && ratingStore.leaderBoard.length === 0) &&
+                    <Text style={styles.rating_all_dataNotFound}>Данные не найдены</Text>
+                }    
+                {ratingStore.leaderBoard ? ratingStore.leaderBoard.map((user, index) => {
                     return (
-                        <View key={user} style={styles.rating_all_user}>
+                        <View key={user.name} style={styles.rating_all_user}>
+
                             <View style={{flexDirection: "row", alignItems: "center"}}>
+                                <Text style={styles.rating_all_user_position}>{index + 1}</Text>
                                 <View style={styles.rating_all_user_avatar}></View>
-                                <Text  style={styles.rating_all_user_username}>Username</Text>
+                                <Text  style={styles.rating_all_user_username}>{user.name}</Text>
                             </View>
-                            <Text  style={styles.rating_all_user_position}>{user}</Text>
+                            <View style={{flexDirection: "row", alignItems: "center"}}>
+                                <Text style={styles.rating_all_user_score}>{user.score}</Text>
+                                <Image style={styles.rating_all_user_score_image} source={require("../../../../assets/img/gem.png")}/>
+                            </View>
                         </View>
                     )
                     })
+                : <ActivityIndicator style={styles.rating_dataIsLoading} size="large" color={COLORS.blueAction} />
                 }
             </ScrollView>
         </View>
     )
 }
 
-export default Rating;
+export default observer(Rating);
 
 const styles = StyleSheet.create({
     rating: {
@@ -62,7 +82,16 @@ const styles = StyleSheet.create({
     },
     rating_all: {
         marginTop: 8,
-        // flex: 1,
+        flex: 1,
+    },
+    rating_all_dataNotFound: {
+        ...TYPOGRAPHY.p1,
+        marginVertical: "auto",
+        marginTop: 30,
+        width: "100%",
+        color: COLORS.gray,
+        alignSelf: "center",
+        textAlign: "center",
     },
     rating_all_user: {
         marginVertical: 8,
@@ -71,7 +100,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between"
     },
+    rating_all_user_position: {
+        ...TYPOGRAPHY.h3,
+        color: COLORS.black,
+    },
     rating_all_user_avatar: {
+        marginLeft: 12,
         width: 48,
         height: 48,
         backgroundColor: COLORS.gray,
@@ -82,9 +116,19 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         color: COLORS.black,
     },
-    rating_all_user_position: {
+    rating_all_user_score: {
         ...TYPOGRAPHY.h3,
-        marginRight: 26,
+        marginRight: 8,
         color: COLORS.black,
-    }
+    },
+    rating_all_user_score_image: {
+        marginRight: 11,
+        width: 20, 
+        height: 20
+    },
+    rating_dataIsLoading: {
+        marginVertical: "auto",
+        width: "100%",
+        alignSelf: "center",
+    },
 });

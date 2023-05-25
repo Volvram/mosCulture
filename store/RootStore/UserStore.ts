@@ -4,7 +4,7 @@ import axios from "axios";
 import { HOST } from "../../config/host";
 import { decodeToken } from "../../config/decodeToken";
 
-type PrivateFields = "_authorized" | "_avatar" | "_userId" | "_name" | "_createdAt" | "_email" | "_roles";
+type PrivateFields = "_authorized" | "_avatar" | "_userId" | "_name" | "_createdAt" | "_email" | "_roles" | "_score";
 
 export default class UserStore {
     private _authorized: boolean | null = null;
@@ -14,6 +14,7 @@ export default class UserStore {
     private _createdAt: string | null = null;
     private _email: string | null = null;
     private _roles: string[] | null = null;
+    private _score: number | null = null;
 
     constructor() {
         makeObservable<UserStore, PrivateFields>(this, {
@@ -39,6 +40,7 @@ export default class UserStore {
             _roles: observable,
             setRoles: action,
             roles: computed,
+            _score: observable,
         })
     }
 
@@ -98,7 +100,15 @@ export default class UserStore {
         return this._roles;
     }
 
-    setAllData(authorized: boolean, avatar: string | null, userId: string, name: string, createdAt: string, email: string, roles: string[]) {
+    setScore(score: number) {
+        this._score = score;
+    }
+
+    get score() {
+        return this._score;
+    }
+
+    setAllData(authorized: boolean, avatar: string | null, userId: string, name: string, createdAt: string, email: string, roles: string[], score: number) {
         this.setAuthorized(authorized);
         this.setAvatar(avatar);
         this.setUserId(userId);
@@ -106,6 +116,7 @@ export default class UserStore {
         this.setCreatedAt(createdAt);
         this.setEmail(email);
         this.setRoles(roles);
+        this.setScore(score);
     }
 
     async checkAuthorization() {
@@ -125,7 +136,7 @@ export default class UserStore {
                 runInAction(() => {
                     const data = result.data;
 
-                    this.setAllData(true, data.avatar, data.userId, data.name, data.createdAt, data.email, data.roles);
+                    this.setAllData(true, data.avatar, data.userId, data.name, data.createdAt, data.email, data.roles, data.score);
                 })
             } else {
                 throw new Error("no access token");

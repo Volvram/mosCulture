@@ -5,7 +5,7 @@ import { COLORS } from "../../config/colors";
 type ScreenHeaderPointsType = {
     image?: ImageSourcePropType | null,
     title?: string,
-    points?: number,
+    points?: number | null,
     onPress?: () => void
 }
 
@@ -24,7 +24,7 @@ const ScreenHeaderPoints: React.FC<ScreenHeaderPointsType> = ({image=null, title
                     </View>
                     <View style={styles.screenHeaderPoints_score}>
                         {/* <Text style={styles.screenHeaderPoints_score_text}>Очки:</Text> */}
-                        <Text style={styles.screenHeaderPoints_score_points}>{points ? points : "-"}</Text>
+                        <Text style={styles.screenHeaderPoints_score_points}>{points ? points : " - "}</Text>
                         <Image source={require("../../assets/img/gem.png")} style={styles.screenHeaderPoints_score_image} />
                     </View>
                 </View>

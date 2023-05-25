@@ -3,6 +3,8 @@ import ListElement from "../../../../components/ListElement/ListElement";
 import { COLORS } from "../../../../config/colors";
 import { SchoolType } from "../../../../store/SchoolScreenStore";
 import { TYPOGRAPHY } from "../../../../config/typography";
+import React from "react";
+import { defineTagStyle } from "../../../../config/defineTagStyle";
 
 type SchoolListProps = {
     navigation: any,
@@ -16,22 +18,11 @@ const SchoolList: React.FC<SchoolListProps> = ({ navigation, schools }) => {
             contentContainerStyle={{
                 flexGrow: 1,
             }}>
-                { schools && schools.length === 0 && <Text style={styles.schoolList_dataNotFound}>Данные не найдены</Text>}
-                {schools && schools.length !== 0 ? schools.map(school => {
-                    let tagStyle;
-                    if (school.arts[0].name === "Музыка") {
-                        tagStyle = {backgroundColor: COLORS.yellow}
-                    } else if (school.arts[0].name === "Изобразительное искусство") {
-                        tagStyle = {backgroundColor: COLORS.pink}
-                    } else if (school.arts[0].name === "Театр") {
-                        tagStyle = {backgroundColor: COLORS.purple}
-                    } else {
-                        tagStyle = {backgroundColor: COLORS.blue}
-                    }
-
+                {schools !== null && schools.length === 0 && <Text style={styles.schoolList_dataNotFound}>Данные не найдены</Text>}
+                {schools ? schools.map(school => {
                     return(
                         <ListElement key={school.id} top={school.arts.map(el => el.name)} middle={school.name} bottom={school.district.name} 
-                        onPress={() => {}} topStyle={{paddingVertical: 2, paddingHorizontal: 10, borderRadius: 8, ...tagStyle}} /> 
+                        onPress={() => {}} topStyle={defineTagStyle(school.arts[0].name)} /> 
                     )
                 })
                 : <ActivityIndicator style={styles.schoolList_dataIsLoading} size="large" color={COLORS.blueAction} />
@@ -48,13 +39,16 @@ const styles = StyleSheet.create({
     },
     schoolList_dataNotFound: {
         ...TYPOGRAPHY.p1,
-        marginTop: 30,
+        marginTop: "auto",
+        marginBottom: "auto",
         width: "100%",
         color: COLORS.gray,
         alignSelf: "center",
         textAlign: "center",
     },
     schoolList_dataIsLoading: {
+        marginTop: "auto",
+        marginBottom: "auto",
         width: "100%",
         alignSelf: "center",
     }

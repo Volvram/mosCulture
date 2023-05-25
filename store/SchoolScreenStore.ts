@@ -133,7 +133,8 @@ export default class SchoolScreenStore implements ILocalStore {
             runInAction(() => {
                 this.setSchools(result.data);
             })
-        } catch(e) {
+        } catch(e: any) {
+            console.log("School Screen Store: ", e)
             this.setSchools([]);
         }
     }

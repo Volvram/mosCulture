@@ -55,7 +55,7 @@ export default class DailyWordStore implements ILocalStore {
             
         } catch(e) {
             this.setDailyWord(undefined);
-            console.log(e)
+            console.log("Daily Word Store", e)
         }
     } 
 

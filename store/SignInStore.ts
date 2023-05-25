@@ -68,6 +68,7 @@ export class SignInStore implements ILocalStore {
             if (e.toString().split(" ").find((el: string) => el === "Network")) {
                 Alert.alert("Отсутствует подключение к серверу");
             } else {
+                console.log("Sign In Store: ", e);
                 return new Promise((resolve, reject) => {
                     resolve(false);
                 });

@@ -105,7 +105,7 @@ export default class SchoolFilterStore implements ILocalStore {
                 this.setDistricts(result.data);
             })
         } catch(e) {
-            console.log(e)
+            console.log("School Filter Store", e);
         }
     }
 
@@ -119,7 +119,7 @@ export default class SchoolFilterStore implements ILocalStore {
                 this.setArts(result.data);
             })
         } catch(e) {
-            console.log(e)
+            console.log("School Filter Store", e);
         }
     }
     destroy() {}

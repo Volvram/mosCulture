@@ -7,7 +7,6 @@ import ScreenHeaderPoints from "../../components/ScreenHeaderPoints/ScreenHeader
 import { TouchableOpacity } from "react-native-gesture-handler";
 import React from "react";
 import { useLocalStore } from "../../utils/useLocalStore";
-import { ProfileScreenStore } from "../../store/ProfileScreenStore";
 import { observer } from "mobx-react-lite";
 import rootStore from "../../store/RootStore/instance";
 
@@ -17,11 +16,9 @@ type ProfileScreenProps = {
 
 const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
 
-    const profileScreenStore = useLocalStore(() => new ProfileScreenStore());
-
     return (
         <View style={styles.container}>
-            <ScreenHeaderPoints />
+            <ScreenHeaderPoints points={rootStore.user.score}/>
             <View style={styles.profile}>
                 <View style={styles.profile_wrapper}>
                     <View style={{alignItems: "center"}}>
