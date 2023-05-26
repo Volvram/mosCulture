@@ -9,7 +9,7 @@ type PrivateFields = "_authorized" | "_avatar" | "_userId" | "_name" | "_created
 export default class UserStore {
     private _authorized: boolean | null = null;
     private _avatar: string | null = null;
-    private _userId: string | null = null;
+    private _userId: number | null = null;
     private _name: string | null = null;
     private _createdAt: string | null = null;
     private _email: string | null = null;
@@ -60,7 +60,7 @@ export default class UserStore {
         return this._avatar;
     }
 
-    setUserId(userId: string) {
+    setUserId(userId: number) {
         this._userId = userId;
     }
 
@@ -108,7 +108,7 @@ export default class UserStore {
         return this._score;
     }
 
-    setAllData(authorized: boolean, avatar: string | null, userId: string, name: string, createdAt: string, email: string, roles: string[], score: number) {
+    setAllData(authorized: boolean, avatar: string | null, userId: number, name: string, createdAt: string, email: string, roles: string[], score: number) {
         this.setAuthorized(authorized);
         this.setAvatar(avatar);
         this.setUserId(userId);
@@ -136,7 +136,7 @@ export default class UserStore {
                 runInAction(() => {
                     const data = result.data;
 
-                    this.setAllData(true, data.avatar, data.userId, data.name, data.createdAt, data.email, data.roles, data.score);
+                    this.setAllData(true, data.avatar, data.id, data.name, data.createdAt, data.email, data.roles, data.score);
                 })
             } else {
                 throw new Error("no access token");

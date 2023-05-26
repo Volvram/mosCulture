@@ -1,15 +1,28 @@
-import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import Modal from "react-native-modal";
 import { COLORS } from "../../../../config/colors";
 import { TYPOGRAPHY } from "../../../../config/typography";
+import React from "react";
+import { useLocalStore } from "../../../../utils/useLocalStore";
+import { TaskModalStore } from "../../../../store/TaskModalStore";
+import { observer } from "mobx-react-lite";
 
 type TaskModalType = {
     navigation: any,
     isModalVisible: boolean,
     setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
+    chosenTest: number | null
 }
 
-const TaskModal: React.FC<TaskModalType> = ({navigation, isModalVisible, setModalVisible}) => {
+const TaskModal: React.FC<TaskModalType> = ({navigation, isModalVisible, setModalVisible, chosenTest}) => {
+
+    const taskModalStore = useLocalStore(() => new TaskModalStore(chosenTest));
+
+    React.useEffect(() => {
+        taskModalStore.setTaskId(chosenTest);
+        taskModalStore.requestTask();
+    }, [chosenTest]);
+
     return (
         <Modal
             style={styles.taskModal}
@@ -19,23 +32,31 @@ const TaskModal: React.FC<TaskModalType> = ({navigation, isModalVisible, setModa
             swipeDirection="down"
             onSwipeComplete={() => setModalVisible(false)}>
 
-            <View style={styles.taskModal_wrapper}>
-                <Image style={styles.taskModal_wrapper_image} source={require("../../../../assets/img/taskModal.png")} />
+            {taskModalStore.task ? 
+                <View style={styles.taskModal_wrapper}>
+                <Image style={styles.taskModal_wrapper_image} 
+                    source={{uri: taskModalStore.task.image}} 
+                    resizeMode="cover"/>
                 <View style={styles.taskModal_wrapper_details}>
                     <View style={styles.taskModal_wrapper_details_top}>
                         <View style={styles.taskModal_wrapper_details_top_difficulty}>
-                            <Text style={styles.taskModal_wrapper_details_top_difficulty_text}>Простой</Text>
+                            <Text style={styles.taskModal_wrapper_details_top_difficulty_text}>
+                                {taskModalStore.task.difficulty}
+                            </Text>
                         </View>
                         <View style={styles.taskModal_wrapper_details_top_reward}>
                             <Text style={styles.taskModal_wrapper_details_top_reward_text}>Награда:</Text>
-                            <Text style={styles.taskModal_wrapper_details_top_reward_num}>10×10</Text>
+                            <Text style={styles.taskModal_wrapper_details_top_reward_num}>
+                                {taskModalStore.task.scorePerQuestion}
+                                ×
+                                {taskModalStore.task.questions.length}
+                            </Text>
                             <Image style={{width: 20, height: 20}} source={require("../../../../assets/img/gem.png")} />
                         </View>
                     </View>
-                    <Text style={styles.taskModal_wrapper_title}>Картины Архипа Ивановича Куинджи</Text>
+                    <Text style={styles.taskModal_wrapper_title}>{taskModalStore.task.title}</Text>
                     <Text style={styles.taskModal_wrapper_description}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Sed pretium sapien at sollicitudin rhoncus. Aenean ac leo tincidunt.
+                     {taskModalStore.task.description}
                     </Text>
                     <Text style={styles.taskModal_wrapper_rule}>За повторное прохождение очки не начисляются!</Text>
                     <View style={styles.taskModal_wrapper_bottom}>
@@ -43,21 +64,26 @@ const TaskModal: React.FC<TaskModalType> = ({navigation, isModalVisible, setModa
                             onPress={() => {setModalVisible(false)}}>
                             <Text style={styles.taskModal_wrapper_bottom_back_text}>Назад</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.taskModal_wrapper_bottom_start} onPress={() => navigation.navigate("Тест")}>
+                        <TouchableOpacity style={styles.taskModal_wrapper_bottom_start} 
+                            onPress={() => navigation.navigate("Тест", {test: taskModalStore.task})}>
                             <Text style={styles.taskModal_wrapper_bottom_start_text}>Начать</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
+            : <ActivityIndicator style={styles. taskModal_dataIsLoading} size="large" color={COLORS.blueAction} />
+        }
+            
         </Modal>
     )
 }
 
-export default TaskModal;
+export default observer(TaskModal);
 
 const styles = StyleSheet.create({
     taskModal: {
         margin: 0,
+        minHeight: 542,
         justifyContent: "flex-end"
     },
     taskModal_wrapper: {
@@ -68,6 +94,7 @@ const styles = StyleSheet.create({
     },
     taskModal_wrapper_image: {
         width: "100%",
+        minHeight: 220,
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
     },
@@ -147,5 +174,11 @@ const styles = StyleSheet.create({
     taskModal_wrapper_bottom_start_text: {
         ...TYPOGRAPHY.p1,
         color: COLORS.white
+    },
+    taskModal_dataIsLoading: {
+        marginTop: "auto",
+        marginBottom: "auto",
+        width: "100%",
+        alignSelf: "center",
     }
 })

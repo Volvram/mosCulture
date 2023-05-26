@@ -8,46 +8,16 @@ import ListElement from "../../components/ListElement/ListElement";
 import TaskModal from "./components/TaskModal/TaskModal";
 import { useLocalStore } from "../../utils/useLocalStore";
 import { TaskScreenStore } from "../../store/TaskScreenStore";
+import rootStore from "../../store/RootStore/instance";
+import { observer } from "mobx-react-lite";
 
 type TaskScreenProps = {
     navigation: any,
 }
 
-const tests = [
-    {
-        id: "1",
-        difficulty: "Простой",
-        title: "Художники конструктивисты",
-        result: "Результат: 5 / 10"
-    },
-    {
-        id: "2",
-        difficulty: "Простой",
-        title: "Художники конструктивисты",
-        result: "Попыток не было"
-    },
-    {
-        id: "3",
-        difficulty: "Средний",
-        title: "Художники конструктивисты",
-        result: "Попыток не было"
-    },
-    {
-        id: "4",
-        difficulty: "Средний",
-        title: "Художники конструктивисты",
-        result: "Результат: 10 / 10"
-    },
-    {
-        id: "5",
-        difficulty: "Сложный",
-        title: "Художники конструктивисты",
-        result: "Результат: 7 / 10"
-    },
-]
-
 const TaskScreen: React.FC<TaskScreenProps> = ({ navigation }) => {
     const [isModalVisible, setModalVisible] = React.useState(false);
+    const [chosenTest, setChosenTest] = React.useState<number | null>(null);
 
     const taskScreenStore = useLocalStore(() => new TaskScreenStore());
 
@@ -61,7 +31,9 @@ const TaskScreen: React.FC<TaskScreenProps> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <ScreenHeaderPoints image={require("../../assets/img/btnBack.png")} onPress={() => navigation.goBack()} />
+            <ScreenHeaderPoints image={require("../../assets/img/btnBack.png")} 
+                onPress={() => navigation.goBack()} 
+                points={rootStore.user.score}/>
             <View style={styles.task}>
                 <View style={styles.task_title}>
                     <Text style={styles.task_title_text}>Музыка</Text>
@@ -79,20 +51,21 @@ const TaskScreen: React.FC<TaskScreenProps> = ({ navigation }) => {
                                 <ListElement key={test.id} top={test.difficulty} 
                                     middle={test.title} 
                                     bottom={test.score ? "Результат: test.score / 100" : "Попыток не было"} 
-                                    onPress={() => {toggleModal()}} 
-                                    image={require("../../assets/img/taskModal.png")}
+                                    onPress={() => {setChosenTest(test.id); toggleModal()}} 
+                                    image={test.image}
+                                    resizeMode="cover"
                                     />
                             )
                         })
                         }
                 </ScrollView>
             </View>
-            <TaskModal navigation={navigation} isModalVisible={isModalVisible} setModalVisible={setModalVisible}/>
+            <TaskModal navigation={navigation} isModalVisible={isModalVisible} setModalVisible={setModalVisible} chosenTest={chosenTest}/>
             <StatusBar style="auto" />
         </View>
     );
 }
-export default TaskScreen;
+export default observer(TaskScreen);
 
 const styles = StyleSheet.create({
     container: {

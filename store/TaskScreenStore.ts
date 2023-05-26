@@ -4,7 +4,7 @@ import axios from "axios";
 import { HOST } from "../config/host";
 import { Alert } from "react-native";
 
-export type TestType = {
+export type TastType = {
     id: number,
     title: string,
     description: string,
@@ -25,7 +25,7 @@ export type TestType = {
 type PrivateFields = "_tests";
 
 export class TaskScreenStore implements ILocalStore {
-    private _tests: TestType[] | null = null;
+    private _tests: TastType[] | null = null;
 
     constructor() {
         makeObservable<TaskScreenStore, PrivateFields>(this, {
@@ -33,7 +33,7 @@ export class TaskScreenStore implements ILocalStore {
         })
     }
 
-    setTests(tests: TestType[]) {
+    setTests(tests: TastType[]) {
         this._tests = tests;
     }
 

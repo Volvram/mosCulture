@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image, ImageSourcePropType, TouchableOpacity, StyleProp, TextStyle, ScrollView } from "react-native";
+import { StyleSheet, View, Text, Image, ImageSourcePropType, TouchableOpacity, StyleProp, TextStyle, ScrollView, ImageResizeMode } from "react-native";
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
 import React from "react";
@@ -7,18 +7,29 @@ type ListElementProps = {
     top?: string | string[],
     middle?: string,
     bottom?: string,
-    image?: ImageSourcePropType | null,
+    image?: string | null,
     onPress?: () => void,
     topStyle?: StyleProp<TextStyle>,
     bottomStyle?: StyleProp<TextStyle>,
+    resizeMode?: ImageResizeMode | undefined,
 }
 
-const ListElement: React.FC<ListElementProps> = ({ top=" ", middle=" ", bottom=" ", image=null, onPress, topStyle=null, bottomStyle=null}) => {
+const ListElement: React.FC<ListElementProps> = (
+    { 
+        top=" ", 
+        middle=" ", 
+        bottom=" ", 
+        image=null, 
+        onPress, 
+        topStyle=null,
+        bottomStyle=null,
+        resizeMode
+    }) => {
 
     return (
         <TouchableOpacity style={styles.listElement} onPress={onPress} activeOpacity={1}>
             {image  
-               ? <Image style={styles.listElement_image} source={image} resizeMode="contain" />
+               ? <Image style={styles.listElement_image} source={{uri: image}} resizeMode={resizeMode ? resizeMode : "cover"} />
                : <View style={styles.listElement_image_replaced} /> 
             }
 

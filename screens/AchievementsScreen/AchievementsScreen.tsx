@@ -97,7 +97,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation }) =
                                             styles.achievements_scroll_list_item 
                                             : styles.achievements_scroll_list_item_disabled}
                                         bottom={achievement.name}
-                                        image={achievement.url} 
+                                        // image={achievement.url}
                                         resizeMode="contain" 
                                         width={achievement.width} 
                                         height={achievement.height}
@@ -116,7 +116,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation }) =
                                             styles.achievements_scroll_list_item 
                                             : styles.achievements_scroll_list_item_disabled}
                                         bottom={achievement.name}
-                                        image={achievement.url} 
+                                        // image={achievement.url} 
                                         resizeMode="contain" 
                                         width={achievement.width} 
                                         height={achievement.height}

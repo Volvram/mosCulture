@@ -21,7 +21,7 @@ const EntertainmentScreen: React.FC<EntertainmentScreenProps> = ({ navigation })
 
     return (
         <View style={styles.container}>
-            <ScreenHeaderPoints points={rootStore.user.score}/>
+            <ScreenHeaderPoints/>
             <View style={styles.entertainment}>
                 <ToggleButton firstSelection="Задания" secondSelection="Рейтинг" onChange={handleChange} />
                 {selected === "Задания" && <Tasks navigation={navigation} />}

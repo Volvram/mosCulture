@@ -48,7 +48,7 @@ const SchoolScreen: React.FC<SchoolScreenProps> =  ({ navigation }) => {
             <View style={styles.schools}>
                 <SchoolFilter isFilterVisible={isFilterVisible} setFilterVisible={setFilterVisible} onFilterChange={onFilterChange}/>
                 
-                <ToggleButton firstSelection="Список" secondSelection="Карта" onChange={handleChange} />
+                {/* <ToggleButton firstSelection="Список" secondSelection="Карта" onChange={handleChange} /> */}
                 {selected === "Список" && <SchoolList navigation={navigation} schools={schoolScreenStore.schools}/>}
                 {Platform.OS !== "web" && selected === "Карта" && <Map navigation={navigation} schools={schoolScreenStore.schools}/>}
             </View>

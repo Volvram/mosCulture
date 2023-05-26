@@ -18,7 +18,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
 
     return (
         <View style={styles.container}>
-            <ScreenHeaderPoints points={rootStore.user.score}/>
+            <ScreenHeaderPoints />
             <View style={styles.profile}>
                 <View style={styles.profile_wrapper}>
                     <View style={{alignItems: "center"}}>

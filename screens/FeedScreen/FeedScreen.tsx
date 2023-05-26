@@ -6,6 +6,7 @@ import DailyWord from "./components/DailyWord/DailyWord";
 import News from "./components/News/News";
 import TrialTest from "./components/TrialTest/TrialTest";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
+import rootStore from "../../store/RootStore/instance";
 
 type FeedScreenProps = {
     navigation: any,

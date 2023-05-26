@@ -1,6 +1,8 @@
 import { StyleSheet, View, Text, Image, TouchableOpacity, ImageSourcePropType } from "react-native";
 import { TYPOGRAPHY } from "../../config/typography";
 import { COLORS } from "../../config/colors";
+import React from "react";
+import rootStore from "../../store/RootStore/instance";
 
 type ScreenHeaderPointsType = {
     image?: ImageSourcePropType | null,
@@ -10,6 +12,7 @@ type ScreenHeaderPointsType = {
 }
 
 const ScreenHeaderPoints: React.FC<ScreenHeaderPointsType> = ({image=null, title = "Мос.Культура", points, onPress}) => {
+
     return (
         <View style={styles.screenHeaderPoints}>
             <View style={{ overflow: 'hidden', paddingBottom: 5 }}>
@@ -23,8 +26,7 @@ const ScreenHeaderPoints: React.FC<ScreenHeaderPointsType> = ({image=null, title
                         <Text style={styles.screenHeaderPoints_title}>{title}</Text>
                     </View>
                     <View style={styles.screenHeaderPoints_score}>
-                        {/* <Text style={styles.screenHeaderPoints_score_text}>Очки:</Text> */}
-                        <Text style={styles.screenHeaderPoints_score_points}>{points ? points : " - "}</Text>
+                        <Text style={styles.screenHeaderPoints_score_points}>{points ? points : rootStore.user.score ? rootStore.user.score : " - "}</Text>
                         <Image source={require("../../assets/img/gem.png")} style={styles.screenHeaderPoints_score_image} />
                     </View>
                 </View>
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
         height: 20
     },
     screenHeaderPoints_title: {
-        marginLeft: 52,
+        marginLeft: 16,
         ...TYPOGRAPHY.h4
     },
     screenHeaderPoints_score: {
@@ -77,11 +79,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-end",
-    },
-    screenHeaderPoints_score_text: {
-        ...TYPOGRAPHY.h4,
-        marginRight: 8,
-        color: COLORS.gray,
     },
     screenHeaderPoints_score_points: {
         ...TYPOGRAPHY.h3,
