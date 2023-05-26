@@ -1,15 +1,18 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Image, ImageBackground } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image, ImageBackground, ActivityIndicator } from "react-native";
 import Modal from "react-native-modal";
 import { COLORS } from "../../../../../../config/colors";
 import { TYPOGRAPHY } from "../../../../../../config/typography";
+import { SchoolType } from "../../../../../../store/SchoolScreenStore";
+import { defineTagStyle } from "../../../../../../config/defineTagStyle";
 
 type MapModalProps = {
     isModalVisible: boolean,
-    setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
+    setModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+    chosenSchool: SchoolType | null;
 }
 
-const MapModal: React.FC<MapModalProps> = ({ isModalVisible, setModalVisible }) => {
+const MapModal: React.FC<MapModalProps> = ({ isModalVisible, setModalVisible, chosenSchool }) => {
 
     return (
         <Modal
@@ -20,70 +23,65 @@ const MapModal: React.FC<MapModalProps> = ({ isModalVisible, setModalVisible }) 
             swipeDirection="down"
             onSwipeComplete={() => setModalVisible(false)}
             >
-            <View style={styles.mapModal_wrapper}>
-                <View style={styles.mapModal_wrapper_top}>
-                    <View style={styles.mapModal_wrapper_top_tags}>
-                        {["Музыкальная", "Театральная"].map(tag => {
-                            let tagStyle;
-                            if (tag === "Музыкальная") {
-                                tagStyle = {backgroundColor: COLORS.yellow}
-                            } else if (tag === "Художественная") {
-                                tagStyle = {backgroundColor: COLORS.pink}
-                            } else if (tag === "Театральная") {
-                                tagStyle = {backgroundColor: COLORS.purple}
-                            }
-                            return (
-                                <View key={tag} style={[styles.mapModal_wrapper_top_tag, tagStyle]}>
-                                    <Text style={styles.mapModal_wrapper_top_tag_text}>{tag}</Text>
-                                </View>
-                            )
-                        })
-                        }
-                    </View>
-                    <TouchableOpacity style={{marginRight: 16}} onPress={() => {setModalVisible(false)}}>
-                        <Image style={{width: 48, height: 48}} 
-                            source={require("../../../../../../assets/img/buttonClose.png")} />
-                    </TouchableOpacity>
-                </View>
-                <Text style={styles.mapModal_wrapper_title}>Детская школа искусств № 14</Text>
-                <ImageBackground source={require("../../../../../../assets/img/decoration_3.png")}>
-                    <Text style={styles.mapModal_wrapper_description}>Школа искусств, дополнительное образование</Text>
-                    <View style={styles.mapModal_wrapper_rating}>
-                        {
-                            ["1", "2","3","4", "5"].map(star => {
+                { chosenSchool ? 
+                    <View style={styles.mapModal_wrapper}>
+                    <View style={styles.mapModal_wrapper_top}>
+                        <View style={styles.mapModal_wrapper_top_tags}>
+                            {chosenSchool.arts.map(art => {
                                 return (
-                                    <Image style={{marginHorizontal: 4}} key={star} source={require("../../../../../../assets/img/star.png")} />
+                                    <View key={art.id} style={[styles.mapModal_wrapper_top_tag, defineTagStyle(art.name)]}>
+                                        <Text style={styles.mapModal_wrapper_top_tag_text}>{art.name}</Text>
+                                    </View>
                                 )
                             })
-                        }
-                        <Text style={styles.mapModal_wrapper_rating_mark}>5.0</Text>
-                        <Text style={styles.mapModal_wrapper_rating_feedbacks}>68 отзывов</Text>
+                            }
+                        </View>
+                        <TouchableOpacity style={{marginRight: 16}} onPress={() => {setModalVisible(false)}}>
+                            <Image style={{width: 48, height: 48}} 
+                                source={require("../../../../../../assets/img/buttonClose.png")} />
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.mapModal_wrapper_details}>
-                        <View style={styles.mapModal_wrapper_details_section}>
-                            <Image style={styles.mapModal_wrapper_details_section_image} 
-                                source={require("../../../../../../assets/img/geo.png")} />
-                            <Text style={styles.mapModal_wrapper_details_section_title}>Адрес</Text>
-                            <Text style={styles.mapModal_wrapper_details_section_data}>Пронская ул., 7, Москва</Text>
+                    <Text style={styles.mapModal_wrapper_title}>{chosenSchool.name}</Text>
+                    <ImageBackground source={require("../../../../../../assets/img/decoration_3.png")}>
+                        <Text style={styles.mapModal_wrapper_description}>Школа искусств, дополнительное образование</Text>
+                        <View style={styles.mapModal_wrapper_rating}>
+                            {
+                                ["1", "2","3","4", "5"].map(star => {
+                                    return (
+                                        <Image style={{marginHorizontal: 4}} key={star} source={require("../../../../../../assets/img/star.png")} />
+                                    )
+                                })
+                            }
+                            <Text style={styles.mapModal_wrapper_rating_mark}>5.0</Text>
+                            <Text style={styles.mapModal_wrapper_rating_feedbacks}>68 отзывов</Text>
                         </View>
-                        <View style={styles.mapModal_wrapper_details_section}>
-                            <Image style={styles.mapModal_wrapper_details_section_image} 
-                            source={require("../../../../../../assets/img/telephone.png")} />
-                            <Text style={styles.mapModal_wrapper_details_section_title}>Контакты</Text>
-                            <Text style={styles.mapModal_wrapper_details_section_data}>+7 (495) 705-61-71</Text>
+                        <View style={styles.mapModal_wrapper_details}>
+                            <View style={styles.mapModal_wrapper_details_section}>
+                                <Image style={styles.mapModal_wrapper_details_section_image} 
+                                    source={require("../../../../../../assets/img/geo.png")} />
+                                <Text style={styles.mapModal_wrapper_details_section_title}>Адрес</Text>
+                                <Text style={styles.mapModal_wrapper_details_section_data}>{chosenSchool.address}</Text>
+                            </View>
+                            <View style={styles.mapModal_wrapper_details_section}>
+                                <Image style={styles.mapModal_wrapper_details_section_image} 
+                                source={require("../../../../../../assets/img/telephone.png")} />
+                                <Text style={styles.mapModal_wrapper_details_section_title}>Контакты</Text>
+                                <Text style={styles.mapModal_wrapper_details_section_data}>{chosenSchool.phoneNumber}</Text>
+                            </View>
+                            <View style={styles.mapModal_wrapper_details_section}>
+                                <Image style={styles.mapModal_wrapper_details_section_image}
+                                source={require("../../../../../../assets/img/clock.png")} />
+                                <Text style={styles.mapModal_wrapper_details_section_title}>Время работы</Text>
+                                <Text style={styles.mapModal_wrapper_details_section_data}>Открыто до 20:00</Text>
+                            </View>
                         </View>
-                        <View style={styles.mapModal_wrapper_details_section}>
-                            <Image style={styles.mapModal_wrapper_details_section_image}
-                            source={require("../../../../../../assets/img/clock.png")} />
-                            <Text style={styles.mapModal_wrapper_details_section_title}>Время работы</Text>
-                            <Text style={styles.mapModal_wrapper_details_section_data}>Открыто до 20:00</Text>
-                        </View>
-                    </View>
-                    <TouchableOpacity style={styles.mapModal_wrapper_more}>
-                        <Text style={styles.mapModal_wrapper_more_text}>Подробнее</Text>
-                    </TouchableOpacity>
-                </ImageBackground>
-            </View>
+                        <TouchableOpacity style={styles.mapModal_wrapper_more}>
+                            <Text style={styles.mapModal_wrapper_more_text}>Подробнее</Text>
+                        </TouchableOpacity>
+                    </ImageBackground>
+                </View>
+                : <ActivityIndicator style={styles.mapModal_dataIsLoading} size="large" color={COLORS.blueAction} />
+                }
         </Modal>
     )
 }
@@ -191,5 +189,10 @@ const styles = StyleSheet.create({
     mapModal_wrapper_more_text: {
         ...TYPOGRAPHY.p1,
         color: COLORS.white,
+    },
+    mapModal_dataIsLoading: {
+        marginVertical: "auto",
+        width: "100%",
+        alignSelf: "center",
     }
 });

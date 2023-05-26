@@ -3,6 +3,7 @@ import { ILocalStore } from "../utils/useLocalStore";
 import { HOST } from "../config/host";
 import querystring from "query-string";
 import axios, { AxiosResponse } from "axios";
+import { Alert } from "react-native";
 
 export type SchoolType = {
     id: number,
@@ -10,6 +11,8 @@ export type SchoolType = {
     email: string,
     address: string,
     phoneNumber: string,
+    longitude: number,
+    latitude: number,
     createdAt: string,
     updatedAt: string,
     content: string,
@@ -134,7 +137,11 @@ export default class SchoolScreenStore implements ILocalStore {
                 this.setSchools(result.data);
             })
         } catch(e: any) {
-            console.log("School Screen Store: ", e)
+            if (e.toString().split(" ").find((el: string) => el === "Network")) {
+                Alert.alert("Отсутствует подключение к серверу");
+            } else {
+                console.log("School Screen Store: ", e)
+            }
             this.setSchools([]);
         }
     }

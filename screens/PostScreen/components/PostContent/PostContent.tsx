@@ -1,56 +1,52 @@
 import { StyleSheet, View, Text } from "react-native";
 import { COLORS } from "../../../../config/colors";
 import React from "react";
-import axios, { AxiosResponse } from "axios";
-import { ArticleType } from "../../../../store/NewsListStore";
 import { TYPOGRAPHY } from "../../../../config/typography";
+import { createEditorJsViewer } from "editorjs-viewer-native";
+import { useLocalStore } from "../../../../utils/useLocalStore";
+import { PostContentStore } from "../../../../store/PostContentStore";
+import { observer } from "mobx-react-lite";
+import Paragraph from "./components/Paragraph/Paragraph";
+import Header from "./components/Header/Header";
+import ImageView from "./components/ImageVeiw/ImageView";
+
+// const EditorJsViewerNative = createEditorJsViewer();
+
+const EditorJsViewerNative = createEditorJsViewer({
+    toolsParser: {
+      paragraph: {
+        CustomComponent: Paragraph,
+      },
+      header: {
+        CustomComponent: Header,
+      },
+      image: {
+        CustomComponent: ImageView,
+      }
+    },
+})
 
 type PostContentProps = {
-    post: ArticleType,
+    postId: number,
+    postType: string
 }
 
-const PostContent: React.FC<PostContentProps> = ({post}) => {
+const PostContent: React.FC<PostContentProps> = ({postId, postType}) => {
+    const postContentStore = useLocalStore(() => new PostContentStore(postId, postType));
+
+    React.useEffect(() => {
+        postContentStore.requestPost();
+    }, []);
+
     return (
         <View style={styles.content}>
-            {/* NEED TO ADD EDITORJS PARSER */}
-                {post && <Text style={styles.content_paragraph}>{post.description}</Text>}
-
-                <Text style={styles.content_paragraph}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pretium sapien at sollicitudin rhoncus. 
-                    Aenean ac leo tincidunt, porttitor nibh id, interdum.
-                </Text>
+            {postContentStore.post && <EditorJsViewerNative data={JSON.parse(postContentStore.post.content)} />}
+            {/* <EditorJsViewerNative data={content} /> */}
         </View>
     )
 }
 
-export default PostContent;
+export default observer(PostContent);
 
 const styles = StyleSheet.create({
     content: {

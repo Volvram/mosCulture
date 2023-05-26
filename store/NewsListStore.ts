@@ -4,7 +4,7 @@ import axios from "axios";
 import { HOST } from "../config/host";
 
 export type ArticleType = {
-    id: string,
+    id: number,
     name: string,
     description: string,
     image: string,

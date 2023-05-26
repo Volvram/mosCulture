@@ -9,7 +9,7 @@ type ScreenHeaderPointsType = {
     onPress?: () => void
 }
 
-const ScreenHeaderPoints: React.FC<ScreenHeaderPointsType> = ({image=null, title = "Название.Проекта", points, onPress}) => {
+const ScreenHeaderPoints: React.FC<ScreenHeaderPointsType> = ({image=null, title = "Мос.Культура", points, onPress}) => {
     return (
         <View style={styles.screenHeaderPoints}>
             <View style={{ overflow: 'hidden', paddingBottom: 5 }}>

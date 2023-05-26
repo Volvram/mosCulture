@@ -24,7 +24,7 @@ const PostScreen: React.FC<PostScreenProps> = ({route, navigation}) => {
                     <Animated.View style={{transform: [{translateY: Animated.multiply(scroll, 0.8)}]}}>
                         <PostHeader post={post} />
                     </Animated.View>
-                    <PostContent post={post} />
+                    <PostContent postId={post.id} postType="article"/>
                 </Animated.ScrollView>
                 <StatusBar style="auto" />
         </View>

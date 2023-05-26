@@ -18,8 +18,9 @@ const ListElement: React.FC<ListElementProps> = ({ top=" ", middle=" ", bottom="
     return (
         <TouchableOpacity style={styles.listElement} onPress={onPress} activeOpacity={1}>
             {image  
-               ? <Image style={styles.listElement_image} source={image} />
-               : <View style={styles.listElement_image_replaced} /> }
+               ? <Image style={styles.listElement_image} source={image} resizeMode="contain" />
+               : <View style={styles.listElement_image_replaced} /> 
+            }
 
             <View style={styles.listElement_details}>
                 { Array.isArray(top) && top.length > 1 ? 
@@ -50,6 +51,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     listElement_image: {
+        height: 128,
+        width: 128,
         aspectRatio: 1,
         borderRadius: 16,
     },

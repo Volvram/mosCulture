@@ -11,7 +11,7 @@ type ScreenHeaderAchievementsType = {
     onPress?: () => void
 }
 
-const ScreenHeaderAchievements: React.FC<ScreenHeaderAchievementsType> = ({image=null, title = "Название.Проекта", received, all, onPress}) => {
+const ScreenHeaderAchievements: React.FC<ScreenHeaderAchievementsType> = ({image=null, title = "Мос.Культура", received, all, onPress}) => {
     return (
         <View style={styles.screenHeaderAchievements}>
             <View style={{ overflow: 'hidden', paddingBottom: 5 }}>

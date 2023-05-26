@@ -15,7 +15,7 @@ type ScreenHeaderType = {
 }
 
 const ScreenHeader: React.FC<ScreenHeaderType> = ({image = null, 
-    title = "Название.Проекта",
+    title = "Мос.Культура",
     onPress,
     buttons}) => {
 

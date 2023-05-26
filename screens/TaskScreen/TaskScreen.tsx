@@ -6,6 +6,8 @@ import ScreenHeaderPoints from "../../components/ScreenHeaderPoints/ScreenHeader
 import { TYPOGRAPHY } from "../../config/typography";
 import ListElement from "../../components/ListElement/ListElement";
 import TaskModal from "./components/TaskModal/TaskModal";
+import { useLocalStore } from "../../utils/useLocalStore";
+import { TaskScreenStore } from "../../store/TaskScreenStore";
 
 type TaskScreenProps = {
     navigation: any,
@@ -47,6 +49,12 @@ const tests = [
 const TaskScreen: React.FC<TaskScreenProps> = ({ navigation }) => {
     const [isModalVisible, setModalVisible] = React.useState(false);
 
+    const taskScreenStore = useLocalStore(() => new TaskScreenStore());
+
+    React.useEffect(() => {
+        taskScreenStore.requestTests();
+    }, []);
+
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };
@@ -66,10 +74,14 @@ const TaskScreen: React.FC<TaskScreenProps> = ({ navigation }) => {
                     contentContainerStyle={{
                         flexGrow: 1,
                     }}>
-                        {tests.map(test => {
+                        {taskScreenStore.tests && taskScreenStore.tests.map(test => {
                             return (
-                                <ListElement key={test.id} top={test.difficulty} middle={test.title} bottom={test.result} 
-                                     onPress={() => {toggleModal()}} />
+                                <ListElement key={test.id} top={test.difficulty} 
+                                    middle={test.title} 
+                                    bottom={test.score ? "Результат: test.score / 100" : "Попыток не было"} 
+                                    onPress={() => {toggleModal()}} 
+                                    image={require("../../assets/img/taskModal.png")}
+                                    />
                             )
                         })
                         }

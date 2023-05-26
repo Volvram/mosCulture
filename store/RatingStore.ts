@@ -5,9 +5,15 @@ import axios from "axios";
 import { Alert } from "react-native";
 
 export type ResultType = {
+    id?: number,
+    email?: string,
+    password?: string,
     name: string,
+    avatar: string | null,
     score: number,
-    avatar: string | null
+    createdAt?: string,
+    updatedAt?: string,
+    roles?: null
 }
 
 type PrivateFields = "_leaderBoard"
@@ -18,6 +24,8 @@ export default class RatingStore implements ILocalStore {
     constructor() {
         makeObservable<RatingStore, PrivateFields>(this, {
             _leaderBoard: observable,
+            setLeaderBoard: action,
+            leaderBoard: computed
         })
     }
 

@@ -10,7 +10,7 @@ type CourseModalType = {
     setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const CourseModal: React.FC<CourseModalType> = ({navigation, isModalVisible, setModalVisible}) => {
+const CourseModal: React.FC<CourseModalType> = ({ navigation, isModalVisible, setModalVisible }) => {
     return (
         <Modal
             style={styles.courseModal}
@@ -50,7 +50,8 @@ const CourseModal: React.FC<CourseModalType> = ({navigation, isModalVisible, set
                             onPress={() => {setModalVisible(false)}}>
                             <Text style={styles.courseModal_wrapper_bottom_back_text}>Назад</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.courseModal_wrapper_bottom_start} //onPress={navigation.navigate("Пост", { post: course})}
+                        <TouchableOpacity style={styles.courseModal_wrapper_bottom_start} 
+                            //onPress={navigation.navigate("Пост", { post: course})}
                           >
                             <Text style={styles.courseModal_wrapper_bottom_start_text}>К курсу</Text>
                         </TouchableOpacity>

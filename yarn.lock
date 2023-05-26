@@ -4033,6 +4033,13 @@ dot-case@^3.0.4:
     no-case "^3.0.4"
     tslib "^2.0.3"
 
+editorjs-viewer-native@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/editorjs-viewer-native/-/editorjs-viewer-native-0.4.3.tgz#c11dd231791fed488e178c72c229d74d8c422a8e"
+  integrity sha512-PBkQb1RFjw+qHNCZlc9pKX/xR2fPCQ0M6hs+LMNgdyIDaDyWcSYr8OA0hBTEnafvK39wETkXR2lyUAKurG/UoQ==
+  dependencies:
+    html-entities "^2.3.3"
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz"
@@ -5053,7 +5060,7 @@ hpack.js@^2.1.6:
     readable-stream "^2.0.1"
     wbuf "^1.1.0"
 
-html-entities@^2.3.2:
+html-entities@^2.3.2, html-entities@^2.3.3:
   version "2.3.3"
   resolved "https://registry.npmjs.org/html-entities/-/html-entities-2.3.3.tgz"
   integrity sha512-DV5Ln36z34NNTDgnz0EWGBLZENelNAtkiFA4kyNOG2tDI6Mz1uSWiq1wAKdyjnJwyDiDO7Fa2SO1CTxPXL8VxA==

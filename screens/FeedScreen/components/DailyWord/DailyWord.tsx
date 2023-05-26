@@ -28,7 +28,7 @@ const DailyWord: React.FC = () => {
                 }
                 {dailyWordStore.dailyWord !== null ? 
                     <Text style={styles.dailyWord_description_text}>
-                        {dailyWordStore.dailyWord !== undefined && dailyWordStore.dailyWord.description}
+                        {dailyWordStore.dailyWord !== undefined && `${dailyWordStore.dailyWord.name} - ${dailyWordStore.dailyWord.description}`}
                     </Text>
                 : <ActivityIndicator style={styles.dailyWord_dataIsLoading} size="large" color={COLORS.blueAction} />
                 }
