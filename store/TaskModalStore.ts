@@ -50,6 +50,8 @@ export class TaskModalStore implements ILocalStore {
 
         makeObservable<TaskModalStore, PrivateFields>(this, {
             _taskId: observable,
+            setTaskId: action,
+            taskId: computed,
             _task: observable,
             setTask: action,
             task: computed,

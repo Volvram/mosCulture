@@ -24,7 +24,6 @@ export default News;
 const styles = StyleSheet.create({
     news: {
         marginTop: 32,
-        paddingBottom: 68,
         flex: 1,
         backgroundColor: COLORS.white,
     },

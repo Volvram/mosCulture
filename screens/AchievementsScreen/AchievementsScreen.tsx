@@ -1,13 +1,16 @@
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
 import Card from "../../components/Card/Card";
 import React from "react";
+import AutoHeightImage from 'react-native-auto-height-image';
 import ScreenHeaderAchievements from "../../components/ScreenHeaderAchievements/ScreenHeaderAchievements";
+import { AchievementType } from "../../store/ProfileStore";
 
 type AchievementsScreenProps = {
-    navigation: any
+    route: any,
+    navigation: any,
 }
 
 const achievements = [
@@ -69,18 +72,14 @@ const achievements = [
     },
 ]
 
-const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation }) => {
+type DimensionsType = {
+    width: number,
+    height: number
+}
 
-    // ### МЕТОД ДЛЯ ИЗВЛЕЧЕНИЯ РАЗМЕРОВ
-    // React.useEffect(() => {
-    //     const url = "https://www.androiddeveloper.co.in/blog/wp-content/uploads/2020/02/2.React-Native.png"
+const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ route, navigation }) => {
 
-    //     Image.getSize(url, (width, height) => {
-    //         console.log(width)
-    //         console.log(height)
-    //     });
-    // }, []);
-    
+    const {achievements} = route.params;
 
     return (
         <View style={styles.container}>
@@ -91,38 +90,44 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ navigation }) =
                     <ScrollView style={styles.achievements_scroll_list} 
                         showsVerticalScrollIndicator={false}>
                         {
-                            achievements.slice(0,achievements.length/2).map(achievement => {
+                            achievements.slice(0,achievements.length/2).map((achievement: AchievementType) => {
                                 return (
-                                    <Card key={achievement.id} cardStyle={achievement.received ? 
-                                            styles.achievements_scroll_list_item 
-                                            : styles.achievements_scroll_list_item_disabled}
-                                        bottom={achievement.name}
-                                        // image={achievement.url}
-                                        resizeMode="contain" 
-                                        width={achievement.width} 
-                                        height={achievement.height}
-                                        onPress={achievement.received 
-                                            ? () => navigation.navigate("Достижение", {achievement: achievement}) 
-                                            : () => {}}/>
+                                    <TouchableOpacity key={achievement.id}
+                                            onPress={achievement.received 
+                                                ? () => navigation.navigate("Достижение", {achievement: achievement}) 
+                                                : () => {}}
+                                                >
+                                        <AutoHeightImage
+                                            style={achievement.received 
+                                                ? styles.achievements_scroll_list_item 
+                                                : styles.achievements_scroll_list_item_disabled}
+                                            width={175}
+                                            source={{uri: achievement.image}}
+                                            />
+                                            <Text style={styles.achievements_scroll_list_item_text}>{achievement.title}</Text>
+                                    </TouchableOpacity>
                                 )
                             })
                         }
                     </ScrollView>
                     <ScrollView style={styles.achievements_scroll_list} 
                         showsVerticalScrollIndicator={false}>
-                        {achievements.slice(achievements.length/2,achievements.length).map(achievement => {
+                        {achievements.slice(achievements.length/2,achievements.length).map((achievement: AchievementType, index: number) => {
                                 return (
-                                    <Card key={achievement.id} cardStyle={achievement.received ? 
-                                            styles.achievements_scroll_list_item 
-                                            : styles.achievements_scroll_list_item_disabled}
-                                        bottom={achievement.name}
-                                        // image={achievement.url} 
-                                        resizeMode="contain" 
-                                        width={achievement.width} 
-                                        height={achievement.height}
+                                    <TouchableOpacity key={achievement.id}
                                         onPress={achievement.received 
-                                            ? () => navigation.navigate("Достижение", {achievement: achievement}) 
-                                            : () => {}}/>
+                                        ? () => navigation.navigate("Достижение", {achievement: achievement}) 
+                                        : () => {}}
+                                        >
+                                        <AutoHeightImage
+                                            style={achievement.received 
+                                                ? styles.achievements_scroll_list_item 
+                                                : styles.achievements_scroll_list_item_disabled}
+                                            width={175}
+                                            source={{uri: achievement.image}}
+                                            />
+                                        <Text style={styles.achievements_scroll_list_item_text}>{achievement.title}</Text>
+                                    </TouchableOpacity>
                                 )
                             })
                         }
@@ -158,17 +163,27 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     achievements_scroll_list: {
+        width: "50%",
         flexDirection: 'column',
-        paddingVertical: 10,
         paddingHorizontal: 6
     },
     achievements_scroll_list_item: {
         marginVertical: 6,
+        borderRadius: 16,
         alignSelf: "center"
     },
     achievements_scroll_list_item_disabled: {
-        marginVertical: 6, 
+        marginVertical: 6,
+        borderRadius: 16,
         alignSelf: "center",
         opacity: 0.5,
+    },
+    achievements_scroll_list_item_text: {
+        ...TYPOGRAPHY.h3,
+        position: "absolute",
+        bottom: 16,
+        color: COLORS.white,
+        alignSelf: "center",
+        textAlign: "center",
     }
 })

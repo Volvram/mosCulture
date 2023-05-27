@@ -1,8 +1,8 @@
-import {makeObservable, observable, action, computed } from "mobx";
+import {makeObservable, observable, action, computed, reaction, IReactionDisposer } from "mobx";
 import { AnswerType } from "../screens/TestScreen/TestScreen";
 import { ILocalStore } from "../utils/useLocalStore";
 
-type privateFields = "_currentQuestion" | "_chosenAnswer" | "_score" | "_correctAnswer" | "_showNotes"
+type privateFields = "_currentQuestion" | "_chosenAnswer" | "_score" | "_correctAnswer" | "_showNotes" | "_currentAnswers"
 
 export class TestScreenStore implements ILocalStore {
     private _currentQuestion = 1;
@@ -10,6 +10,7 @@ export class TestScreenStore implements ILocalStore {
     private _score = 0;
     private _correctAnswer: boolean | null = null;
     private _showNotes = false;
+    private _currentAnswers: AnswerType[] | null = null;
 
     constructor() {
         makeObservable<TestScreenStore, privateFields>(this, {
@@ -28,6 +29,10 @@ export class TestScreenStore implements ILocalStore {
             _showNotes: observable,
             setShowNotes: action,
             showNotes: computed,
+            _currentAnswers: observable,
+            setCurrentAnswers: action,
+            currentAnswers: computed,
+            shuffle: action,
         })
     }
 
@@ -71,5 +76,38 @@ export class TestScreenStore implements ILocalStore {
         return this._showNotes;
     }
 
-    destroy(){}
+    setCurrentAnswers(currentAnswers: AnswerType[]) {
+        this._currentAnswers = this.shuffle(currentAnswers);
+    }
+
+    get currentAnswers() {
+        return this._currentAnswers;
+    }
+
+    shuffle = (answers: AnswerType[]) => {
+        let currentIndex = answers.length,  randomIndex;
+
+        // While there remain elements to shuffle.
+        while (currentIndex != 0) {
+
+            // Pick a remaining element.
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [answers[currentIndex], answers[randomIndex]] = [
+                answers[randomIndex], answers[currentIndex]];
+        }
+
+        return answers;
+    }
+
+    destroy(){
+        this._handleChangeQuestion();
+    }
+
+    readonly _handleChangeQuestion: IReactionDisposer = reaction(
+        () => this._currentQuestion,
+        () => this.setShowNotes(false)
+    )
 }

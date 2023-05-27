@@ -52,7 +52,8 @@ const YourCourses: React.FC<YourCousesProps> = ({navigation}) => {
                 {courses.map(course => {
                     return (
                         <Card key={course.id} top={course.percent} middle={course.tag} bottom={course.title} // image={item.image}
-                           middleStyle={defineTagStyle(course.tag)} // onPress={() => navigation.navigate("Пост", { post: course})} 
+                           middleStyle={defineTagStyle(course.tag)} // onPress={() => navigation.navigate("Пост", { post: course})}
+                           width={290} height={192}
                             />
                     )
                 })}

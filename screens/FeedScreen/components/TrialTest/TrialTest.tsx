@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     trialTest: {
         width: "100%",
         flex: 1,
-        backgroundColor: COLORS.lightGray
+        backgroundColor: COLORS.white
     },
     trialTest_background: {
         width: "100%",

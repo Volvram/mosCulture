@@ -7,6 +7,7 @@ import News from "./components/News/News";
 import TrialTest from "./components/TrialTest/TrialTest";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import rootStore from "../../store/RootStore/instance";
+import AboutArt from "./components/AboutArt/AboutArt";
 
 type FeedScreenProps = {
     navigation: any,
@@ -32,6 +33,7 @@ const FeedScreen: React.FC<FeedScreenProps> = ({ navigation }) => {
                 <ScrollView onScroll={() => {}}>
                     <News navigation={navigation} />
                     <DailyWord />
+                    <AboutArt navigation={navigation} />
                     <TrialTest navigation={navigation} />
                 </ScrollView>
             </View>

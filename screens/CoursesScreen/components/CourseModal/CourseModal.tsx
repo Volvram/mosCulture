@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     },
     courseModal_wrapper_bottom: {
         marginTop: 32,
+        width: "100%",
         display: "flex",
         flexDirection: "row",
         alignItems: "center",

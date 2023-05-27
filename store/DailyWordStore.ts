@@ -45,7 +45,7 @@ export default class DailyWordStore implements ILocalStore {
                 method: "get",
                 params: {
                     per_page: 1,
-                    article_type_ids: 10,
+                    article_type_ids: 7,
                 }
             });
 

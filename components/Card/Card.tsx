@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, ImageBackground, ImageSourcePropType, TouchableOpacity, StyleProp, ViewStyle, ImageResizeMode, TextStyle } from "react-native";
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, StyleProp, ViewStyle, ImageResizeMode, TextStyle, Image } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
@@ -12,8 +12,8 @@ type CardProps = {
     onPress?: () => void,
     cardStyle?: StyleProp<ViewStyle>,
     resizeMode?: ImageResizeMode | undefined,
-    width?: number,
-    height?: number,
+    width?: number | string,
+    height?: number | string,
     middleStyle?: StyleProp<TextStyle>
 }
 
@@ -25,11 +25,25 @@ const Card: React.FC<CardProps> = ({
         onPress, 
         cardStyle=null, 
         resizeMode="cover", 
-        width=290,
-        height=192,
+        width,
+        height,
         middleStyle=null}) => {
+
+    const [dimensions, setDimensions] = React.useState({
+        width: 0,
+        height: 0
+    })
+
+    React.useEffect(() => {
+        image && Image.getSize(image, (width, height) => {
+            setDimensions({width, height})
+        })
+    }, []);
+
     return (
-        <TouchableOpacity style={[styles.card, cardStyle, {width, height}]} onPress={onPress}>
+        <TouchableOpacity style={[styles.card, cardStyle, 
+            width ? {width: width} : {width: "100%"}, 
+            height ? {height: height} : {height: dimensions.height}]} onPress={onPress}>
             {image
             ?  <ImageBackground 
                     style={styles.card_background}

@@ -1,8 +1,9 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
 import ScreenHeaderAchievements from "../../components/ScreenHeaderAchievements/ScreenHeaderAchievements";
+import React from "react";
 
 
 type OneAchieveScreenProps = {
@@ -12,25 +13,35 @@ type OneAchieveScreenProps = {
 
 const OneAchieveScreen: React.FC<OneAchieveScreenProps> = ({ route, navigation }) => {
     const { achievement } = route.params;
+    const [dimensions, setDimensions] = React.useState({
+        width: 100,
+        height: 100,
+    })
+
+    React.useEffect(() => {
+        achievement && Image.getSize(achievement.image, (width, height) => {
+            setDimensions({width, height});
+        })
+    }, [achievement]);
 
     return (
         <View style={styles.container}>
             <ScreenHeaderAchievements image={require("../../assets/img/btnClose.png")} onPress={() => navigation.goBack()}/>
-            <View style={styles.achievement}>
-                <Text style={styles.achievement_title}>“Погрузился с головой” {/* achievement.name */}</Text>
+            <ScrollView style={styles.achievement}>
+                <Text style={styles.achievement_title}>{achievement.title}</Text>
                 <Text style={styles.achievement_description}>
-                    Получено за 100% прохождение теста
-                    “Русская школа люминизма”, 10.08.2002.
+                    {achievement.successInfo}
                 </Text>
                 <View style={styles.achievement_card}>
-                    <Image style={styles.achievement_card_image} source={achievement.url} resizeMode="contain"/>
+                    <Image style={[styles.achievement_card_image, dimensions && {aspectRatio: dimensions.width / dimensions.height}]} 
+                    source={{uri: achievement.image}} resizeMode="contain"/>
                 </View>
-                <Text style={styles.achievement_artName}>Ладожское озеро</Text>
-                <Text style={styles.achievement_artAuthor}>Архип Иванович Куинджи, 1873 г.</Text>
+                <Text style={styles.achievement_artName}>{achievement.paintingName}</Text>
+                <Text style={styles.achievement_artAuthor}>{achievement.paintingCaption}</Text>
                 <Text style={styles.achievement_artDescription}>
-                    Картина является частью собрания Государственного Русского музея. Размер картины — 79,5 × 62,5 см.
+                   {achievement.paintingDescription}
                 </Text>
-            </View>
+            </ScrollView>
             <StatusBar style="auto" />
         </View>
     )
@@ -42,6 +53,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
+        flex:1,
         backgroundColor: COLORS.white
     },
     achievement: {
@@ -54,6 +66,7 @@ const styles = StyleSheet.create({
         ...TYPOGRAPHY.h1,
         color: COLORS.black,
         alignSelf: "center",
+        textAlign: "center",
     },
     achievement_description: {
         ...TYPOGRAPHY.p1,
@@ -64,15 +77,13 @@ const styles = StyleSheet.create({
     achievement_card: {
         marginVertical: 16,
         width: "100%",
-        height: "100%",
-        maxHeight: 379,
         justifyContent: "center",
         alignItems: "center",
     },
     achievement_card_image: {
-        width: "100%",
-        height: "100%",
+        width: "90%",
         alignSelf: "center",
+        borderRadius: 16,
     },
     achievement_artName: {
         ...TYPOGRAPHY.h3,
@@ -89,6 +100,7 @@ const styles = StyleSheet.create({
     achievement_artDescription: {
         ...TYPOGRAPHY.p1,
         marginTop: 16,
+        marginBottom: 16,
         color: COLORS.gray,
         alignSelf: "center",
         textAlign: "center"

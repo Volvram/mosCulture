@@ -6,9 +6,10 @@ import Achievements from "./components/Achievements/Achievements";
 import ScreenHeaderPoints from "../../components/ScreenHeaderPoints/ScreenHeaderPoints";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import React from "react";
-import { useLocalStore } from "../../utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import rootStore from "../../store/RootStore/instance";
+import { ProfileStore } from "../../store/ProfileStore";
+import { useLocalStore } from "../../utils/useLocalStore";
 
 type ProfileScreenProps = {
     navigation: any,
@@ -16,20 +17,40 @@ type ProfileScreenProps = {
 
 const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
 
+    const profileStore = useLocalStore(() => new ProfileStore());
+
+    React.useEffect(() => {
+        if (rootStore.user.authorized) {
+            profileStore.requestAchievements()
+        }
+    }, []);
+
     return (
         <View style={styles.container}>
             <ScreenHeaderPoints />
             <View style={styles.profile}>
                 <View style={styles.profile_wrapper}>
                     <View style={{alignItems: "center"}}>
-                        <View style={styles.profile_avatar}>
+                        <View style={[styles.profile_avatar, rootStore.user.position === 1 
+                            ? {borderColor: COLORS.yellow}
+                            : rootStore.user.position === 2
+                            ? {borderColor: COLORS.blue}
+                            : rootStore.user.position === 3
+                            ? {borderColor: COLORS.pink}
+                            : {borderColor: COLORS.gray}]}>
                             {rootStore.user.avatar && <Image style={styles.profile_avatar_image} source={{uri: rootStore.user.avatar}}/>}
 
-                            {/* For colorfulness */}
-                            {/* <Image style={styles.profile_avatar_image} source={require("../../assets/img/avatar.png")}/> */}
                         </View>
-                        <View style={styles.profile_rating}>
-                            <Text style={styles.profile_rating_num}>997</Text>
+                        <View style={[styles.profile_rating, rootStore.user.position === 1 
+                            ? {backgroundColor: COLORS.yellow}
+                            : rootStore.user.position === 2
+                            ? {backgroundColor: COLORS.blue}
+                            : rootStore.user.position === 3
+                            ? {backgroundColor: COLORS.pink}
+                            : {borderColor: COLORS.gray}]}>
+                            <Text style={styles.profile_rating_num}>
+                                {rootStore.user.position ? rootStore.user.position : " - "}
+                            </Text>
                         </View>
                     </View>
                     <View style={styles.profile_details}>
@@ -49,7 +70,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
                         </View>
                     </View>
                 </View>
-                <Achievements navigation={navigation} />
+                <Achievements navigation={navigation} achievements={profileStore.achievements} />
             </View>
             <StatusBar style="auto" />
         </View>
@@ -92,6 +113,7 @@ const styles = StyleSheet.create({
     },
     profile_rating: {
         marginTop: -21,
+        minWidth: 44,
         padding: 8,
         backgroundColor: COLORS.gray,
         borderRadius: 24,
@@ -99,6 +121,7 @@ const styles = StyleSheet.create({
     profile_rating_num: {
         ...TYPOGRAPHY.h3,
         color: COLORS.white,
+        alignSelf: "center",
     },
     profile_details: {
         marginLeft: 12,

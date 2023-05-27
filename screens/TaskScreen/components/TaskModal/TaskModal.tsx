@@ -65,7 +65,10 @@ const TaskModal: React.FC<TaskModalType> = ({navigation, isModalVisible, setModa
                             <Text style={styles.taskModal_wrapper_bottom_back_text}>Назад</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.taskModal_wrapper_bottom_start} 
-                            onPress={() => navigation.navigate("Тест", {test: taskModalStore.task})}>
+                            onPress={() => {
+                                setModalVisible(false);
+                                navigation.navigate("Тест", {test: taskModalStore.task})
+                            }}>
                             <Text style={styles.taskModal_wrapper_bottom_start_text}>Начать</Text>
                         </TouchableOpacity>
                     </View>

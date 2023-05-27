@@ -43,7 +43,7 @@ const Interesting: React.FC<InterestingProps> = ({ navigation, onOpen }) => {
 
                     return (
                         <Card key={course.id} top={formatPrice(course.price)} middle={course.tag} bottom={course.title} // image={item.image}
-                            middleStyle={defineTagStyle(course.tag)}  onPress={() => {onOpen()}} 
+                            middleStyle={defineTagStyle(course.tag)} width={290} height={192}  onPress={() => {onOpen()}} 
                             />
                     )
                 })}

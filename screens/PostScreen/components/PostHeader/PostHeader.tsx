@@ -14,7 +14,8 @@ const PostHeader: React.FC<PostHeaderProps> = ({post}) => {
 
     return (
         <View style={styles.postHeader}>
-            <ImageBackground style={styles.postHeader_background} source={post.image ? post.image : require("../../../../assets/img/violin.png")} resizeMode="contain">
+            <ImageBackground style={styles.postHeader_background} source={post.image 
+                ? {uri: post.image} : require("../../../../assets/img/violin.png")} resizeMode="cover">
                     <LinearGradient
                         colors={[
                         'rgba(24, 24, 27, 0)',

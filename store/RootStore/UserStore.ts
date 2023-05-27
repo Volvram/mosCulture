@@ -4,7 +4,7 @@ import axios from "axios";
 import { HOST } from "../../config/host";
 import { decodeToken } from "../../config/decodeToken";
 
-type PrivateFields = "_authorized" | "_avatar" | "_userId" | "_name" | "_createdAt" | "_email" | "_roles" | "_score";
+type PrivateFields = "_authorized" | "_avatar" | "_userId" | "_name" | "_createdAt" | "_email" | "_roles" | "_score" | "_position";
 
 export default class UserStore {
     private _authorized: boolean | null = null;
@@ -15,6 +15,7 @@ export default class UserStore {
     private _email: string | null = null;
     private _roles: string[] | null = null;
     private _score: number | null = null;
+    private _position: number | null = null;
 
     constructor() {
         makeObservable<UserStore, PrivateFields>(this, {
@@ -41,6 +42,7 @@ export default class UserStore {
             setRoles: action,
             roles: computed,
             _score: observable,
+            _position: observable,
         })
     }
 
@@ -108,7 +110,23 @@ export default class UserStore {
         return this._score;
     }
 
-    setAllData(authorized: boolean, avatar: string | null, userId: number, name: string, createdAt: string, email: string, roles: string[], score: number) {
+    setPosition(position: number) {
+        this._position = position;
+    }
+
+    get position(){
+        return this._position;
+    }
+ 
+    setAllData(authorized: boolean,
+         avatar: string | null, 
+         userId: number, 
+         name: string, 
+         createdAt: string, 
+         email: string, 
+         roles: string[], 
+         score: number,
+         position: number) {
         this.setAuthorized(authorized);
         this.setAvatar(avatar);
         this.setUserId(userId);
@@ -117,6 +135,7 @@ export default class UserStore {
         this.setEmail(email);
         this.setRoles(roles);
         this.setScore(score);
+        this.setPosition(position);
     }
 
     async checkAuthorization() {
@@ -133,10 +152,13 @@ export default class UserStore {
                     }
                 })
 
+                const position = await axios(`${HOST}/users/${payload.user_id}/position`, {
+                    method: "get",
+                })
+
                 runInAction(() => {
                     const data = result.data;
-
-                    this.setAllData(true, data.avatar, data.id, data.name, data.createdAt, data.email, data.roles, data.score);
+                    this.setAllData(true, data.avatar, data.id, data.name, data.createdAt, data.email, data.roles, data.score, position.data);
                 })
             } else {
                 throw new Error("no access token");

@@ -17,9 +17,11 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({leaderBoard}) => {
     return (
         <View style={styles.leaderBoard}>
             <View style={styles.leaderBoard_place2}>
-                <View style={styles.leaderBoard_place2_avatar}>
-                    {leaderBoard && leaderBoard[1] && leaderBoard[1].avatar && <Image source={{uri: leaderBoard[1].avatar}}/>}
-                </View>
+                    {leaderBoard && leaderBoard[1] && leaderBoard[1].avatar ? 
+                        <Image style={styles.leaderBoard_place2_avatar} source={{uri: leaderBoard[1].avatar}}/>
+                    :   <View style={styles.leaderBoard_place2_avatar}></View>
+                    }
+                
                 <View style={styles.leaderBoard_place2_medal}>
                     <Text style={styles.leaderBoard_num}>2</Text>
                 </View>
@@ -31,9 +33,11 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({leaderBoard}) => {
             <View style={styles.leaderBoard_place1}>
                 <Image style={styles.leaderBoard_place1_crown} 
                     source={require("../../../../../../assets/img/crown.png")} />
-                <View style={styles.leaderBoard_place1_avatar}>
-                    {leaderBoard && leaderBoard[0] && leaderBoard[0].avatar && <Image source={{uri: leaderBoard[0].avatar}}/>}
-                </View>
+                {leaderBoard && leaderBoard[0] && leaderBoard[0].avatar 
+                    ? <Image style={styles.leaderBoard_place1_avatar} source={{uri: leaderBoard[0].avatar}}/>
+                    :   <View style={styles.leaderBoard_place1_avatar}></View>
+                }
+                
                 <View style={styles.leaderBoard_place1_medal}>
                     <Text style={styles.leaderBoard_num}>1</Text>
                 </View>
@@ -44,9 +48,10 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({leaderBoard}) => {
             </View>
             
             <View style={styles.leaderBoard_place3}>
-                <View style={styles.leaderBoard_place3_avatar}>
-                    {leaderBoard && leaderBoard[2] && leaderBoard[2].avatar && <Image source={{uri: leaderBoard[2].avatar}}/>}
-                </View>
+                {leaderBoard && leaderBoard[2] && leaderBoard[2].avatar 
+                ? <Image source={{uri: leaderBoard[2].avatar}}/>
+                : <View style={styles.leaderBoard_place3_avatar}></View> 
+                } 
                 <View style={styles.leaderBoard_place3_medal}>
                     <Text style={styles.leaderBoard_num}>3</Text>
                 </View>

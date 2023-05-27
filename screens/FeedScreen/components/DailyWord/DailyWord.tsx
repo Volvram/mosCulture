@@ -7,20 +7,25 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 
 const DailyWord: React.FC = () => {
+    const [dimensions, setDimensions] = React.useState({
+        width: 297,
+        height: 451,
+    });
+
     const dailyWordStore = useLocalStore(() => new DailyWordStore());
 
     React.useEffect(() => {
         dailyWordStore.requestDailyWord();
+        dailyWordStore.dailyWord && Image.getSize(dailyWordStore.dailyWord.image, (width, height) => {
+            setDimensions({
+                width, height
+            })
+        })
     }, []);
 
     return (
         <View style={styles.dailyWord}>
-            <View style={{position: 'absolute', top: -20, left: 0, right: 0, justifyContent: 'center', alignItems: 'center'}}>
-                <View style={styles.dailyWord_title}>
-                    <Image style={styles.dailyWord_title_image} source={require("../../../../assets/img/lightbulb.png")} />
-                    <Text style={styles.dailyWord_title_text}>Слово дня</Text>
-                </View>
-            </View>
+            <Text style={styles.dailyWord_title}>Слово дня: {dailyWordStore.dailyWord && dailyWordStore.dailyWord.name}</Text>
             
             <View style={styles.dailyWord_description}>
                 {(dailyWordStore.dailyWord === undefined) &&
@@ -39,7 +44,7 @@ const DailyWord: React.FC = () => {
             </TouchableOpacity>
             <View style={styles.dailyWord_card}>
                 {dailyWordStore.dailyWord && 
-                    <Image style={styles.dailyWord_card_image} 
+                    <Image style={[styles.dailyWord_card_image, {width: "100%", aspectRatio: dimensions.width/dimensions.height}]} 
                         source={{uri: dailyWordStore.dailyWord.image}}
                         resizeMode="contain"
                     />
@@ -54,25 +59,16 @@ export default observer(DailyWord);
 
 const styles = StyleSheet.create({
     dailyWord: {
-        paddingTop: 36,
-        paddingBottom: 58,
+        marginTop: 24,
         paddingHorizontal: 16,
-        backgroundColor: COLORS.lightGray,
-        alignItems: "center"
+        backgroundColor: "transparent",
+        alignItems: "center",
+        zIndex: 1,
     },
     dailyWord_title: {
-        marginBottom: 16,
-        paddingHorizontal: 16,
-        width: 135,
-        height: 40,
-        backgroundColor: COLORS.yellow,
-        borderRadius: 16,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-    },
-    dailyWord_title_text: {
+        ...TYPOGRAPHY.h1,
+        color: COLORS.black,
+        alignSelf: "center",
         textAlign: "center"
     },
     dailyWord_title_image: {
@@ -91,8 +87,9 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     dailyWord_description_text: {
-        ...TYPOGRAPHY.h2,
-        color: COLORS.black,
+        ...TYPOGRAPHY.p1,
+        marginTop: 16,
+        color: COLORS.gray,
         textAlign: "center",
     },
     dailyWord_dataIsLoading: {
@@ -108,16 +105,14 @@ const styles = StyleSheet.create({
     },
     dailyWord_card: {
         marginTop: 16,
-        height: 451,
-        width: 297,
-        backgroundColor: COLORS.white,
+        paddingHorizontal: 16,
+        width: "100%",
         borderRadius: 16,
         justifyContent: "center",
         alignItems: "center"
     },
     dailyWord_card_image: {
         width: "100%",
-        height: "100%",
         borderRadius: 16,
     },
     

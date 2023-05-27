@@ -20,7 +20,7 @@ const Rating: React.FC = () => {
             <LeaderBoard leaderBoard={ratingStore.leaderBoard} />
             <View style={styles.rating_position}>
                 <Text style={styles.rating_position_text}>Ваша позиция в общем рейтинге:</Text>
-                <Text style={styles.rating_position_num}>{rootStore.user.score ? rootStore.user.score : " - "}</Text>
+                <Text style={styles.rating_position_num}>{rootStore.user.position ? rootStore.user.position : " - "}</Text>
             </View>
             <ScrollView style={styles.rating_all}
                 contentContainerStyle={{
@@ -35,7 +35,8 @@ const Rating: React.FC = () => {
 
                             <View style={{flexDirection: "row", alignItems: "center"}}>
                                 <Text style={styles.rating_all_user_position}>{index + 1}</Text>
-                                <View style={styles.rating_all_user_avatar}></View>
+                                <View style={styles.rating_all_user_avatar}>
+                                </View>
                                 <Text  style={styles.rating_all_user_username}>{user.name}</Text>
                             </View>
                             <View style={{flexDirection: "row", alignItems: "center"}}>

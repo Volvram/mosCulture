@@ -12,4 +12,6 @@ export const COLORS = {
     darkBlue: "#394562",
     blue: "#B1CFDF",
     blueAction: "#3B82F6",
+    green: "#198754",
+    red: "#DC3545"
 }

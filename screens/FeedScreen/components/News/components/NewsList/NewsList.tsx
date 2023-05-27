@@ -34,18 +34,11 @@ const NewsList: React.FC<NewsListProps> = ({navigation}) => {
                 <Text style={styles.newsList_dataNotFound}>Данные не найдены</Text>
             }
             {newsListStore.news ? newsListStore.news.map(item => {
-                if (item.image) {
                     return (
                         <Card key={item.id} top={formatDate(item.createdAt)} bottom={item.name} image={item.image}
+                            width={290} height={192}
                             onPress={() => navigation.navigate("Пост", { post: item})} />
                     )
-                } else {
-                    return (
-                        <Card key={item.id} top={formatDate(item.createdAt)} bottom={item.name}  
-                            image={require("../../../../../../assets/img/violin.png")}
-                            onPress={() => navigation.navigate("Пост", { post: item})} />
-                    )
-                }
             }) 
                 : <ActivityIndicator style={styles.newsList_dataIsLoading} size="large" color={COLORS.blueAction} />
             }
