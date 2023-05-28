@@ -6,16 +6,17 @@ import React from "react";
 
 type QuestionAudioType = {
     question: string,
-    audio: string
+    audio: string,
+    stop?: boolean
 }
 
-const QuestionAudio: React.FC<QuestionAudioType> = ({question, audio}) => {
+const QuestionAudio: React.FC<QuestionAudioType> = ({question, audio, stop}) => {
 
     return (
         <View style={styles.questionAudio}>
             <Text style={styles.questionAudio_text}>{question}</Text>
             {audio &&
-                <AudioView source={audio} style={styles.questionAudio_audio}/>
+                <AudioView source={audio} style={styles.questionAudio_audio} stop={stop}/>
             }
         </View> 
     )

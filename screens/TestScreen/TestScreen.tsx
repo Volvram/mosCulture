@@ -81,10 +81,12 @@ const TestScreen: React.FC<TestScreenProps> = ({ route, navigation }) => {
                                 question={test.questions[testScreenStore.currentQuestion - 1].text} />
                             : test.questions[testScreenStore.currentQuestion - 1].video 
                             ? <QuestionVideo video={test.questions[testScreenStore.currentQuestion - 1].video}
-                                question={test.questions[testScreenStore.currentQuestion - 1].text} />
+                                question={test.questions[testScreenStore.currentQuestion - 1].text} 
+                                />
                             : test.questions[testScreenStore.currentQuestion - 1].audio
                             ?   <QuestionAudio audio={test.questions[testScreenStore.currentQuestion - 1].audio}
-                                question={test.questions[testScreenStore.currentQuestion - 1].text} />
+                                question={test.questions[testScreenStore.currentQuestion - 1].text} 
+                                />
                             : <QuestionText question={test.questions[testScreenStore.currentQuestion - 1].text} />
                         }
 

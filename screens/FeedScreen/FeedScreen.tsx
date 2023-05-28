@@ -8,6 +8,7 @@ import TrialTest from "./components/TrialTest/TrialTest";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import AboutArt from "./components/AboutArt/AboutArt";
 import QuestionsToTeacher from "./components/QuestionsToTeacher/QuestionsToTeacher";
+import AppIntro from 'react-native-app-intro';
 
 type FeedScreenProps = {
     navigation: any,

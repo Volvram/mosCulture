@@ -4,10 +4,6 @@ import { COLORS } from "../../../../config/colors";
 import Card from "../../../../components/Card/Card";
 import { AchievementType } from "../../../../store/ProfileStore";
 
-const achievements = [{id: 1, title: "Lorem ipsum dolor sit aet, consectetur"},
-{id: 2, title: "Lorem ipsum dolor sit aet, consectetur"},
-{id: 3, title: "Lorem ipsum dolor sit aet, consectetur"}]
-
 type AchievementsProps = {
     navigation: any,
     achievements: AchievementType[] | null

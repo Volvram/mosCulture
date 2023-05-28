@@ -35,8 +35,11 @@ const Rating: React.FC = () => {
 
                             <View style={{flexDirection: "row", alignItems: "center"}}>
                                 <Text style={styles.rating_all_user_position}>{index + 1}</Text>
-                                <View style={styles.rating_all_user_avatar}>
-                                </View>
+                                {user.avatar 
+                                    ? <Image style={styles.rating_all_user_avatar_image} source={{uri: user.avatar}} />
+                                    : <View style={styles.rating_all_user_avatar}>
+                                     </View>
+                                }
                                 <Text  style={styles.rating_all_user_username}>{user.name}</Text>
                             </View>
                             <View style={{flexDirection: "row", alignItems: "center"}}>
@@ -106,6 +109,13 @@ const styles = StyleSheet.create({
         color: COLORS.black,
     },
     rating_all_user_avatar: {
+        marginLeft: 12,
+        width: 48,
+        height: 48,
+        backgroundColor: COLORS.gray,
+        borderRadius: 24,
+    },
+    rating_all_user_avatar_image: {
         marginLeft: 12,
         width: 48,
         height: 48,

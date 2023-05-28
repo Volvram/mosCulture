@@ -11,12 +11,20 @@ type AudioViewProps = {
     styleText?: StyleProp<TextStyle>,
     light?: boolean,
     onClick?: () => void,
-    currentAudio?: string | null
+    currentAudio?: string | null,
+    stop?: boolean
 }
 
-const AudioView: React.FC<AudioViewProps> = ({title="Аудио", source, style, styleText, light=false, onClick, currentAudio}) => {
+const AudioView: React.FC<AudioViewProps> = (
+    {title="Аудио", source, style, styleText, light=false, onClick, currentAudio, stop=false}) => {
     const [sound, setSound] = React.useState<Audio.Sound | null>(null);
     const [isPlaying, setIsPlaying] = React.useState(false);
+
+    React.useEffect(() => {
+        if (stop && isPlaying) {
+            setIsPlaying(false);
+        }
+      }, [stop]);
 
     React.useEffect(() => {
         loadAudio();

@@ -2,17 +2,20 @@ import {StyleSheet, View, Text, TouchableOpacity, Image} from "react-native";
 import { TYPOGRAPHY } from "../../../../config/typography";
 import { COLORS } from "../../../../config/colors";
 import VideoView from "../VideoView/VideoView";
+import React from "react";
 
 type QuestionVideoType = {
     question: string,
-    video: string
+    video: string,
+    stop?: boolean
 }
 
-const QuestionVideo: React.FC<QuestionVideoType> = ({question, video}) => {
+const QuestionVideo: React.FC<QuestionVideoType> = ({question, video, stop}) => {
+
     return (
         <View>
             <Text style={styles.questionVideo_text}>{question}</Text>
-            <VideoView source={video}/>
+            <VideoView source={video} stop={stop}/>
         </View> 
     )
 }

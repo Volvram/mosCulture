@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, ScrollView, Dimensions, TouchableOpacity, Image
 import { StatusBar } from 'expo-status-bar';
 import React from "react";
 import { COLORS } from "../../config/colors";
+import { TYPOGRAPHY } from "../../config/typography";
 
 type IntroScreenProps = {
     navigation: any,
@@ -39,20 +40,33 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ navigation }) => {
             >
             <View style={{ width, height }}>
                 <View style={styles.wrapper}>
-                <Text style={styles.header}>Nature Imitates Art</Text>
-                <Text style={styles.paragraph}>....something like that</Text>
+                    <Image style={{width: "100%", minWidth: 361, minHeight: 334}} 
+                        source={require("../../assets/img/intro_1.png")}/>
+                    <Text style={styles.header}>Добро пожаловать в приложение Мос.Культура</Text>
+                    <Text style={styles.paragraph}>
+                        Здесь Вы найдёте подборку новостей и фактов из мира культуры и искусства, 
+                        тематические игры и курсы, информацию о школах и многое другое!
+                    </Text>
                 </View>
             </View>
             <View style={{ width, height }}>
                 <View style={styles.wrapper}>
-                <Text style={styles.header}>High quality Art work</Text>
-                <Text style={styles.paragraph}>... for a fraction of the price</Text>
+                    <Image style={{width: "100%", minWidth: 361, minHeight: 334}} 
+                        source={require("../../assets/img/intro_2.png")}/>
+                    <Text style={styles.header}>Приложение создано при поддержке</Text>
+                    <Text style={styles.paragraph}>
+                        Департамента культуры города Москвы и Дирекции образовательных программ в сфере культуры и искусства.
+                    </Text>
                 </View>
             </View>
             <View style={{ width, height }}>
                 <View style={styles.wrapper}>
-                <Text style={styles.header}>Top Notch Artists</Text>
-                <Text style={styles.paragraph}>... all in one place</Text>
+                    <Image style={{width: "100%", minWidth: 361, minHeight: 334}} 
+                        source={require("../../assets/img/intro_3.png")}/>
+                    <Text style={styles.header}>Хотите создать аккаунт для доступа ко всем функциям?</Text>
+                    <Text style={styles.paragraph}>
+                        Нажмите “Пропуск”, если не хотите создавать аккаунт. Зарегистрироваться можно будет позже.
+                    </Text>
                 </View>
             </View>
             </ScrollView>
@@ -98,16 +112,23 @@ const styles = StyleSheet.create({
     },
     wrapper: {
         marginTop: 79,
+        paddingHorizontal: 16,
         justifyContent: 'center',
         alignItems: 'center',
     },
     header: {
-        fontSize: 30,
+        marginTop: 28,
+        fontSize: 28,
         fontWeight: 'bold',
         marginBottom: 20,
+        alignSelf: "center",
+        textAlign: "center"
     },
     paragraph: {
-        fontSize: 17,
+        ...TYPOGRAPHY.p1,
+        color: COLORS.gray,
+        alignSelf: "center",
+        textAlign: "center"
     },
     paginationWrapper: {
         position: 'absolute',

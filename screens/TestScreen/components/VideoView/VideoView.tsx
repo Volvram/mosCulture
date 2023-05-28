@@ -5,12 +5,20 @@ import React from "react";
 type VideoViewProps = {
   source: string;
   style?: StyleProp<ViewStyle>,
-  hideButtons?: boolean
+  hideButtons?: boolean,
+  stop?: boolean
 }
 
-const VideoView: React.FC<VideoViewProps> = ({source, style, hideButtons=false}) => {
+const VideoView: React.FC<VideoViewProps> = ({source, style, hideButtons=false, stop=false}) => {
     const video = React.useRef<Video | null>(null);
     const [videoStatus, setVideoStatus] = React.useState<any>({});
+
+    React.useEffect(() => {
+      if (stop && video.current) {
+        video.current.pauseAsync();
+        setVideoStatus(false);
+      }
+    }, []);
 
     return (
     <View style={styles.container}>

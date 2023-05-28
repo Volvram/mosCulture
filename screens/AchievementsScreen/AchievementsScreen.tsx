@@ -2,7 +2,6 @@ import { StyleSheet, View, Text, ScrollView, Image, TouchableOpacity } from "rea
 import { StatusBar } from "expo-status-bar";
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
-import Card from "../../components/Card/Card";
 import React from "react";
 import AutoHeightImage from 'react-native-auto-height-image';
 import ScreenHeaderAchievements from "../../components/ScreenHeaderAchievements/ScreenHeaderAchievements";
@@ -11,70 +10,6 @@ import { AchievementType } from "../../store/ProfileStore";
 type AchievementsScreenProps = {
     route: any,
     navigation: any,
-}
-
-const achievements = [
-    {
-        id: "1",
-        url: require("../../assets/img/achievement_1.png"),
-        name: "Lorem ipsum dolor sit aet",
-        width: 175,
-        height: 175,
-        received: false,
-    },
-    {
-        id: "2",
-        url: require("../../assets/img/achievement_2.png"),
-        name: "Lorem ipsum dolor sit aet",
-        width: 175,
-        height: 262,
-        received: true,
-    },
-    {
-        id: "3",
-        url: require("../../assets/img/achievement_3.png"),
-        name: "Lorem ipsum dolor sit aet",
-        width: 175,
-        height: 262,
-        received: false,
-    },
-    {
-        id: "4",
-        url: require("../../assets/img/achievement_4.png"),
-        name: "Lorem ipsum dolor sit aet",
-        width: 175,
-        height: 262,
-        received: true,
-    },
-    {
-        id: "5",
-        url: require("../../assets/img/achievement_5.png"),
-        name: "Lorem ipsum dolor sit aet",
-        width: 175,
-        height: 100,
-        received: true,
-    },
-    {
-        id: "6",
-        url: require("../../assets/img/achievement_6.png"),
-        name: "Lorem ipsum dolor sit aet",
-        width: 175,
-        height: 175,
-        received: false,
-    },
-    {
-        id: "7",
-        url: require("../../assets/img/achievement_2.png"),
-        name: "Lorem ipsum dolor sit aet",
-        width: 175,
-        height: 262,
-        received: false,
-    },
-]
-
-type DimensionsType = {
-    width: number,
-    height: number
 }
 
 const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ route, navigation }) => {
