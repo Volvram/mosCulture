@@ -30,7 +30,7 @@ const Tasks: React.FC<TasksProps> = ({ navigation }) => {
                 {tasksStore.tasks && tasksStore.tasks.map((task, index) => {
                     return (
                         <TouchableOpacity key={task.id} style={styles.tasks_list_task} onPress={() => navigation.navigate("Задание", 
-                            {artId: index + 1, userScore: task.userScore, scoreSum: task.scoreSum})}>
+                            {artId: index + 1, userScore: task.userScore, scoreSum: task.scoreSum, name: task.name})}>
                             <ImageBackground style={styles.tasks_list_task_details} 
                                 source={index === 0 ? musicImg : index === 1 ? artImg : index === 2 ? theatreImg : danceImg}
                                 resizeMode="contain">

@@ -17,7 +17,7 @@ type TaskScreenProps = {
 }
 
 const TaskScreen: React.FC<TaskScreenProps> = ({ route, navigation }) => {
-    const { artId, userScore, scoreSum } = route.params;
+    const { artId, userScore, scoreSum, name } = route.params;
     const [isModalVisible, setModalVisible] = React.useState(false);
     const [chosenTest, setChosenTest] = React.useState<number | null>(null);
 
@@ -38,7 +38,7 @@ const TaskScreen: React.FC<TaskScreenProps> = ({ route, navigation }) => {
                 points={rootStore.user.score}/>
             <View style={styles.task}>
                 <View style={styles.task_title}>
-                    <Text style={styles.task_title_text}>Музыка</Text>
+                    <Text style={styles.task_title_text}>{name}</Text>
                     <View style={styles.task_title_points}>
                         <Text style={styles.task_title_points_num}>{userScore ? userScore : " - "} / {scoreSum ? scoreSum : " - "}</Text>
                         <Image style={styles.task_title_points_image} source={require("../../assets/img/gem.png")} />

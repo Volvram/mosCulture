@@ -90,7 +90,7 @@ export class TasksStore implements ILocalStore {
             }
 
             runInAction(() => {
-                this.setTasks(result);
+                this.setTasks(result.sort((a, b) => a.id-b.id));
             })
             
         } catch(e: any) {
