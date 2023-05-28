@@ -2,7 +2,7 @@ import { COLORS } from "./colors"
 
 export const defineTagStyle = (tag: string) => {
     let tagStyle
-    if (tag === "Изобразительное Искусство") {
+    if (tag === "Изобр. искусство") {
         tagStyle = { paddingVertical: 2, paddingHorizontal: 10, backgroundColor: COLORS.pink, borderRadius: 8}
     }else if (tag === "Музыка") {
         tagStyle = { paddingVertical: 2, paddingHorizontal: 10, backgroundColor: COLORS.yellow, borderRadius: 8}

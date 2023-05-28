@@ -41,6 +41,9 @@ export default class RatingStore implements ILocalStore {
         try {
             const result = await axios(`${HOST}/leaderboard`, {
                 method: "get",
+                params: {
+                    limit: 9,
+                }
             });
 
             runInAction(() => {

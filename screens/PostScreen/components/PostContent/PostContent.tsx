@@ -41,7 +41,6 @@ const PostContent: React.FC<PostContentProps> = ({postId, postType}) => {
     return (
         <View style={styles.content}>
             {postContentStore.post && <EditorJsViewerNative data={JSON.parse(postContentStore.post.content)} />}
-            {/* <EditorJsViewerNative data={content} /> */}
         </View>
     )
 }

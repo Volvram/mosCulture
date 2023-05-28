@@ -9,6 +9,7 @@ export type SchoolType = {
     id: number,
     name: string,
     email: string,
+    image: string,
     address: string,
     phoneNumber: string,
     longitude: number,

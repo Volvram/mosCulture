@@ -61,11 +61,13 @@ const Card: React.FC<CardProps> = ({
                             <Text style={styles.card_details_top}>
                                 {top}
                             </Text>
-                            <Text style={styles.card_details_middle}>
+                            <View style={[styles.card_details_middle, middleStyle]}>
+                            <Text style={styles.card_details_middle_text}>
                                 {middle}
                             </Text>
+                        </View>
                             <Text style={styles.card_details_bottom}>
-                                {bottom}
+                                {bottom.length > 40 ? bottom.slice(0, 40)+"..." : bottom}
                             </Text>
                         </View>
                     </LinearGradient>
@@ -87,7 +89,7 @@ const Card: React.FC<CardProps> = ({
                             </Text>
                         </View>
                         <Text style={styles.card_details_bottom}>
-                            {bottom}
+                            {bottom.length > 40 ? bottom.slice(0, 40)+"..." : bottom}
                         </Text>
                     </View>
                 </LinearGradient>

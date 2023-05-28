@@ -2,7 +2,6 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import { TYPOGRAPHY } from "../../../../../../config/typography";
 import { COLORS } from "../../../../../../config/colors";
 import { ResultType } from "../../../../../../store/RatingStore";
-import { observer } from "mobx-react-lite"
 import React from "react";
 
 type LeaderBoardProps = {
@@ -10,16 +9,14 @@ type LeaderBoardProps = {
 }
 
 const LeaderBoard: React.FC<LeaderBoardProps> = ({leaderBoard}) => {
-    React.useEffect(() => {
-
-    });
-
     return (
         <View style={styles.leaderBoard}>
             <View style={styles.leaderBoard_place2}>
                     {leaderBoard && leaderBoard[1] && leaderBoard[1].avatar ? 
-                        <Image style={styles.leaderBoard_place2_avatar} source={{uri: leaderBoard[1].avatar}}/>
-                    :   <View style={styles.leaderBoard_place2_avatar}></View>
+                        <View style={styles.leaderBoard_place2_avatar}>
+                            <Image style={styles.leaderBoard_place2_avatar_image} source={{uri: leaderBoard[1].avatar}}/>
+                        </View>
+                    :   <View style={styles.leaderBoard_place2_avatar_placeholder}></View>
                     }
                 
                 <View style={styles.leaderBoard_place2_medal}>
@@ -34,8 +31,10 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({leaderBoard}) => {
                 <Image style={styles.leaderBoard_place1_crown} 
                     source={require("../../../../../../assets/img/crown.png")} />
                 {leaderBoard && leaderBoard[0] && leaderBoard[0].avatar 
-                    ? <Image style={styles.leaderBoard_place1_avatar} source={{uri: leaderBoard[0].avatar}}/>
-                    :   <View style={styles.leaderBoard_place1_avatar}></View>
+                    ? <View style={styles.leaderBoard_place1_avatar}>
+                        <Image style={styles.leaderBoard_place1_avatar_image} source={{uri: leaderBoard[0].avatar}}/>
+                      </View>
+                    :   <View style={styles.leaderBoard_place1_avatar_placeholder}></View>
                 }
                 
                 <View style={styles.leaderBoard_place1_medal}>
@@ -49,8 +48,10 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({leaderBoard}) => {
             
             <View style={styles.leaderBoard_place3}>
                 {leaderBoard && leaderBoard[2] && leaderBoard[2].avatar 
-                ? <Image source={{uri: leaderBoard[2].avatar}}/>
-                : <View style={styles.leaderBoard_place3_avatar}></View> 
+                ? <View style={styles.leaderBoard_place3_avatar}>
+                    <Image style={styles.leaderBoard_place3_avatar_image} source={{uri: leaderBoard[2].avatar}}/>
+                </View>
+                : <View style={styles.leaderBoard_place3_avatar_placeholder}></View> 
                 } 
                 <View style={styles.leaderBoard_place3_medal}>
                     <Text style={styles.leaderBoard_num}>3</Text>
@@ -76,13 +77,26 @@ const styles = StyleSheet.create({
         marginTop: 63,
         alignItems: "center"
     },
-    leaderBoard_place2_avatar: {
+    leaderBoard_place2_avatar_placeholder: {
         width: 96,
         height: 96,
         backgroundColor: COLORS.gray,
         borderColor: COLORS.blue,
         borderWidth: 5,
         borderStyle: "solid",
+        borderRadius: 56
+    },
+    leaderBoard_place2_avatar: {
+        backgroundColor: COLORS.gray,
+        borderColor: COLORS.blue,
+        borderWidth: 5,
+        borderStyle: "solid",
+        borderRadius: 56
+    },
+    leaderBoard_place2_avatar_image: {
+        width: 96,
+        height: 96,
+        backgroundColor: COLORS.gray,
         borderRadius: 56
     },
     leaderBoard_place2_medal: {
@@ -124,13 +138,26 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
     },
-    leaderBoard_place1_avatar: {
+    leaderBoard_place1_avatar_placeholder: {
         width: 112,
         height: 112,
         backgroundColor: COLORS.gray,
         borderColor: COLORS.yellow,
         borderWidth: 5,
         borderStyle: "solid",
+        borderRadius: 56
+    },
+    leaderBoard_place1_avatar: {
+        backgroundColor: COLORS.gray,
+        borderColor: COLORS.yellow,
+        borderWidth: 5,
+        borderStyle: "solid",
+        borderRadius: 56
+    },
+    leaderBoard_place1_avatar_image: {
+        width: 112,
+        height: 112,
+        backgroundColor: COLORS.gray,
         borderRadius: 56
     },
     leaderBoard_place1_medal: {
@@ -155,13 +182,26 @@ const styles = StyleSheet.create({
         marginTop: 63,
         alignItems: "center"
     },
-    leaderBoard_place3_avatar: {
+    leaderBoard_place3_avatar_placeholder: {
         width: 96,
         height: 96,
         backgroundColor: COLORS.gray,
         borderColor: COLORS.pink,
         borderWidth: 5,
         borderStyle: "solid",
+        borderRadius: 56
+    },
+    leaderBoard_place3_avatar: {
+        backgroundColor: COLORS.gray,
+        borderColor: COLORS.pink,
+        borderWidth: 5,
+        borderStyle: "solid",
+        borderRadius: 56
+    },
+    leaderBoard_place3_avatar_image: {
+        width: 96,
+        height: 96,
+        backgroundColor: COLORS.gray,
         borderRadius: 56
     },
     leaderBoard_place3_medal: {

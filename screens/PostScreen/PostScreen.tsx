@@ -12,7 +12,7 @@ type PostScreenProps = {
 }
 
 const PostScreen: React.FC<PostScreenProps> = ({route, navigation}) => {
-    const { post } = route.params;
+    const { post, postType } = route.params;
     const scroll = new Animated.Value(0);
 
     return (
@@ -22,9 +22,9 @@ const PostScreen: React.FC<PostScreenProps> = ({route, navigation}) => {
                     onScroll={Animated.event([{nativeEvent: {contentOffset: {y: scroll}}}], {useNativeDriver: true})}>
 
                     <Animated.View style={{transform: [{translateY: Animated.multiply(scroll, 0.8)}]}}>
-                        <PostHeader post={post} />
+                        <PostHeader postId={post.id} postType={postType} />
                     </Animated.View>
-                    <PostContent postId={post.id} postType="article"/>
+                    <PostContent postId={post.id} postType={postType}/>
                 </Animated.ScrollView>
                 <StatusBar style="auto" />
         </View>

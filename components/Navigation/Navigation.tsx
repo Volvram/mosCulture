@@ -16,6 +16,7 @@ import AchievementsScreen from '../../screens/AchievementsScreen/AchievementsScr
 import OneAchieveScreen from '../../screens/OneAchieveScreen/OneAchieveScreen';
 import TaskScreen from '../../screens/TaskScreen/TaskScreen';
 import TestScreen from '../../screens/TestScreen/TestScreen';
+import React from 'react';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableOpacity, Image, ActivityIndicator } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image, ActivityIndicator, Alert } from "react-native";
 import Modal from "react-native-modal";
 import { COLORS } from "../../../../config/colors";
 import { TYPOGRAPHY } from "../../../../config/typography";
@@ -6,21 +6,22 @@ import React from "react";
 import { useLocalStore } from "../../../../utils/useLocalStore";
 import { TaskModalStore } from "../../../../store/TaskModalStore";
 import { observer } from "mobx-react-lite";
+import rootStore from "../../../../store/RootStore/instance";
+import { TastType } from "../../../../store/TaskScreenStore";
 
 type TaskModalType = {
     navigation: any,
     isModalVisible: boolean,
     setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
-    chosenTest: number | null
+    chosenTest: number | null,
 }
 
 const TaskModal: React.FC<TaskModalType> = ({navigation, isModalVisible, setModalVisible, chosenTest}) => {
 
-    const taskModalStore = useLocalStore(() => new TaskModalStore(chosenTest));
+    const taskModalStore = useLocalStore(() => new TaskModalStore());
 
     React.useEffect(() => {
         taskModalStore.setTaskId(chosenTest);
-        taskModalStore.requestTask();
     }, [chosenTest]);
 
     return (
@@ -34,9 +35,11 @@ const TaskModal: React.FC<TaskModalType> = ({navigation, isModalVisible, setModa
 
             {taskModalStore.task ? 
                 <View style={styles.taskModal_wrapper}>
-                <Image style={styles.taskModal_wrapper_image} 
-                    source={{uri: taskModalStore.task.image}} 
-                    resizeMode="cover"/>
+                    {taskModalStore.task.image &&
+                        <Image style={styles.taskModal_wrapper_image} 
+                        source={{uri: taskModalStore.task.image}} 
+                        resizeMode="cover"/>
+                    }
                 <View style={styles.taskModal_wrapper_details}>
                     <View style={styles.taskModal_wrapper_details_top}>
                         <View style={styles.taskModal_wrapper_details_top_difficulty}>
@@ -66,8 +69,22 @@ const TaskModal: React.FC<TaskModalType> = ({navigation, isModalVisible, setModa
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.taskModal_wrapper_bottom_start} 
                             onPress={() => {
+                                if (rootStore.user.authorized) {
+                                    navigation.navigate("Тест", {test: taskModalStore.task})
+                                } else {
+                                    Alert.alert(
+                                        "Авторизация",
+                                        "Войдите в систему, чтобы перейти к тестам",
+                                        [
+                                            { text: "Войти", onPress: () => {navigation.navigate("Авторизация")} },
+                                            { text: "Отмена" }
+                                        ],
+                                        {
+                                            cancelable: true,
+                                        }
+                                    )
+                                }
                                 setModalVisible(false);
-                                navigation.navigate("Тест", {test: taskModalStore.task})
                             }}>
                             <Text style={styles.taskModal_wrapper_bottom_start_text}>Начать</Text>
                         </TouchableOpacity>

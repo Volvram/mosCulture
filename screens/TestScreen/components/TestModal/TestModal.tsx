@@ -12,7 +12,6 @@ type TestModalType = {
     changeQuestion: () => void,
     correctAnswer: AnswerType,
     scorePerQuestion: number,
-    setChosenAnswer: (chosenAnswer: AnswerType | null) => void
     explanation: string,
 }
 
@@ -23,8 +22,7 @@ const TestModal: React.FC<TestModalType> = (
         isCorrect, 
         changeQuestion, 
         correctAnswer, 
-        scorePerQuestion, 
-        setChosenAnswer,
+        scorePerQuestion,
         explanation
     }) => {
     return (
@@ -62,7 +60,6 @@ const TestModal: React.FC<TestModalType> = (
                         onPress={() => {
                             changeQuestion();
                             setModalVisible(false);
-                            setChosenAnswer(null)
                         }}
                         >
                         <Text style={styles.testModal_button_text}>Далее</Text>

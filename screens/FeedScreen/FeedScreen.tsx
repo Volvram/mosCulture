@@ -6,23 +6,14 @@ import DailyWord from "./components/DailyWord/DailyWord";
 import News from "./components/News/News";
 import TrialTest from "./components/TrialTest/TrialTest";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
-import rootStore from "../../store/RootStore/instance";
 import AboutArt from "./components/AboutArt/AboutArt";
+import QuestionsToTeacher from "./components/QuestionsToTeacher/QuestionsToTeacher";
 
 type FeedScreenProps = {
     navigation: any,
 }
 
 const FeedScreen: React.FC<FeedScreenProps> = ({ navigation }) => {
-
-    // function handleInfinityScroll(event: any) {
-    //     let mHeight = event.nativeEvent.layoutMeasurement.height;
-    //     let cSize = event.nativeEvent.contentSize.height;
-    //     let Y = event.nativeEvent.contentOffset.y;
-    //     if (Math.ceil(mHeight + Y) >= cSize) return true;
-    //     return false;
-    // }
-
     return (
         <View style={styles.container}>
             <ScreenHeader buttons={
@@ -32,8 +23,9 @@ const FeedScreen: React.FC<FeedScreenProps> = ({ navigation }) => {
             <View style={styles.feed}>
                 <ScrollView onScroll={() => {}}>
                     <News navigation={navigation} />
-                    <DailyWord />
+                    <DailyWord navigation={navigation} />
                     <AboutArt navigation={navigation} />
+                    <QuestionsToTeacher navigation={navigation} />
                     <TrialTest navigation={navigation} />
                 </ScrollView>
             </View>

@@ -2,7 +2,6 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { AnswerType } from "../../TestScreen";
 import { COLORS } from "../../../../config/colors";
 import { TYPOGRAPHY } from "../../../../config/typography";
-import VideoView from "../VideoView/VideoView";
 import AudioView from "../AudioView/AudioView";
 import React from "react";
 
@@ -18,17 +17,17 @@ const AnswersAudio: React.FC<AnswersAudioType> = ({answers, onChoose}) => {
         <View style={styles.answersAudio}>
             {answers.map(answer => {
                 return (
-                    <TouchableOpacity style={[styles.answersAudio_answer,
-                        answer === activeAnswer && styles.answersAudio_answer__active]}
-                        onPress={() => {
-                            onChoose(answer)
-                            setActiveAnswer(answer);
-                        }}>
+                    <View key={answer.id} style={[styles.answersAudio_answer]}>
                         { answer.audio &&
-                            <AudioView 
+                            <AudioView onClick={() => {
+                                onChoose(answer)
+                                setActiveAnswer(answer);
+                            }}
+                            currentAudio={activeAnswer && activeAnswer.text}
+                            light={answer === activeAnswer ? true : false} 
                             title={answer.text} source={answer.audio} />
                         }
-                    </TouchableOpacity>
+                    </View>
                 )
             }) 
             }
@@ -46,30 +45,55 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         alignItems: "center", 
         alignSelf: "center",
-        justifyContent: "center"
+        justifyContent: "space-between"
     },
     answersAudio_answer: {
         marginVertical: 6,
         marginHorizontal: 6,
+        paddingVertical: "auto",
         borderRadius: 16,
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: COLORS.gray,
-        flexBasis: "45%",
+        flexBasis: "46%",
     },
     answersAudio_answer__active: {
         marginHorizontal: 6,
         borderWidth: 5,
         borderStyle: "solid",
         borderColor: COLORS.blueAction,
-        borderRadius: 22,
     },
-    answersAudio_audio: {
-        borderRadius: 16,
+    answersAudio_answer_audio: {
+        padding: 12,
+        width: "100%",
+        minWidth: 175,
+        minHeight: 48,
+        borderRadius: 24,
+        backgroundColor: COLORS.lightGray,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        alignItems: "center",
+        justifyContent: "center",
     },
     answersAudio_answer_audio__active: {
+        padding: 12,
+        width: "100%",
+        minWidth: 175,
+        minHeight: 48,
+        borderRadius: 24,
+        backgroundColor: COLORS.blueAction,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    answersAudio_audio_text: {
         ...TYPOGRAPHY.p1,
+        marginLeft: 8,
+        color: COLORS.black,
+        textAlign: "center",
+    },
+    answersAudio_audio__active_text: {
+        ...TYPOGRAPHY.p1,
+        marginLeft: 8,
         color: COLORS.white,
         textAlign: "center",
-    }
+    },
 })

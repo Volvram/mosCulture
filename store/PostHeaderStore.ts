@@ -28,7 +28,7 @@ type ArticleType = {
 
 type PrivateFields = "_post";
 
-export class PostContentStore implements ILocalStore {
+export class PostHeaderStore implements ILocalStore {
     private _postId: number;
     private _postType: string;
     private _post: any | null  = null;
@@ -37,14 +37,14 @@ export class PostContentStore implements ILocalStore {
         this._postId = postId;
         this._postType = postType;
 
-        makeObservable<PostContentStore, PrivateFields>(this, {
+        makeObservable<PostHeaderStore, PrivateFields>(this, {
             _post: observable,
             setPost: action,
             post: computed,
         })
     }
 
-    setPost(post: ArticleType) {
+    setPost(post: any) {
         this._post = post;
     }
 

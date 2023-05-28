@@ -12,18 +12,20 @@ import rootStore from "../../store/RootStore/instance";
 import { observer } from "mobx-react-lite";
 
 type TaskScreenProps = {
+    route: any,
     navigation: any,
 }
 
-const TaskScreen: React.FC<TaskScreenProps> = ({ navigation }) => {
+const TaskScreen: React.FC<TaskScreenProps> = ({ route, navigation }) => {
+    const { artId, userScore, scoreSum } = route.params;
     const [isModalVisible, setModalVisible] = React.useState(false);
     const [chosenTest, setChosenTest] = React.useState<number | null>(null);
 
     const taskScreenStore = useLocalStore(() => new TaskScreenStore());
 
     React.useEffect(() => {
-        taskScreenStore.requestTests();
-    }, []);
+        taskScreenStore.setArtId(artId);
+    }, [artId]);
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -38,7 +40,7 @@ const TaskScreen: React.FC<TaskScreenProps> = ({ navigation }) => {
                 <View style={styles.task_title}>
                     <Text style={styles.task_title_text}>Музыка</Text>
                     <View style={styles.task_title_points}>
-                        <Text style={styles.task_title_points_num}>71 / 100</Text>
+                        <Text style={styles.task_title_points_num}>{userScore ? userScore : " - "} / {scoreSum ? scoreSum : " - "}</Text>
                         <Image style={styles.task_title_points_image} source={require("../../assets/img/gem.png")} />
                     </View>
                 </View>
@@ -48,19 +50,27 @@ const TaskScreen: React.FC<TaskScreenProps> = ({ navigation }) => {
                     }}>
                         {taskScreenStore.tests && taskScreenStore.tests.map(test => {
                             return (
-                                <ListElement key={test.id} top={test.difficulty} 
+                                <ListElement key={test.title} 
+                                    top={test.difficulty} 
                                     middle={test.title} 
-                                    bottom={test.score ? "Результат: test.score / 100" : "Попыток не было"} 
-                                    onPress={() => {setChosenTest(test.id); toggleModal()}} 
+                                    bottom={test.score ? `Результат: ${test.score} / ${scoreSum}` : "Попыток не было"} 
+                                    onPress={() => {
+                                        setChosenTest(test.id); 
+                                        toggleModal()
+                                    }} 
                                     image={test.image}
                                     resizeMode="cover"
-                                    />
+                                />
                             )
                         })
                         }
                 </ScrollView>
             </View>
-            <TaskModal navigation={navigation} isModalVisible={isModalVisible} setModalVisible={setModalVisible} chosenTest={chosenTest}/>
+            <TaskModal navigation={navigation} 
+                isModalVisible={isModalVisible} 
+                setModalVisible={setModalVisible} 
+                chosenTest={chosenTest}
+                />
             <StatusBar style="auto" />
         </View>
     );

@@ -21,8 +21,11 @@ const SchoolList: React.FC<SchoolListProps> = ({ navigation, schools }) => {
                 {schools !== null && schools.length === 0 && <Text style={styles.schoolList_dataNotFound}>Данные не найдены</Text>}
                 {schools ? schools.map(school => {
                     return(
-                        <ListElement key={school.id} top={school.arts.map(el => el.name)} middle={school.name} bottom={school.district.name} 
-                        onPress={() => {}} topStyle={defineTagStyle(school.arts[0].name)} /> 
+                        <ListElement key={school.id} top={school.arts.map(el => el.name)}
+                        image={school.image}
+                        middle={school.name} bottom={school.district.name} 
+                        onPress={() => navigation.navigate("Пост", { post: school, postType: "school"})} 
+                        topStyle={defineTagStyle(school.arts[0].name)} /> 
                     )
                 })
                 : <ActivityIndicator style={styles.schoolList_dataIsLoading} size="large" color={COLORS.blueAction} />

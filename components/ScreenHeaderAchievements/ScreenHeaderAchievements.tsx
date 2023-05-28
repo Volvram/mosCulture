@@ -1,6 +1,11 @@
 import { StyleSheet, View, Text, Image, ImageSourcePropType, TouchableOpacity } from "react-native";
 import { COLORS } from "../../config/colors";
 import { TYPOGRAPHY } from "../../config/typography";
+import React from "react";
+import rootStore from "../../store/RootStore/instance";
+import { HOST } from "../../config/host";
+import axios from "axios";
+import { AchievementType } from "../../store/ProfileStore";
 
 
 type ScreenHeaderAchievementsType = {
@@ -12,6 +17,36 @@ type ScreenHeaderAchievementsType = {
 }
 
 const ScreenHeaderAchievements: React.FC<ScreenHeaderAchievementsType> = ({image=null, title = "Мос.Культура", received, all, onPress}) => {
+    
+    const [achievements, setAchievements] = React.useState<AchievementType[] | null>(null);
+    const [receivedAchievements, setReceivedAchievements] = React.useState<number>(0);
+
+    React.useEffect(() => {
+        requestAchievements();
+    }, []);
+
+    const requestAchievements = async () => {
+        if (rootStore.user.authorized) {
+            try {
+                const result = await axios(`${HOST}/users/${rootStore.user.userId}/achievements`, {
+                    method: "get",
+                })
+
+                setAchievements(result.data);
+                let sum = 0;
+                result.data.forEach((ach: AchievementType) => {
+                    if (ach.received) {
+                        sum++
+                    }
+                })
+                setReceivedAchievements(sum)
+            } catch(e) {
+                console.log(e);
+            }
+        }
+        
+    }
+
     return (
         <View style={styles.screenHeaderAchievements}>
             <View style={{ overflow: 'hidden', paddingBottom: 5 }}>
@@ -25,7 +60,8 @@ const ScreenHeaderAchievements: React.FC<ScreenHeaderAchievementsType> = ({image
                         <Text style={styles.screenHeaderAchievements_title}>{title}</Text>
                     </View>
                     <View style={styles.screenHeaderAchievements_achievements}>
-                        <Text style={styles.screenHeaderAchievements_achievements_num}>{received ? received : "-"} / {all ? all : "-"}</Text>
+                        <Text style={styles.screenHeaderAchievements_achievements_num}>
+                            {received ? received : receivedAchievements ? receivedAchievements : "-"} / {all ? all : achievements ? achievements.length : "-"}</Text>
                         <Image source={require("../../assets/img/achievement.png")} 
                             style={styles.screenHeaderAchievements_achievements_image} />
                     </View>

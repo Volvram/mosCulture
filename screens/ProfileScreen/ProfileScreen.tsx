@@ -38,7 +38,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
                             : rootStore.user.position === 3
                             ? {borderColor: COLORS.pink}
                             : {borderColor: COLORS.gray}]}>
-                            {rootStore.user.avatar && <Image style={styles.profile_avatar_image} source={{uri: rootStore.user.avatar}}/>}
+                            {rootStore.user.avatar && <Image style={styles.profile_avatar_image} 
+                            source={{uri: rootStore.user.avatar}}/>}
 
                         </View>
                         <View style={[styles.profile_rating, rootStore.user.position === 1 
@@ -48,7 +49,14 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
                             : rootStore.user.position === 3
                             ? {backgroundColor: COLORS.pink}
                             : {borderColor: COLORS.gray}]}>
-                            <Text style={styles.profile_rating_num}>
+                            <Text style={[styles.profile_rating_num,
+                            rootStore.user.position === 1 
+                            ? {color: COLORS.black}
+                            : rootStore.user.position === 2
+                            ? {color: COLORS.black}
+                            : rootStore.user.position === 3
+                            ? {color: COLORS.black}
+                            : {color: COLORS.white}]}>
                                 {rootStore.user.position ? rootStore.user.position : " - "}
                             </Text>
                         </View>
@@ -97,8 +105,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     profile_avatar: {
-        minWidth: 128,
-        minHeight: 128,
+        minWidth: 130,
+        minHeight: 130,
         backgroundColor: COLORS.gray,
         borderWidth: 5,
         borderColor: COLORS.gray,

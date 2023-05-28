@@ -54,14 +54,14 @@ const TestScreen: React.FC<TestScreenProps> = ({ route, navigation }) => {
         } else {
             testScreenStore.setCorrectAnswer(false);
         }
-        testScreenStore.setShowNotes(true);
+        testScreenStore.setChosenAnswer(null);
     }
 
     const changeQuestion = () => {
         if (testScreenStore.currentQuestion !== test.questions.length) {
             testScreenStore.setCurrentQuestion(testScreenStore.currentQuestion + 1);
         } else {
-
+            navigation.goBack();
         }
     }
 
@@ -107,9 +107,10 @@ const TestScreen: React.FC<TestScreenProps> = ({ route, navigation }) => {
 
 
                     </ScrollView>
-                    <TouchableOpacity style={styles.test_check} onPress={() => {
+                    <TouchableOpacity style={[styles.test_check, 
+                        !testScreenStore.chosenAnswer && styles.test_check__disabled]} onPress={() => {
                         if (testScreenStore.chosenAnswer) {
-                            checkAnswer(testScreenStore.chosenAnswer)
+                            checkAnswer(testScreenStore.chosenAnswer);
                         }
                     }}>
                         <Text style={styles.test_check_text}>Проверить</Text>
@@ -121,7 +122,6 @@ const TestScreen: React.FC<TestScreenProps> = ({ route, navigation }) => {
                 changeQuestion={changeQuestion}
                 correctAnswer={test.questions[testScreenStore.currentQuestion - 1].answers.find((ans: AnswerType) => ans.isCorrect)}
                 scorePerQuestion={test.scorePerQuestion}
-                setChosenAnswer={testScreenStore.setChosenAnswer}
                 explanation={test.questions[testScreenStore.currentQuestion - 1].explanation}
                 />
             <StatusBar style="auto" />
@@ -153,6 +153,9 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.lightGray,
         borderRadius: 24,
         alignSelf: "center"
+    },
+    test_check__disabled: {
+        opacity: 0.4
     },
     test_check_text: {
         marginTop: "auto",

@@ -37,7 +37,7 @@ const NewsList: React.FC<NewsListProps> = ({navigation}) => {
                     return (
                         <Card key={item.id} top={formatDate(item.createdAt)} bottom={item.name} image={item.image}
                             width={290} height={192}
-                            onPress={() => navigation.navigate("Пост", { post: item})} />
+                            onPress={() => navigation.navigate("Пост", { post: item, postType: "article"})} />
                     )
             }) 
                 : <ActivityIndicator style={styles.newsList_dataIsLoading} size="large" color={COLORS.blueAction} />
@@ -63,6 +63,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     newsList_dataIsLoading: {
+        marginTop: "auto",
+        marginBottom: "auto",
         width: "100%",
         alignSelf: "center",
     }

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ImageBackground } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ImageBackground, ScrollView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import { COLORS } from "../../config/colors";
@@ -30,7 +30,7 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <ScreenHeader image={require("../../assets/img/btnClose.png")} onPress={() => {navigation.goBack()}} />
-            <View style={styles.signUp}>
+            <ScrollView style={styles.signUp}>
                 <ImageBackground style={styles.signUp_background}
                     source={require("../../assets/img/decoration_2.png")}>
                     <View style={{marginHorizontal: 16}}>
@@ -75,7 +75,7 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
                     </View>
                 </ImageBackground>
                 <Redirect navigation={navigation} />
-            </View>
+            </ScrollView>
             <StatusBar style="auto" />
         </View>
     );
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     },
     signUp: {
         width: '100%',
+        flex: 1,
     },
     signUp_background: {
         paddingTop: 32,

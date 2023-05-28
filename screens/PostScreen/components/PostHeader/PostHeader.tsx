@@ -5,37 +5,55 @@ import { TYPOGRAPHY } from "../../../../config/typography";
 import { LinearGradient } from "expo-linear-gradient";
 import { ArticleType } from "../../../../store/NewsListStore";
 import { formatDate } from "../../../../config/formatDate";
+import { SchoolType } from "../../../../store/SchoolScreenStore";
+import { PostHeaderStore } from "../../../../store/PostHeaderStore";
+import { useLocalStore } from "../../../../utils/useLocalStore";
+import { observer } from "mobx-react-lite";
 
 type PostHeaderProps = {
-    post: ArticleType,
+    postId: number,
+    postType: string
 }
 
-const PostHeader: React.FC<PostHeaderProps> = ({post}) => {
+const PostHeader: React.FC<PostHeaderProps> = ({postId, postType}) => {
+
+    const postHeaderStore = useLocalStore(() => new PostHeaderStore(postId, postType));
+
+    React.useEffect(() => {
+        postHeaderStore.requestPost();
+    }, []);
 
     return (
         <View style={styles.postHeader}>
-            <ImageBackground style={styles.postHeader_background} source={post.image 
-                ? {uri: post.image} : require("../../../../assets/img/violin.png")} resizeMode="cover">
-                    <LinearGradient
-                        colors={[
-                        'rgba(24, 24, 27, 0)',
-                        '#18181B',
-                        ]}
-                        style={styles.postHeader_gradient}
-                        >
-                        <View style={styles.postHeader_text}>
-                            <Text style={styles.postHeader_text_tag}>{post.articleType.name}</Text>
-                            <Text style={styles.postHeader_text_title}>{post.name}</Text>
-                            <Text style={styles.postHeader_text_date}>{formatDate(post.createdAt)}</Text>
-                        </View>
-                    </LinearGradient>         
-            </ImageBackground>
+            {postHeaderStore.post &&
+                <ImageBackground style={styles.postHeader_background} source={postHeaderStore.post.image 
+                    ? {uri: postHeaderStore.post.image} : require("../../../../assets/img/violin.png")} resizeMode="cover">
+                        <LinearGradient
+                            colors={[
+                            'rgba(24, 24, 27, 0)',
+                            '#18181B',
+                            ]}
+                            style={styles.postHeader_gradient}
+                            >
+                            <View style={styles.postHeader_text}>
+                                <Text style={styles.postHeader_text_tag}>
+                                    {postType === "article" ? postHeaderStore.post.articleType.name
+                                    : postType === "school" ? postHeaderStore.post.name
+                                    : ""}
+                                </Text>
+                                <Text style={styles.postHeader_text_title}>{postHeaderStore.post.name}</Text>
+                                <Text style={styles.postHeader_text_date}>{formatDate(postHeaderStore.post.createdAt)}</Text>
+                            </View>
+                        </LinearGradient>         
+                </ImageBackground>
+            }
+            
         </View>
         
     )
 }
 
-export default PostHeader;
+export default observer(PostHeader);
 
 const styles = StyleSheet.create({
     postHeader: {

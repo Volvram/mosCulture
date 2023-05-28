@@ -1,19 +1,26 @@
 import {makeObservable, observable, action, computed, reaction, IReactionDisposer } from "mobx";
 import { AnswerType } from "../screens/TestScreen/TestScreen";
 import { ILocalStore } from "../utils/useLocalStore";
+import { HOST } from "../config/host";
+import axios from "axios";
+import { Alert } from "react-native";
+import rootStore from "./RootStore/instance";
 
-type privateFields = "_currentQuestion" | "_chosenAnswer" | "_score" | "_correctAnswer" | "_showNotes" | "_currentAnswers"
+type privateFields = "_testId" | "_currentQuestion" | "_chosenAnswer" | "_score" | "_correctAnswer" | "_currentAnswers"
 
 export class TestScreenStore implements ILocalStore {
+    private _testId: number | null = null;
     private _currentQuestion = 1;
     private _chosenAnswer: AnswerType | null = null;
     private _score = 0;
     private _correctAnswer: boolean | null = null;
-    private _showNotes = false;
     private _currentAnswers: AnswerType[] | null = null;
 
     constructor() {
         makeObservable<TestScreenStore, privateFields>(this, {
+            _testId: observable,
+            setTestId: action,
+            testId: computed,
             _currentQuestion: observable,
             setCurrentQuestion: action,
             currentQuestion: computed,
@@ -26,14 +33,19 @@ export class TestScreenStore implements ILocalStore {
             _correctAnswer: observable,
             setCorrectAnswer: action,
             correctAnswer: computed,
-            _showNotes: observable,
-            setShowNotes: action,
-            showNotes: computed,
             _currentAnswers: observable,
             setCurrentAnswers: action,
             currentAnswers: computed,
             shuffle: action,
         })
+    }
+
+    setTestId(testId: number) {
+        this._testId = testId;
+    }
+
+    get testId() {
+        return this._testId;
     }
 
     setCurrentQuestion(currentQuestion: number) {
@@ -68,14 +80,6 @@ export class TestScreenStore implements ILocalStore {
         return this._correctAnswer;
     }
 
-    setShowNotes(showNotes: boolean) {
-        this._showNotes = showNotes;
-    }
-
-    get showNotes() {
-        return this._showNotes;
-    }
-
     setCurrentAnswers(currentAnswers: AnswerType[]) {
         this._currentAnswers = this.shuffle(currentAnswers);
     }
@@ -102,12 +106,22 @@ export class TestScreenStore implements ILocalStore {
         return answers;
     }
 
-    destroy(){
-        this._handleChangeQuestion();
-    }
+    sendAnswer = async () => {
+        try {
+            const result = await axios(`${HOST}/${rootStore.user.userId}/tests/${this._testId}`, {
+                method: "post",
+                data: {
+                    score: this._score
+                }
+            })
+        } catch(e: any) {
+            if (e.toString().split(" ").find((el: string) => el === "Network")) {
+                Alert.alert("Отсутствует подключение к серверу");
+            } else {
+                console.log("Test Screen Store: ", e.response);
+            }
+        }
+    };
 
-    readonly _handleChangeQuestion: IReactionDisposer = reaction(
-        () => this._currentQuestion,
-        () => this.setShowNotes(false)
-    )
+    destroy(){}
 }

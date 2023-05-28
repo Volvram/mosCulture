@@ -6,7 +6,11 @@ import DailyWordStore from "../../../../store/DailyWordStore";
 import React from "react";
 import { observer } from "mobx-react-lite";
 
-const DailyWord: React.FC = () => {
+type DailyWordProps = {
+    navigation: any,
+}
+
+const DailyWord: React.FC<DailyWordProps> = ({navigation}) => {
     const [dimensions, setDimensions] = React.useState({
         width: 297,
         height: 451,
@@ -39,14 +43,15 @@ const DailyWord: React.FC = () => {
                 }
                 
             </View>
-            <TouchableOpacity style={styles.dailyWord_more}>
+            <TouchableOpacity style={styles.dailyWord_more}
+                 onPress={() => navigation.navigate("Пост", { post: dailyWordStore.dailyWord, postType: "article"})}>
                 <Text style={styles.dailyWord_more_text}>Подробнее</Text>
             </TouchableOpacity>
             <View style={styles.dailyWord_card}>
                 {dailyWordStore.dailyWord && 
                     <Image style={[styles.dailyWord_card_image, {width: "100%", aspectRatio: dimensions.width/dimensions.height}]} 
                         source={{uri: dailyWordStore.dailyWord.image}}
-                        resizeMode="contain"
+                        resizeMode="cover"
                     />
                 }
             </View>
@@ -93,6 +98,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     dailyWord_dataIsLoading: {
+        marginTop: "auto",
+        marginBottom: "auto",
         width: "100%",
         alignSelf: "center",
     },

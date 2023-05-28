@@ -2,6 +2,7 @@ import { makeObservable, observable, action, computed, runInAction } from "mobx"
 import { ILocalStore } from "../utils/useLocalStore";
 import axios from "axios";
 import { HOST } from "../config/host";
+import { ArtType } from "./TasksStore";
 
 export type ArticleType = {
     id: string,
@@ -15,7 +16,8 @@ export type ArticleType = {
     articleType: {
         id: number,
         name: string
-    }
+    },
+    arts: ArtType[]
 }
 
 type PrivateFields = "_dailyWord";

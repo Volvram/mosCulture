@@ -1,16 +1,18 @@
-import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import Modal from "react-native-modal";
 import { COLORS } from "../../../../config/colors";
 import { TYPOGRAPHY } from "../../../../config/typography";
 import { formatPrice } from "../../../../config/formatPrice";
+import { CourseType } from "../../../../store/InterestingCoursesStore";
 
 type CourseModalType = {
     navigation: any,
     isModalVisible: boolean,
-    setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
+    setModalVisible: React.Dispatch<React.SetStateAction<boolean>>,
+    currentCourse: CourseType | null;
 }
 
-const CourseModal: React.FC<CourseModalType> = ({ navigation, isModalVisible, setModalVisible }) => {
+const CourseModal: React.FC<CourseModalType> = ({ navigation, isModalVisible, setModalVisible, currentCourse }) => {
     return (
         <Modal
             style={styles.courseModal}
@@ -20,44 +22,52 @@ const CourseModal: React.FC<CourseModalType> = ({ navigation, isModalVisible, se
             swipeDirection="down"
             onSwipeComplete={() => setModalVisible(false)}>
 
-            <View style={styles.courseModal_wrapper}>
-                <Image style={styles.courseModal_wrapper_image} source={require("../../../../assets/img/taskModal.png")} />
-                <View style={styles.courseModal_wrapper_details}>
-                    <View style={styles.courseModal_wrapper_details_top}>
-                        <View style={styles.courseModal_wrapper_details_top_tag}>
-                            <Text style={styles.courseModal_wrapper_details_top_tag_text}>Музыка</Text>
+                {currentCourse ?
+                    <View style={styles.courseModal_wrapper}>
+                    <Image style={styles.courseModal_wrapper_image} 
+                        source={{uri: currentCourse.image}}/>
+                    <View style={styles.courseModal_wrapper_details}>
+                        <View style={styles.courseModal_wrapper_details_top}>
+                            <View style={styles.courseModal_wrapper_details_top_tag}>
+                                <Text style={styles.courseModal_wrapper_details_top_tag_text}>
+                                    {currentCourse.art.name}
+                                </Text>
+                            </View>
+                            <View style={styles.courseModal_wrapper_details_top_price}>
+                                <Text style={styles.courseModal_wrapper_details_top_price_text}>Цена:</Text>
+                                <Text style={styles.courseModal_wrapper_details_top_price_num}>
+                                    {currentCourse.price !== 0 ? formatPrice(currentCourse.price)
+                                    : "Бесплатно"}
+                                </Text>
+                            </View>
                         </View>
-                        <View style={styles.courseModal_wrapper_details_top_price}>
-                            <Text style={styles.courseModal_wrapper_details_top_price_text}>Цена:</Text>
-                            <Text style={styles.courseModal_wrapper_details_top_price_num}>{formatPrice(789)}</Text>
+                        <Text style={styles.courseModal_wrapper_title}>{currentCourse.name}</Text>
+                        <Text style={styles.courseModal_wrapper_description}>
+                            {currentCourse.description}
+                        </Text>
+                        <View style={styles.courseModal_wrapper_info}>
+                            <Image style={styles.courseModal_wrapper_info_image} source={require("../../../../assets/img/person.png")} />
+                            <Text style={styles.courseModal_wrapper_info_text}>{currentCourse.duration}</Text>
+                            <Image style={[styles.courseModal_wrapper_info_image, {marginLeft: 16}]} 
+                                source={require("../../../../assets/img/duration.png")} />
+                            <Text style={styles.courseModal_wrapper_info_text}>40 ч</Text>
                         </View>
-                    </View>
-                    <Text style={styles.courseModal_wrapper_title}>Обучение игре на скрипке</Text>
-                    <Text style={styles.courseModal_wrapper_description}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Sed pretium sapien at sollicitudin rhoncus. Aenean ac leo tincidunt.
-                    </Text>
-                    <View style={styles.courseModal_wrapper_info}>
-                        <Image style={styles.courseModal_wrapper_info_image} source={require("../../../../assets/img/person.png")} />
-                        <Text style={styles.courseModal_wrapper_info_text}>256</Text>
-                        <Image style={[styles.courseModal_wrapper_info_image, {marginLeft: 16}]} 
-                            source={require("../../../../assets/img/duration.png")} />
-                        <Text style={styles.courseModal_wrapper_info_text}>40 ч</Text>
-                    </View>
-                    <Text style={styles.courseModal_wrapper_rule}>Первый ознакомительный урок бесплатный.</Text>
-                    <View style={styles.courseModal_wrapper_bottom}>
-                        <TouchableOpacity style={styles.courseModal_wrapper_bottom_back} 
-                            onPress={() => {setModalVisible(false)}}>
-                            <Text style={styles.courseModal_wrapper_bottom_back_text}>Назад</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.courseModal_wrapper_bottom_start} 
-                            //onPress={navigation.navigate("Пост", { post: course})}
-                          >
-                            <Text style={styles.courseModal_wrapper_bottom_start_text}>К курсу</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.courseModal_wrapper_rule}>Первый ознакомительный урок бесплатный.</Text>
+                        <View style={styles.courseModal_wrapper_bottom}>
+                            <TouchableOpacity style={styles.courseModal_wrapper_bottom_back} 
+                                onPress={() => {setModalVisible(false)}}>
+                                <Text style={styles.courseModal_wrapper_bottom_back_text}>Назад</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.courseModal_wrapper_bottom_start} 
+                                //onPress={navigation.navigate("Пост", { post: course})}
+                              >
+                                <Text style={styles.courseModal_wrapper_bottom_start_text}>К курсу</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            </View>
+                : <ActivityIndicator style={styles.courseModal_dataIsLoading} size="large" color={COLORS.blueAction} />
+                }
         </Modal>
     )
 }
@@ -77,6 +87,7 @@ const styles = StyleSheet.create({
     },
     courseModal_wrapper_image: {
         width: "100%",
+        minHeight: 220,
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
     },
@@ -171,5 +182,11 @@ const styles = StyleSheet.create({
     courseModal_wrapper_bottom_start_text: {
         ...TYPOGRAPHY.p1,
         color: COLORS.white
+    },
+    courseModal_dataIsLoading: {
+        marginTop: "100%",
+        marginBottom: "100%",
+        width: "100%",
+        alignSelf: "center",
     }
 })

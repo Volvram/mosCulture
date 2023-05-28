@@ -54,14 +54,14 @@ export class TasksStore implements ILocalStore {
                     userScore = await axios(`${HOST}/users/${rootStore.user.userId}/tests/score-sum`, {
                         method: "get",
                         params: {
-                            // art_id: art.id
+                            art_id: art.id
                         }
                     });
 
                     userCount = await axios(`${HOST}/users/${rootStore.user.userId}/tests/count`, {
                         method: "get",
                         params: {
-                            // art_id: art.id
+                            art_id: art.id
                         }
                     })
                 } 
@@ -69,22 +69,22 @@ export class TasksStore implements ILocalStore {
                 const scoreSum = await axios(`${HOST}/tests/score-sum`, {
                     method: "get",
                     params: {
-                        // art_id: art.id
+                        art_id: art.id
                     }
                 })
                 const testsCount = await axios(`${HOST}/tests/count`, {
                     method: "get",
                     params: {
-                        // art_id: art.id
+                        art_id: art.id
                     }
                 });
 
                 result.push({
                     id: art.id,
                     name: art.name,
-                    userScore: userScore ? userScore.data : null,
+                    userScore: userScore ? userScore.data : 0,
                     scoreSum: scoreSum.data,
-                    userCount: userCount ? userCount.data : null,
+                    userCount: userCount ? userCount.data : 0,
                     testsCount: testsCount.data,
                 });
             }

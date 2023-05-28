@@ -27,11 +27,12 @@ const Achievements: React.FC<AchievementsProps> = ({ navigation, achievements })
                 scrollEventThrottle={200}
                 decelerationRate="fast">
                 {achievements ? achievements.map((achievement, index) => {
-                    if (index <= 5) {
+                    if (index <= 5 && achievement.received) {
                         return (
                             <Card key={achievement.id} bottom={achievement.title}
                             width={187} height={192}
-                            image={achievement.image} />
+                            image={achievement.image} 
+                            onPress={() => navigation.navigate("Достижение", {achievement: achievement}) }/>
                         )
                     } else {
 

@@ -29,7 +29,8 @@ const Tasks: React.FC<TasksProps> = ({ navigation }) => {
             <ScrollView>
                 {tasksStore.tasks && tasksStore.tasks.map((task, index) => {
                     return (
-                        <TouchableOpacity key={task.id} style={styles.tasks_list_task} onPress={() => navigation.navigate("Задание")}>
+                        <TouchableOpacity key={task.id} style={styles.tasks_list_task} onPress={() => navigation.navigate("Задание", 
+                            {artId: index + 1, userScore: task.userScore, scoreSum: task.scoreSum})}>
                             <ImageBackground style={styles.tasks_list_task_details} 
                                 source={index === 0 ? musicImg : index === 1 ? artImg : index === 2 ? theatreImg : danceImg}
                                 resizeMode="contain">
@@ -60,7 +61,7 @@ const Tasks: React.FC<TasksProps> = ({ navigation }) => {
                                 <CircularProgress
                                     value={task.userCount && task.userScore 
                                         ? Math.sqrt(task.userCount / task.testsCount * task.userScore / task.scoreSum) * 100
-                                        : Math.sqrt(1 / task.testsCount * 50 / task.scoreSum) * 100}
+                                        : 0}
                                     radius={48}
                                     duration={2000}
                                     progressValueColor={COLORS.black}

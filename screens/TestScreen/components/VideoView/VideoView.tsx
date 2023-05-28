@@ -1,13 +1,14 @@
-import { StyleSheet, View, Text, TouchableOpacity, StyleProp, ViewStyle } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, StyleProp, ViewStyle, Image } from "react-native";
 import { Video, ResizeMode } from 'expo-av';
 import React from "react";
 
 type VideoViewProps = {
   source: string;
-  style?: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>,
+  hideButtons?: boolean
 }
 
-const VideoView: React.FC<VideoViewProps> = ({source, style}) => {
+const VideoView: React.FC<VideoViewProps> = ({source, style, hideButtons=false}) => {
     const video = React.useRef<Video | null>(null);
     const [videoStatus, setVideoStatus] = React.useState<any>({});
 
@@ -19,19 +20,24 @@ const VideoView: React.FC<VideoViewProps> = ({source, style}) => {
         source={{
           uri: source,
         }}
-        useNativeControls
+        useNativeControls={false}
         resizeMode={ResizeMode.CONTAIN}
         isMuted={true}
+        isLooping={true}
         onPlaybackStatusUpdate={status => setVideoStatus(() => status)}
       />
-        <TouchableOpacity style={styles.video_buttons}
+        <TouchableOpacity style={[styles.video_buttons, hideButtons && {display: "none"}]}
           onPress={() => {
             if (video.current) {
               videoStatus.isPlaying ? video.current.pauseAsync() : video.current.playAsync()
             }
           } 
           }>
-          <Text>{videoStatus.isPlaying ? 'Pause' : 'Play'}</Text>
+            {!videoStatus.isPlaying ?
+              <Image style={styles.video_buttons_image} source={require("../../../../assets/img/playCircle.png")} />
+              : <Image style={styles.video_buttons_image_pause} source={require("../../../../assets/img/pause.png")} />
+            }
+            <Text style={[styles.video_buttons_text, {display: "none"}]}>{videoStatus.isPlaying ? 'Pause' : 'Play'}</Text>
         </TouchableOpacity>
     </View>
     )
@@ -52,8 +58,25 @@ const styles = StyleSheet.create({
     minHeight: 203,
     borderRadius: 16,
   },
+  video_buttons_image: {
+    position: "absolute",
+    marginTop: -110,
+    width: 32,
+    height: 32,
+    alignSelf: "center",
+  },
+  video_buttons_image_pause: {
+    marginTop: 6,
+    width: 32,
+    height: 32,
+    alignSelf: "center",
+  },
   video_buttons: {
     width: 100,
     height: 50,
+    alignSelf: "center",
+  },
+  video_buttons_text: {
+    textAlign: "center",
   }
 });

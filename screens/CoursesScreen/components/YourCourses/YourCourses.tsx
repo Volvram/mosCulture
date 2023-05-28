@@ -1,14 +1,18 @@
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { StyleSheet, View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { TYPOGRAPHY } from "../../../../config/typography";
 import { COLORS } from "../../../../config/colors";
 import Card from "../../../../components/Card/Card";
 import { defineTagStyle } from "../../../../config/defineTagStyle";
+import { useLocalStore } from "../../../../utils/useLocalStore";
+import { YourCoursesStore } from "../../../../store/YourCoursesStore";
+import React from "react";
+import { observer } from "mobx-react-lite";
 
 const courses = [
     {
         id: 1,
         percent: "50%",
-        tag: "Изобразительное Искусство",
+        tag: "Изобр. искусство",
         title: "Lorem ipsum dolor sit amet, consectetur adipiscing"
     },
     {
@@ -36,6 +40,12 @@ type YourCousesProps = {
 }
 
 const YourCourses: React.FC<YourCousesProps> = ({navigation}) => {
+    const yourCoursessStore = useLocalStore(() => new YourCoursesStore());
+
+    React.useEffect(() => {
+        yourCoursessStore.requestCourses();
+    }, [])
+
     return (
         <View style={styles.yourCourses}>
             <Text style={styles.yourCourses_title}>Ваши курсы</Text>
@@ -49,21 +59,25 @@ const YourCourses: React.FC<YourCousesProps> = ({navigation}) => {
                 scrollEventThrottle={200}
                 decelerationRate="fast">
 
-                {courses.map(course => {
+                {yourCoursessStore.courses ? yourCoursessStore.courses.map(course => {
                     return (
-                        <Card key={course.id} top={course.percent} middle={course.tag} bottom={course.title} // image={item.image}
-                           middleStyle={defineTagStyle(course.tag)} // onPress={() => navigation.navigate("Пост", { post: course})}
+                        <Card key={course.id} middle={course.art.name} bottom={course.name} 
+                           image={course.image}
+                           middleStyle={defineTagStyle(course.art.name)} 
                            width={290} height={192}
+                           // onPress={() => navigation.navigate("Пост", { post: course})}
                             />
                     )
-                })}
+                })
+                : <ActivityIndicator style={styles.yourCourses_dataIsLoading} size="large" color={COLORS.blueAction} />
+            }
 
             </ScrollView>
         </View>
     )
 }
 
-export default YourCourses;
+export default observer(YourCourses);
 
 const styles = StyleSheet.create({
     yourCourses: {
@@ -76,5 +90,11 @@ const styles = StyleSheet.create({
     },
     yourCourses_list: {
         marginTop: 16,
-    }
+    },
+    yourCourses_dataIsLoading: {
+        marginTop: "auto",
+        marginBottom: "auto",
+        width: "100%",
+        alignSelf: "center",
+    },
 })

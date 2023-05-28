@@ -35,7 +35,7 @@ const AboutArt: React.FC<AboutArtProps> = ({navigation}) => {
                     {aboutArtStore.arts && aboutArtStore.arts.map(art => {
                         return (
                             <Card key={art.id} bottom={art.name} image={art.image} width={290} height={192} 
-                                onPress={() => navigation.navigate("Пост", {post: art})} />
+                                onPress={() => navigation.navigate("Пост", {post: art, postType: "article"})} />
                         )
                         })
                     }

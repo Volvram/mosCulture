@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, computed, runInAction} from "mobx";
+import { makeObservable, observable, action, computed, runInAction, IReactionDisposer, reaction} from "mobx";
 import { ILocalStore } from "../utils/useLocalStore";
 import { Alert } from "react-native";
 import axios from "axios";
@@ -42,12 +42,10 @@ export type TestType = {
 type PrivateFields = "_taskId" | "_task";
 
 export class TaskModalStore implements ILocalStore {
-    private _taskId: number | null;
+    private _taskId: number | null = null;
     private _task: TestType | null = null;
 
-    constructor(id: number | null) {
-        this._taskId = id;
-
+    constructor() {
         makeObservable<TaskModalStore, PrivateFields>(this, {
             _taskId: observable,
             setTaskId: action,
@@ -96,4 +94,9 @@ export class TaskModalStore implements ILocalStore {
     }
 
     destroy(){}
+
+    readonly _handleTaskRequest: IReactionDisposer = reaction(
+        () => this._taskId,
+        () => this.requestTask()
+    )
 }

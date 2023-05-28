@@ -4,9 +4,12 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 import { COLORS } from "../../config/colors";
 import ScreenHeader from "../../components/ScreenHeader/ScreenHeader";
 import YourCourses from "./components/YourCourses/YourCourses";
-import Interesting from "./components/Interesting/Interesting";
-import Other from "./components/Other/Other";
+import OtherCourses from "./components/OtherCourses/OtherCourses";
 import CourseModal from "./components/CourseModal/CourseModal";
+import rootStore from "../../store/RootStore/instance";
+import { useLocalStore } from "../../utils/useLocalStore";
+import InterestingCourses from "./components/InterestingCourses/InterestingCourses";
+import { CourseType } from "../../store/InterestingCoursesStore";
 
 type CoursesScreenProps = {
     navigation: any,
@@ -15,6 +18,7 @@ type CoursesScreenProps = {
 const CoursesScreen: React.FC<CoursesScreenProps> = ({ navigation }) => {
 
     const [isModalVisible, setModalVisible] = React.useState(false);
+    const [currentCourse, setCurrentCourse] = React.useState<CourseType | null>(null);
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -27,11 +31,22 @@ const CoursesScreen: React.FC<CoursesScreenProps> = ({ navigation }) => {
                 {image: require("../../assets/img/sliders.png"), onClick: () => {}}]
                 } />
             <ScrollView style={styles.courses}>
-                <YourCourses navigation={navigation} />
-                <Interesting navigation={navigation} onOpen={() => {setModalVisible(true)}}/>
-                <Other navigation={navigation} onOpen={() => {setModalVisible(true)}}/>
+                {rootStore.user.authorized && 
+                    <YourCourses navigation={navigation} />
+                }
+                <InterestingCourses navigation={navigation} onOpen={(course: CourseType) => {
+                        setCurrentCourse(course)
+                        setModalVisible(true)
+                    }}/>
+                <OtherCourses navigation={navigation} onOpen={(course: CourseType) => {
+                        setCurrentCourse(course)
+                        setModalVisible(true)
+                    }}/>
             </ScrollView>
-            <CourseModal navigation={navigation} isModalVisible={isModalVisible} setModalVisible={setModalVisible} />
+            <CourseModal navigation={navigation} 
+                isModalVisible={isModalVisible} 
+                setModalVisible={setModalVisible} 
+                currentCourse={currentCourse}/>
             <StatusBar style="auto" />
         </View>
     );

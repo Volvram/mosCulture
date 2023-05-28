@@ -12,7 +12,7 @@ const QuestionVideo: React.FC<QuestionVideoType> = ({question, video}) => {
     return (
         <View>
             <Text style={styles.questionVideo_text}>{question}</Text>
-            <VideoView source={video} />
+            <VideoView source={video}/>
         </View> 
     )
 }
