@@ -1,0 +1,10 @@
+Для старта докера команда:
+	docker-compose up
+Для закрытия докера команда:
+	docker-compose down
+
+Для всех веток сабмодуля:
+	git remote set-branches origin '*'
+	git fetch -v --depth=1
+	git branch -a
+	git checkout remotes/<branch_name>
