@@ -22,7 +22,7 @@ const QuestionsToTeacher: React.FC<QuestionsToTeacherProps> = ({navigation}) => 
         <View style={styles.questions}>
             <Text style={styles.questions_title}>Вопросы педагогу</Text>
             {questionsToTeachersStore.questions && 
-                <View style={{alignSelf: "center"}}>
+                <View style={{alignSelf: "center", zIndex: 0}}>
                     <Text style={styles.questions_description}>
                         {questionsToTeachersStore.questions 
                         && questionsToTeachersStore.questions[0].description}
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         width: "100%",
         flex: 1,
-        backgroundColor: COLORS.white
+        backgroundColor: 'transparent'
     },
     questions_title: {
         ...TYPOGRAPHY.h1,
@@ -89,16 +89,16 @@ const styles = StyleSheet.create({
     },
     questions_background: {
         marginTop: 16,
-        width: "100%",
         minHeight: 200,
-        alignSelf: "center"
     },
     questions_content: {
         paddingHorizontal: 32,
+        width: "100%",
         minHeight: 200,
         backgroundColor: "rgba(24, 24, 27, 0.33)",
+        borderRadius: 16,
         alignItems: "center",
-        borderRadius: 16
+        alignSelf: "center",
     },
     questions_content_date: {
         ...TYPOGRAPHY.p1,

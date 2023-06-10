@@ -152,13 +152,13 @@ const styles = StyleSheet.create({
         borderColor: COLORS.yellow,
         borderWidth: 5,
         borderStyle: "solid",
-        borderRadius: 56
+        borderRadius: 80
     },
     leaderBoard_place1_avatar_image: {
         width: 112,
         height: 112,
         backgroundColor: COLORS.gray,
-        borderRadius: 56
+        borderRadius: 70
     },
     leaderBoard_place1_medal: {
         marginTop: -16,

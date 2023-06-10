@@ -21,7 +21,8 @@ const AboutArt: React.FC<AboutArtProps> = ({navigation}) => {
 
     return (
         <View style={styles.aboutArt}>
-            <ImageBackground style={{width: "100%", minHeight: 400}} source={require("../../../../assets/img/aboutArt.png")}>
+            <ImageBackground style={{width: "100%", minHeight: 400}} 
+                source={require("../../../../assets/img/aboutArt.png")}>
                 <Text style={styles.aboutArt_title}>Об искусстве</Text>
                 <ScrollView
                     horizontal

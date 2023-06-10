@@ -28,6 +28,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ route, navigati
                             achievements.slice(0,achievements.length/2).map((achievement: AchievementType) => {
                                 return (
                                     <TouchableOpacity key={achievement.id}
+                                            style={{paddingHorizontal: 6}}
                                             onPress={achievement.received 
                                                 ? () => navigation.navigate("Достижение", {achievement: achievement}) 
                                                 : () => {}}
@@ -50,6 +51,7 @@ const AchievementsScreen: React.FC<AchievementsScreenProps> = ({ route, navigati
                         {achievements.slice(achievements.length/2,achievements.length).map((achievement: AchievementType, index: number) => {
                                 return (
                                     <TouchableOpacity key={achievement.id}
+                                        style={{paddingHorizontal: 6}}
                                         onPress={achievement.received 
                                         ? () => navigation.navigate("Достижение", {achievement: achievement}) 
                                         : () => {}}

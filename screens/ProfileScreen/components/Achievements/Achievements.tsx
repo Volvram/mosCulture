@@ -60,8 +60,7 @@ const styles = StyleSheet.create({
     achievements_list: {
         marginTop: 16,
         width: "100%",
-        backgroundColor: COLORS.lightGray,
-        borderRadius: 16,
+        backgroundColor: COLORS.white,
     },
     achievements_dataIsLoading: {
         marginVertical: "auto",

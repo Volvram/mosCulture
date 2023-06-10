@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         borderWidth: 5,
         borderColor: COLORS.gray,
         borderStyle: "solid",
-        borderRadius: 64,
+        borderRadius: 80,
     },
     profile_avatar_image: {
         width: 128,
