@@ -13,6 +13,7 @@
 * Ссылка на бекенд приложение (с документацией OpenApi) http://94.139.255.120/api/swagger-ui/index.html
 * Ссылка на Google Drive с apk файлом: https://drive.google.com/drive/folders/1nUzq-y_xRmy-eyhU_t0Pw7G7tndwRmo7?usp=sharing
 * Ссылка на админ-панель: http://178.170.196.129
+* Ссылка на первоначальный репозиторий с кодом Frontend: https://github.com/MatveyBatishchev/Frontend-Hackaton2023
 * Ссылка на репозиторий с кодом Backend (Spring Boot): https://github.com/MatveyBatishchev/Backend-Hackaton2023
 * Ссылка на репозиторий с кодом для админ-панели: https://github.com/MatveyBatishchev/AdminPanel-Hackaton2023
 > Проекты были развёрнуты в облачном хранилище при помощи сервиса **SberCloud**
@@ -47,6 +48,7 @@
 
 ## Запуск приложения
 Для запуска проекта (без предварительной конфигурации) необходимо скачать **.apk** файл по ссылке выше и установить его либо на android устройстве, либо на эмуляторе (например использовав android studio)
+> **Примечание**: В случае невозможности запустить проект можно посмотреть его демонстрационное видео, расположенное по пути: different/demonstration.mp4.
 
 ## Развёртывание приложения при помощи Expo go
 Здесь содержится инструкции по запуску проекта React Native с помощью Expo go.<br>
